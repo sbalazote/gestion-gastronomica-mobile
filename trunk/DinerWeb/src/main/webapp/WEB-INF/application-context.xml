@@ -17,6 +17,8 @@
 	
 	<mvc:annotation-driven/>
 	
+	<mvc:default-servlet-handler/>
+	
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 	    <property name="basenames">
 	        <list>
