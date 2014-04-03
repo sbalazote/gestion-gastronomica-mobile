@@ -545,7 +545,7 @@ public class OpenTable extends ActionBarActivity implements OnClickListener {
 		protected List<Category> doInBackground(String... params) {
 			List<Category> categories = null;
 			try {
-				String response = this.connectionHelper.get(WEBAPP_HOST + "/diner/getCategories.do");
+				String response = this.connectionHelper.get(WEBAPP_HOST + "/diner/categories");
 				System.out.println(response);
 				Type type = (new TypeToken<List<Category>>() {
 				}).getType();
