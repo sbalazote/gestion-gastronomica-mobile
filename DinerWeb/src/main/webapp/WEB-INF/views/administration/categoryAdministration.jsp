@@ -37,3 +37,18 @@
 		</tbody>
 	</table>
 </div>
+
+<%-- Confirmación de que se borrará definitivamente --%>
+<div class="modal fade" data-backdrop="static" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width:250px">
+		<div class="modal-content">
+			<div class="modal-body">
+				<strong><span style="color:red"><spring:message code="administration.entity.delete"/></span></strong>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="common.no"/></button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="deleteEntityButton"><spring:message code="common.yes"/></button>
+			</div>
+		</div>
+	</div>
+</div>

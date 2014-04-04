@@ -15,8 +15,17 @@ public class AdministrationController {
 	private CategoryService categoryService;
 
 	@RequestMapping(value = "/categoryAdministration", method = RequestMethod.GET)
-	public String home(ModelMap modelMap) throws Exception {
+	public String categoryAdministration(ModelMap modelMap) throws Exception {
 		return "categoryAdministration";
 	}
 
+	@RequestMapping(value = "/entitySaved", method = RequestMethod.GET)
+	public String error(ModelMap modelMap) throws Exception {
+		return "entitySaved";
+	}
+
+	@RequestMapping(value = "/deleteConfirmation", method = RequestMethod.GET)
+	public String deleteConfirmation(ModelMap modelMap) throws Exception {
+		return "deleteConfirmation";
+	}
 }

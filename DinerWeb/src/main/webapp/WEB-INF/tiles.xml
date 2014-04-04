@@ -23,4 +23,20 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/categoryAdministration.jsp" />
     </definition>
     
+    <definition name="addCategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addCategory.jsp" />
+    </definition>
+    
+     <definition name="entitySaved" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/entitySaved.jsp" />
+    </definition>
+     
+    <definition name="deleteConfirmation" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/deleteConfirmation.jsp" />
+    </definition>
+    
+    <definition name="updateCategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateCategory.jsp" />
+    </definition>
+    
 </tiles-definitions>
