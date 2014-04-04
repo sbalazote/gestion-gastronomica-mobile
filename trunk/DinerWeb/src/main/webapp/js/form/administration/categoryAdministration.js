@@ -28,7 +28,6 @@ CategoryAdministration = function() {
 			});
 		},
 		error: function(response) {
-			window.location = "error.do";
 		}
 	});
 	
