@@ -22,7 +22,7 @@
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="common.administration"/> <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 			    	<li><a href="categoryAdministration"><spring:message code="common.categories"/></a></li>
-					<li><a href="#"><spring:message code="common.subcategories"/></a></li>
+					<li><a href="subcategoryAdministration"><spring:message code="common.subcategories"/></a></li>
 					<li><a href="#"><spring:message code="common.products"/></a></li>
 				</ul>
 	        </li>
