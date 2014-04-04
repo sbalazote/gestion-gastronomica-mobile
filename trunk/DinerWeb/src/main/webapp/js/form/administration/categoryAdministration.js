@@ -1,4 +1,6 @@
 CategoryAdministration = function() {
+	var categoryId;
+	
 	$.ajax({
 		url: "getCategories",
 		type: "GET",
@@ -30,4 +32,40 @@ CategoryAdministration = function() {
 		}
 	});
 	
+	$("#addCategory").click(function() {
+		window.location="addCategory";
+	});
+	
+	$('#divTable').on("click", ".delete-row", function() {
+		var parent = $(this).parent().parent();
+		categoryId = parent.find("td:first-child").html();
+		
+		$('#deleteConfirmationModal').modal('show');
+	});
+	
+	$("#deleteEntityButton").click(function() {
+
+		$.ajax({
+			url: "deleteCategory",
+			type: "POST",
+			data: {
+				categoryId: categoryId,
+			},
+			async: true,
+			success: function(response) {
+				window.location = "deleteConfirmation";
+			},
+			error: function(response) {
+				console.log(response),
+				$('#deleteFailModal').modal('show');
+			}
+		});
+	});
+	
+	$('#divTable').on("click", ".edit-row", function() {
+		var parent = $(this).parent().parent();
+		categoryId = parent.find("td:first-child").html();
+		
+		window.location = "updateCategory?id=" + categoryId;
+	});
 };
