@@ -1,5 +1,7 @@
 package com.fiuba.diner.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,8 +41,8 @@ public class SubcategoryController {
 		Subcategory subcategory = new Subcategory();
 		if (subcategoryDTO.getId() != null) {
 			subcategory.setId(subcategoryDTO.getId());
-		}
 
+		}
 		subcategory.setDescription(subcategoryDTO.getDescription());
 		Category category = this.categoryService.get(subcategoryDTO.getCategoryId());
 		subcategory.setActive(subcategoryDTO.isActive());
@@ -59,5 +61,22 @@ public class SubcategoryController {
 		category.getSubcategories().remove(subcategoryToDelete);
 
 		this.categoryService.save(category);
+	}
+
+	@RequestMapping(value = "/updateSubcategory", method = RequestMethod.GET)
+	public String updateSubcategory(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+		Integer id = Integer.valueOf(parameters.get("id"));
+		Integer categoryId = Integer.valueOf(parameters.get("categoryId"));
+
+		modelMap.put("categories", this.categoryService.getAll());
+
+		Subcategory subcategory = this.subcategoryService.get(id);
+
+		modelMap.put("id", subcategory.getId());
+		modelMap.put("description", subcategory.getDescription());
+		modelMap.put("categoryId", categoryId);
+		modelMap.put("active", subcategory.getActive());
+
+		return "updateSubcategory";
 	}
 }

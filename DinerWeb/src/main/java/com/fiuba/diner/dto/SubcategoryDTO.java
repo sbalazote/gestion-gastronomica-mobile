@@ -9,6 +9,7 @@ public class SubcategoryDTO implements Serializable {
 	private String description;
 	private Integer categoryId;
 	private boolean active;
+	private Integer oldCategoryId;
 
 	public Integer getId() {
 		return this.id;
@@ -40,6 +41,14 @@ public class SubcategoryDTO implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Integer getOldCategoryId() {
+		return this.oldCategoryId;
+	}
+
+	public void setOldCategoryId(Integer oldCategoryId) {
+		this.oldCategoryId = oldCategoryId;
 	}
 
 }
