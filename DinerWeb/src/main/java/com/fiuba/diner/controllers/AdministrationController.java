@@ -28,4 +28,9 @@ public class AdministrationController {
 	public String deleteConfirmation(ModelMap modelMap) throws Exception {
 		return "deleteConfirmation";
 	}
+
+	@RequestMapping(value = "/subcategoryAdministration", method = RequestMethod.GET)
+	public String subcategoryAdministration(ModelMap modelMap) throws Exception {
+		return "subcategoryAdministration";
+	}
 }
