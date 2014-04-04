@@ -47,4 +47,9 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/addSubcategory.jsp" />
     </definition>
     
+        
+    <definition name="updateSubcategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateSubcategory.jsp" />
+    </definition>
+    
 </tiles-definitions>

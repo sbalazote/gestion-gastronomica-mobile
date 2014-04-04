@@ -68,8 +68,9 @@ SubcategoryAdministration = function() {
 	
 	$('#divTable').on("click", ".edit-row", function() {
 		var parent = $(this).parent().parent();
-		categoryId = parent.find("td:first-child").html();
+		subcategoryId = parent.find("td:first-child").html();
+		categoryId = parent.find(".span-categoryId").html();
 		
-		window.location = "updateCategory?id=" + categoryId;
+		window.location = "updateSubcategory?id=" + subcategoryId +"&categoryId=" + categoryId;
 	});
 };
