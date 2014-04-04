@@ -19,4 +19,8 @@
         <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
     </definition>
     
+    <definition name="categoryAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/categoryAdministration.jsp" />
+    </definition>
+    
 </tiles-definitions>

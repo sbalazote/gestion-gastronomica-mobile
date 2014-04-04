@@ -23,6 +23,7 @@
 	    <property name="basenames">
 	        <list>
 	        	<value>WEB-INF/messages/common</value>
+	        	<value>WEB-INF/messages/administration</value>
 	        </list>
 	    </property>
 	</bean>
