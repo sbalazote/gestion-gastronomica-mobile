@@ -8,19 +8,21 @@ SubcategoryAdministration = function() {
 		success: function(response) {
 			var aaData = [];
 			for (var i = 0, l = response.length; i < l; ++i) {
-				for (var j = 0, l = response[j].subcategories.length; j < l; ++j) {
+				var len = response[i].subcategories.length;
+				for (var j = 0; j < len; ++j) {
 					var subcategory = [];
 					subcategory.push(response[i].subcategories[j].id);
 					subcategory.push(response[i].subcategories[j].description);
 					subcategory.push(response[i].description)
 					
-					if(response[i].active==true){
+					if(response[i].subcategories[j].active==true){
 						subcategory.push("Si");	
 					}else{
 						subcategory.push("No");
 					}
 					subcategory.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
-							"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>");
+							"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
+							"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>");
 					aaData.push(subcategory);
 				}
 			}
@@ -30,7 +32,6 @@ SubcategoryAdministration = function() {
 			});
 		},
 		error: function(response) {
-			window.location = "error.do";
 		}
 	});
 	
@@ -40,18 +41,19 @@ SubcategoryAdministration = function() {
 	
 	$('#divTable').on("click", ".delete-row", function() {
 		var parent = $(this).parent().parent();
-		categoryId = parent.find("td:first-child").html();
-		
+		subcategoryId = parent.find("td:first-child").html();
+		categoryId = parent.find(".span-categoryId").html();
 		$('#deleteConfirmationModal').modal('show');
 	});
 	
 	$("#deleteEntityButton").click(function() {
 
 		$.ajax({
-			url: "deleteCategory",
+			url: "deleteSubcategory",
 			type: "POST",
 			data: {
 				categoryId: categoryId,
+				subcategoryId: subcategoryId,
 			},
 			async: true,
 			success: function(response) {

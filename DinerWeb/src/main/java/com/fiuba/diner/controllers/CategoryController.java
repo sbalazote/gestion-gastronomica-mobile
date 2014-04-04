@@ -52,7 +52,7 @@ public class CategoryController {
 
 	@RequestMapping(value = "/deleteCategory", method = RequestMethod.POST)
 	public @ResponseBody
-	void deleteProductBrand(@RequestParam Integer categoryId) throws Exception {
+	void deleteCategory(@RequestParam Integer categoryId) throws Exception {
 		this.categoryService.delete(categoryId);
 	}
 
