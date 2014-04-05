@@ -46,10 +46,13 @@
     <definition name="addSubcategory" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/administration/addSubcategory.jsp" />
     </definition>
-    
         
     <definition name="updateSubcategory" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/administration/updateSubcategory.jsp" />
+    </definition>
+    
+    <definition name="productAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/productAdministration.jsp" />
     </definition>
     
 </tiles-definitions>

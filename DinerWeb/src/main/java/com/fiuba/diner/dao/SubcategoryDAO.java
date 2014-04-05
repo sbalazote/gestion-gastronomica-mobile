@@ -1,5 +1,7 @@
 package com.fiuba.diner.dao;
 
+import java.util.List;
+
 import com.fiuba.diner.model.Subcategory;
 
 public interface SubcategoryDAO {
@@ -10,4 +12,5 @@ public interface SubcategoryDAO {
 
 	void delete(Integer subcategoryId);
 
+	List<Subcategory> getAll();
 }

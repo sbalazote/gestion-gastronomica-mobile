@@ -13,7 +13,7 @@
 
 <div class="row">
 	<div class="col-md-9 form-group">
-		<h2><spring:message code="common.subcategory"/></h2>
+		<h2><spring:message code="administration.addSubcategory"/></h2>
 	</div>
 </div>
 
@@ -26,8 +26,8 @@
 
 <div class="row">
 	<div class="col-md-6 form-group">
-		<label for="categoryInput"><spring:message code="common.category"/></label>
-		<select id="categoryInput" name="category" class="form-control chosen-select" data-placeholder="<spring:message code='common.select.option'/>">
+		<label for="categorySelect"><spring:message code="common.category"/></label>
+		<select id="categorySelect" name="category" class="form-control chosen-select" data-placeholder="<spring:message code='common.select.option'/>">
 			<option value=""></option>
 			<c:forEach items="${categories}" var="category">
 				<option value="${category.id}"><c:out value="${category.id}"></c:out> - <c:out value="${category.description}"></c:out></option>
