@@ -1,5 +1,7 @@
 package com.fiuba.diner.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -75,5 +77,26 @@ public class ProductController {
 		subcategory.getProducts().remove(productToDelete);
 
 		this.subcategoryService.save(subcategory);
+	}
+
+	@RequestMapping(value = "/updateProduct", method = RequestMethod.GET)
+	public String updateProduct(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+		Integer id = Integer.valueOf(parameters.get("id"));
+		Integer categoryId = Integer.valueOf(parameters.get("categoryId"));
+		Integer subcategoryId = Integer.valueOf(parameters.get("subcategoryId"));
+
+		modelMap.put("categories", this.categoryService.getAll());
+		modelMap.put("subcategories", this.subcategoryService.getAll());
+
+		Product product = this.productService.get(id);
+
+		modelMap.put("id", product.getId());
+		modelMap.put("description", product.getDescription());
+		modelMap.put("categoryId", categoryId);
+		modelMap.put("subcategoryId", subcategoryId);
+		modelMap.put("price", product.getPrice());
+		modelMap.put("active", product.getActive());
+
+		return "updateProduct";
 	}
 }
