@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.dto.CategoryDTO;
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Subcategory;
 import com.fiuba.diner.service.CategoryService;
 
 @Controller
@@ -65,5 +66,12 @@ public class CategoryController {
 		modelMap.put("description", category.getDescription());
 		modelMap.put("active", category.getActive());
 		return "updateCategory";
+	}
+
+	@RequestMapping(value = "/getSubcategoriesByCategory", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Subcategory> getSubcategories(Integer categoryId) throws IOException {
+		Category category = this.categoryService.get(categoryId);
+		return category.getSubcategories();
 	}
 }

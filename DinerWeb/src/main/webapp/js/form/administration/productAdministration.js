@@ -36,8 +36,8 @@ ProductAdministration = function() {
 		}
 	});
 	
-	$("#addSubcategory").click(function() {
-		window.location="addSubcategory";
+	$("#addProduct").click(function() {
+		window.location="addProduct";
 	});
 	
 	$('#divTable').on("click", ".delete-row", function() {
