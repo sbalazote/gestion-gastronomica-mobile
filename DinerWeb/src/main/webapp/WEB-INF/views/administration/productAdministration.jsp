@@ -29,6 +29,7 @@
 	        <tr>
 	            <th><spring:message code="common.id"/></th>
 	            <th><spring:message code="common.description"/></th>
+	            <th><spring:message code="common.category"/></th>
 	            <th><spring:message code="common.subcategory"/></th>
 	            <th><spring:message code="common.price"/></th>
 	           	<th><spring:message code="common.active"/></th>

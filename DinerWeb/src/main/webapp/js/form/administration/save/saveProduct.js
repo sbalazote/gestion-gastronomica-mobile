@@ -1,22 +1,22 @@
 SaveProduct = function() {
-	
 	 
-	 $("#categorySelect").chosen().change(function() {
-			$.ajax({
-				url: "getSubcategoriesByCategory",
-				type: "GET",
-				async: false,
-				data: {
-					categoryId: $("#categorySelect option:selected").val(),
-				},
-				success: function(response) {
-					for (var i = 0, l = response.length; i < l; ++i) {
-						$('#subcategorySelect').append('<option value="foo">Bar</option>');
-					}
-					$('#subcategorySelect').trigger("chosen:updated");
+	$("#categorySelect").chosen().change(function() {
+		$.ajax({
+			url: "getSubcategoriesByCategory",
+			type: "GET",
+			async: false,
+			data: {
+				categoryId: $("#categorySelect option:selected").val(),
+			},
+			success: function(response) {
+				$('#subcategorySelect').empty();
+				for (var i = 0, l = response.length; i < l; ++i) {
+					$('#subcategorySelect').append('<option value="'+ response[i].id + '">' + response[i].id + ' - ' + response[i].description +'</option>');
 				}
-			});
+				$('#subcategorySelect').trigger("chosen:updated");
+			}
 		});
+	});
 	
 	
 	var validateForm = function() {
@@ -42,6 +42,7 @@ SaveProduct = function() {
 					"id": $("#idInput").val(),
 					"description": $("#descriptionInput").val(),
 					"subcategoryId": $("#subcategorySelect option:selected").val(),
+					"price": $("#priceInput").val(),
 					"active": $("#activeSelect option:selected").val(),
 					"oldSubcategoryId": $("#idCategory").val()
 			};

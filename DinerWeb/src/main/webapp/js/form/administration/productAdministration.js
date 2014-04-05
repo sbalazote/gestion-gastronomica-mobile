@@ -2,29 +2,33 @@ ProductAdministration = function() {
 	var categoryId;
 	
 	$.ajax({
-		url: "getSubcategories",
+		url: "getCategories",
 		type: "GET",
 		async: false,
 		success: function(response) {
 			var aaData = [];
 			for (var i = 0, l = response.length; i < l; ++i) {
-				var len = response[i].products.length;
+				var len = response[i].subcategories.length;
 				for (var j = 0; j < len; ++j) {
-					var product = [];
-					product.push(response[i].products[j].id);
-					product.push(response[i].products[j].description);
-					product.push(response[i].description);
-					product.push(response[i].products[j].price);
-					
-					if(response[i].products[j].active==true){
-						product.push("Si");	
-					}else{
-						product.push("No");
-					}
-					product.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
-							"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
-							"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>");
-					aaData.push(product);
+					var long = response[i].subcategories[j].products.length;
+					for (var k = 0; k < long; ++k) {	
+						var product = [];
+						product.push(response[i].subcategories[j].products[k].id);
+						product.push(response[i].subcategories[j].products[k].description);
+						product.push(response[i].description);
+						product.push(response[i].subcategories[j].description);
+						product.push(response[i].subcategories[j].products[k].price);
+						
+						if(response[i].subcategories[j].products[j].active==true){
+							product.push("Si");	
+						}else{
+							product.push("No");
+						}
+						product.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
+								"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
+								"<span class='span-subcategoryId' style='display:none'>" + response[i].subcategories[j].id + "</span>");
+						aaData.push(product);
+						}
 					}
 				}
 			$('.datatable').dataTable({
@@ -42,19 +46,19 @@ ProductAdministration = function() {
 	
 	$('#divTable').on("click", ".delete-row", function() {
 		var parent = $(this).parent().parent();
-		subcategoryId = parent.find("td:first-child").html();
-		categoryId = parent.find(".span-categoryId").html();
+		productId = parent.find("td:first-child").html();
+		subcategoryId = parent.find(".span-subcategoryId").html();
 		$('#deleteConfirmationModal').modal('show');
 	});
 	
 	$("#deleteEntityButton").click(function() {
 
 		$.ajax({
-			url: "deleteSubcategory",
+			url: "deleteProduct",
 			type: "POST",
 			data: {
-				categoryId: categoryId,
 				subcategoryId: subcategoryId,
+				productId: productId,
 			},
 			async: true,
 			success: function(response) {
