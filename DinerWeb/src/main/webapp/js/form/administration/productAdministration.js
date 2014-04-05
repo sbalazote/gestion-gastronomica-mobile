@@ -19,14 +19,15 @@ ProductAdministration = function() {
 						product.push(response[i].subcategories[j].description);
 						product.push(response[i].subcategories[j].products[k].price);
 						
-						if(response[i].subcategories[j].products[j].active==true){
+						if(response[i].subcategories[j].products[k].active==true){
 							product.push("Si");	
 						}else{
 							product.push("No");
 						}
 						product.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
 								"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
-								"<span class='span-subcategoryId' style='display:none'>" + response[i].subcategories[j].id + "</span>");
+								"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>"
+								+ "<span class='span-subcategoryId' style='display:none'>" + response[i].subcategories[j].id + "</span>");
 						aaData.push(product);
 						}
 					}
@@ -47,6 +48,7 @@ ProductAdministration = function() {
 	$('#divTable').on("click", ".delete-row", function() {
 		var parent = $(this).parent().parent();
 		productId = parent.find("td:first-child").html();
+		categoryId = parent.find(".span-categoryId").html();
 		subcategoryId = parent.find(".span-subcategoryId").html();
 		$('#deleteConfirmationModal').modal('show');
 	});
@@ -57,6 +59,7 @@ ProductAdministration = function() {
 			url: "deleteProduct",
 			type: "POST",
 			data: {
+				categoryId: categoryId,
 				subcategoryId: subcategoryId,
 				productId: productId,
 			},
@@ -73,9 +76,10 @@ ProductAdministration = function() {
 	
 	$('#divTable').on("click", ".edit-row", function() {
 		var parent = $(this).parent().parent();
-		subcategoryId = parent.find("td:first-child").html();
+		productId = parent.find("td:first-child").html();
 		categoryId = parent.find(".span-categoryId").html();
+		subcategoryId = parent.find(".span-subcategoryId").html();
 		
-		window.location = "updateSubcategory?id=" + subcategoryId +"&categoryId=" + categoryId;
+		window.location = "updateProduct?id=" + productId + "&subcategoryId=" + subcategoryId +"&categoryId=" + categoryId;
 	});
 };

@@ -9,6 +9,7 @@ SaveProduct = function() {
 				categoryId: $("#categorySelect option:selected").val(),
 			},
 			success: function(response) {
+				$(".chosen-select").attr('disabled', false).trigger("chosen:updated")
 				$('#subcategorySelect').empty();
 				for (var i = 0, l = response.length; i < l; ++i) {
 					$('#subcategorySelect').append('<option value="'+ response[i].id + '">' + response[i].id + ' - ' + response[i].description +'</option>');
@@ -44,7 +45,7 @@ SaveProduct = function() {
 					"subcategoryId": $("#subcategorySelect option:selected").val(),
 					"price": $("#priceInput").val(),
 					"active": $("#activeSelect option:selected").val(),
-					"oldSubcategoryId": $("#idCategory").val()
+					"oldSubcategoryId": $("#idSubcategory").val()
 			};
 
 			$.ajax({
