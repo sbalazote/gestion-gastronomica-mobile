@@ -55,4 +55,8 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/productAdministration.jsp" />
     </definition>
     
+    <definition name="addProduct" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addProduct.jsp" />
+    </definition>
+    
 </tiles-definitions>
