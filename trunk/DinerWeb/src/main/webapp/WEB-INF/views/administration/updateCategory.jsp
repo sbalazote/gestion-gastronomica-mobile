@@ -13,7 +13,7 @@
 
 <div class="row">
 	<div class="col-md-9 form-group">
-		<h2><spring:message code="common.category"/></h2>
+		<h2><spring:message code="administration.updateCategory"/></h2>
 		<input type="hidden" class="form-control" id="idInput" value="${id}">
 	</div>
 </div>

@@ -6,14 +6,31 @@ CREATE TABLE `diner`.`table` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(100) NOT NULL,
 	`active` bit(1) NOT NULL,
+	`state_id` int(8) NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `fk_table_table_state_idx` (`state_id`),
+	CONSTRAINT `fk_table_table_state` FOREIGN KEY (`state_id`) REFERENCES `table_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `diner`.`table_state` (
+	`id` int(8) NOT NULL AUTO_INCREMENT,
+	`description` varchar(100) NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`order` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
-	`state` varchar(50) NOT NULL,
 	`date` datetime NOT NULL,
 	`customer_amount` int(2) NOT NULL,
+	`state_id` int(8) NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `fk_order_order_state_idx` (`state_id`),
+	CONSTRAINT `fk_order_order_state` FOREIGN KEY (`state_id`) REFERENCES `order_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `diner`.`order_state` (
+	`id` int(8) NOT NULL AUTO_INCREMENT,
+	`description` varchar(100) NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

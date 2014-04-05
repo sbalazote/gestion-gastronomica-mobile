@@ -25,7 +25,7 @@ SaveSubcategory = function() {
 			var jsonSubcategory = {
 					"id": $("#idInput").val(),
 					"description": $("#descriptionInput").val(),
-					"categoryId": $("#categoryInput option:selected").val(),
+					"categoryId": $("#categorySelect option:selected").val(),
 					"active": $("#activeSelect option:selected").val(),
 					"oldCategoryId": $("#idCategory").val()
 			};

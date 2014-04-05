@@ -1,5 +1,7 @@
 package com.fiuba.diner.controllers;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +36,30 @@ public class SubcategoryController {
 	@RequestMapping(value = "/saveSubcategory", method = RequestMethod.POST)
 	public @ResponseBody
 	void saveSubcategory(@RequestBody SubcategoryDTO subcategoryDTO) throws Exception {
-		this.categoryService.save(this.buildModel(subcategoryDTO));
+		this.categoryService.save(this.getCategory(subcategoryDTO));
 	}
 
-	private Category buildModel(SubcategoryDTO subcategoryDTO) {
+	private Category getCategory(SubcategoryDTO subcategoryDTO) {
 		Subcategory subcategory = new Subcategory();
-		if (subcategoryDTO.getId() != null) {
-			subcategory.setId(subcategoryDTO.getId());
 
-		}
 		subcategory.setDescription(subcategoryDTO.getDescription());
-		Category category = this.categoryService.get(subcategoryDTO.getCategoryId());
 		subcategory.setActive(subcategoryDTO.isActive());
 
-		category.getSubcategories().add(subcategory);
+		Category category = this.categoryService.get(subcategoryDTO.getCategoryId());
+		if (subcategoryDTO.getId() != null) {
+			subcategory.setId(subcategoryDTO.getId());
+		}
+
+		if (subcategoryDTO.getCategoryId().equals(subcategoryDTO.getOldCategoryId())) {
+			for (Subcategory subcat : category.getSubcategories()) {
+				if (subcat.getId().equals(subcategory.getId())) {
+					subcat.setDescription(subcategoryDTO.getDescription());
+					subcat.setActive(subcategoryDTO.isActive());
+				}
+			}
+		} else {
+			category.getSubcategories().add(subcategory);
+		}
 
 		return category;
 	}
@@ -78,5 +90,11 @@ public class SubcategoryController {
 		modelMap.put("active", subcategory.getActive());
 
 		return "updateSubcategory";
+	}
+
+	@RequestMapping(value = "/getSubcategories", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Subcategory> getSubcategories() throws IOException {
+		return this.subcategoryService.getAll();
 	}
 }

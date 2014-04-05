@@ -33,4 +33,9 @@ public class AdministrationController {
 	public String subcategoryAdministration(ModelMap modelMap) throws Exception {
 		return "subcategoryAdministration";
 	}
+
+	@RequestMapping(value = "/productAdministration", method = RequestMethod.GET)
+	public String productAdministration(ModelMap modelMap) throws Exception {
+		return "productAdministration";
+	}
 }
