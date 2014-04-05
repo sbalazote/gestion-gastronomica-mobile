@@ -8,6 +8,7 @@ public class ProductDTO implements Serializable {
 	private Integer id;
 	private String description;
 	private Integer subcategoryId;
+	private Double price;
 	private boolean active;
 	private Integer oldSubcategoryId;
 
@@ -49,6 +50,14 @@ public class ProductDTO implements Serializable {
 
 	public void setOldSubcategoryId(Integer oldSubcategoryId) {
 		this.oldSubcategoryId = oldSubcategoryId;
+	}
+
+	public Double getPrice() {
+		return this.price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 }
