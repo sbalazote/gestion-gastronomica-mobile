@@ -11,12 +11,16 @@
     <string name="add_product">Agregar Producto</string>
     <string name="order_details">Detalles de Orden</string>
     
-    <string name="title_activity_table_list">Listado de Mesas</string>
     <string name="table">Mesa</string>
     <string name="state">Estado</string>
     <string name="title_activity_order">Carga de Pedidos</string>
     
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
+
+    <string name="new_order">Nuevo Pedido</string>
+    <string name="categories">Rubros</string>
+    <string name="subcategories">Subrubros</string>
+    <string name="products">Productos</string>
 
 </resources>
