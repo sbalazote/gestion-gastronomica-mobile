@@ -13,7 +13,7 @@
          android:background="#7F7F7F"
 	     android:textColor="#FFFFFF"
          android:textAppearance="?android:attr/textAppearanceMedium"
-         android:text="@string/waiter"  />
+         android:text="Mozo"  />
 
         <TextView
          android:id="@+id/waiterNameTextView"
