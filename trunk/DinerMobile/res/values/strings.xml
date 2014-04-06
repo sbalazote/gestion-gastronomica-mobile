@@ -19,5 +19,7 @@
     <string name="products">Productos</string>
     
     <string name="total">Total:</string>
+    <string name="diners">Comensales</string>
+    <string name="waiterField">Mozo: </string>
 
 </resources>
