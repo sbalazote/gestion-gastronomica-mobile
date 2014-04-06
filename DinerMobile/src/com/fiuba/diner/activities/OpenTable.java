@@ -30,8 +30,6 @@ import android.widget.ListView;
 import com.fiuba.diner.R;
 import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.model.Category;
-import com.fiuba.diner.model.Product;
-import com.fiuba.diner.model.Subcategory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -550,22 +548,16 @@ public class OpenTable extends ActionBarActivity implements OnClickListener {
 				Type type = (new TypeToken<List<Category>>() {
 				}).getType();
 				categories = gson.fromJson(response, type);
-				for (Object object : categories) {
-					Category category = (Category) object;
-					System.out.println(category.getDescription());
-					for (Object obj2 : category.getSubcategories()) {
-						Subcategory subcategory = (Subcategory) obj2;
-						System.out.println(subcategory.getDescription());
-						for (Object obj3 : subcategory.getProducts()) {
-							Product product = (Product) obj3;
-							System.out.println(product.getDescription());
-						}
-					}
-				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return categories;
+		}
+
+		@Override
+		protected void onPostExecute(List<Category> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
 		}
 
 	}

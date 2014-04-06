@@ -18,15 +18,22 @@ import android.widget.TextView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.TableListAdapter;
+import com.fiuba.diner.helper.Caller;
+import com.fiuba.diner.helper.ProductProviderHelper;
+import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.tasks.GetCategoriesTask;
 
-public class TableListActivity extends Activity {
+public class TableListActivity extends Activity implements Caller<List<Category>> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_table_list);
+		new GetCategoriesTask(this).execute();
+	}
 
+	private void showView() {
+		this.setContentView(R.layout.activity_table_list);
 		this.populateList();
 	}
 
@@ -53,7 +60,7 @@ public class TableListActivity extends Activity {
 				if (AVAILABLE_STATE.equals(table.getState())) {
 					this.openDialog(view, table);
 				} else {
-					Intent intent = new Intent(TableListActivity.this, OpenTable.class);
+					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 					TableListActivity.this.startActivity(intent);
 				}
 			}
@@ -81,4 +88,11 @@ public class TableListActivity extends Activity {
 
 		});
 	}
+
+	@Override
+	public void afterCall(List<Category> result) {
+		ProductProviderHelper.setCategories(result);
+		this.showView();
+	}
+
 }

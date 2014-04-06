@@ -1,8 +1,11 @@
 package com.fiuba.diner.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String description;
