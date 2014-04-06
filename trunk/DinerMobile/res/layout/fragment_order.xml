@@ -40,9 +40,16 @@
     </LinearLayout>
      
      <Button
-      	android:id="@+id/button1"
+      	android:id="@+id/addProductButton"
       	android:layout_width="match_parent"
       	android:layout_height="wrap_content"
       	android:text="@string/add_product" />
+
+     <ListView
+         android:id="@+id/orderListView"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="4" >
+     </ListView>
 
     </LinearLayout>
