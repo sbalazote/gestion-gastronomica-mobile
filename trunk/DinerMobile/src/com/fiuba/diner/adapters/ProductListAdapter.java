@@ -33,7 +33,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product product = this.products.get(position);
 		productTextView.setText(product.getDescription());
-		productPriceTextView.setText(String.valueOf(product.getPrice()));
+		productPriceTextView.setText("$ " + String.valueOf(product.getPrice()));
 
 		return rowView;
 	}
