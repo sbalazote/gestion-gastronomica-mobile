@@ -40,7 +40,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 	private void populateList() {
 		ListView listview = (ListView) this.findViewById(R.id.tableListView);
 
-		List<Table> tables = new ArrayList<>();
+		List<Table> tables = new ArrayList<Table>();
 		for (int i = 1; i < 21; ++i) {
 			Table table = new Table();
 			table.setId(i);
