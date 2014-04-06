@@ -2,73 +2,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/addProductButton"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/add_product" 
-        android:onClick="addProduct"/>
-    
-    <ListView
-        android:id="@+id/orderListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/addProductButton"
-        android:layout_above="@+id/totalLayout"/>
-    
-	<LinearLayout
-	    android:id="@+id/totalLayout"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/footerLayout"
-	    android:orientation="horizontal">
-	    
-	    <TextView
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="9"
-	        android:gravity="center_vertical"
-	        android:paddingLeft="6dp"
-	        android:text="@string/total"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	
-	    <TextView
-	        android:id="@+id/orderTotalTextView"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="3"
-	        android:gravity="center_vertical"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
-	        android:text="$0"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	    
-	</LinearLayout>
-    
-	<LinearLayout
-	    android:id="@+id/footerLayout"
-	    android:layout_alignParentBottom="true"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal">
-	    
-	    <Button
-	        android:id="@+id/cancelOrderButton"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:text="@string/cancel" />
-	    
-	    <Button
-	        android:id="@+id/confirmOrderButton"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:text="@string/confirm" />
-	    
-	</LinearLayout>
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/WaiterTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/waiterField"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/WaiterNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.87"
+                    android:text="Ruiz, Luis" />
+
+                <TextView
+                    android:id="@+id/dinersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/diners"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/dinersEditText"
+                    android:layout_width="37dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.09"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addProductButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="addProduct"
+                android:text="@string/add_product" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/orderListView"
+            android:layout_width="match_parent"
+            android:layout_height="306dp" >
+        </ListView>
+
+        <LinearLayout
+            android:id="@+id/totalLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:background="#7F7F7F"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dp"
+                android:text="@string/total"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/orderTotalTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8.89"
+                android:background="#7F7F7F"
+                android:gravity="right"
+                android:text="$ 0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/footerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/cancelOrderButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/confirmOrderButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/confirm" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
