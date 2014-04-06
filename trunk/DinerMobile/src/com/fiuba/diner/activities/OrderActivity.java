@@ -46,7 +46,7 @@ public class OrderActivity extends Activity {
 			this.products.add(selectedProduct);
 			this.total = this.total + selectedProduct.getPrice();
 			TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
-			totalTextView.setText(String.valueOf(this.total));
+			totalTextView.setText("$" + String.valueOf(this.total));
 			this.adapter.notifyDataSetChanged();
 		}
 	}
