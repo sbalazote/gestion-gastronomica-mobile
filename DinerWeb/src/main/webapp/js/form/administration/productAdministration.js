@@ -1,5 +1,5 @@
 ProductAdministration = function() {
-	var categoryId;
+	var categoryId = null;
 	
 	$.ajax({
 		url: "getCategories",
@@ -24,7 +24,7 @@ ProductAdministration = function() {
 						}else{
 							product.push("No");
 						}
-						product.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
+						product.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
 								"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
 								"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>"
 								+ "<span class='span-subcategoryId' style='display:none'>" + response[i].subcategories[j].id + "</span>");
