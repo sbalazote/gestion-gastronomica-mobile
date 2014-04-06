@@ -1,5 +1,5 @@
 SubcategoryAdministration = function() {
-	var categoryId;
+	var categoryId = null;
 	
 	$.ajax({
 		url: "getCategories",
@@ -13,14 +13,14 @@ SubcategoryAdministration = function() {
 					var subcategory = [];
 					subcategory.push(response[i].subcategories[j].id);
 					subcategory.push(response[i].subcategories[j].description);
-					subcategory.push(response[i].description)
+					subcategory.push(response[i].description);
 					
 					if(response[i].subcategories[j].active==true){
 						subcategory.push("Si");	
 					}else{
 						subcategory.push("No");
 					}
-					subcategory.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
+					subcategory.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
 							"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
 							"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>");
 					aaData.push(subcategory);

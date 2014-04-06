@@ -1,5 +1,5 @@
 CategoryAdministration = function() {
-	var categoryId;
+	var categoryId = null;
 	
 	$.ajax({
 		url: "getCategories",
@@ -17,7 +17,7 @@ CategoryAdministration = function() {
 				}else{
 					category.push("No");
 				}
-				category.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>" +
+				category.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
 						"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>");
 				aaData.push(category);
 				
