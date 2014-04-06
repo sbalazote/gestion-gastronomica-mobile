@@ -3,6 +3,7 @@ package com.fiuba.diner.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product product = this.products.get(position);
 		productTextView.setText(product.getDescription());
-		productPriceTextView.setText("$ " + String.valueOf(product.getPrice()));
+		productPriceTextView.setText("$" + String.valueOf(product.getPrice()));
+		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 
 		return rowView;
 	}
