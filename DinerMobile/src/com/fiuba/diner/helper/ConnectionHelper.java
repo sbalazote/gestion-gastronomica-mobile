@@ -38,7 +38,7 @@ public class ConnectionHelper {
 
 	private String inputStreamToString(InputStream in) throws Exception {
 		StringBuffer sb = new StringBuffer();
-		Reader reader = new InputStreamReader(in, "ISO-8859-1");
+		Reader reader = new InputStreamReader(in, "UTF-8");
 		int c;
 		while ((c = reader.read()) != -1) {
 			sb.append((char) c);
