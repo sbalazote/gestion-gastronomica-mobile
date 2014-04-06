@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,8 @@ import com.fiuba.diner.model.Table;
 import com.fiuba.diner.tasks.GetCategoriesTask;
 
 public class TableListActivity extends Activity implements Caller<List<Category>> {
+
+	public static final String EXTRA_TITLE = "com.fiuba.diner.activities.TITLE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 					this.openDialog(view, table);
 				} else {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
+					intent.putExtra(EXTRA_TITLE, "Mesa: " + String.valueOf(position + 1));
 					TableListActivity.this.startActivity(intent);
 				}
 			}
@@ -74,6 +78,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 						table.setState(OPEN_STATE);
 						TextView stateTextView = (TextView) view.findViewById(R.id.stateTextView);
 						stateTextView.setText(OPEN_STATE);
+						stateTextView.setTextColor(Color.BLUE);
 					}
 				});
 				alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
