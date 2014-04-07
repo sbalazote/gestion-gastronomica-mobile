@@ -62,11 +62,8 @@ public class OrderActivity extends Activity {
 		Product product = this.products.get(position);
 		product.getDetails().clear();
 		this.products.remove(position);
-		this.total = this.total.subtract(BigDecimal.valueOf(product.getPrice()));
 
-		DecimalFormat formatter = new DecimalFormat("0.00");
-		TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
-		totalTextView.setText("$" + formatter.format(this.total));
+		this.updateTotal();
 
 		this.adapter.notifyDataSetChanged();
 
