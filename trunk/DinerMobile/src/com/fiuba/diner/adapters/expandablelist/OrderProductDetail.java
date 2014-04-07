@@ -8,7 +8,6 @@ public class OrderProductDetail implements Serializable {
 
 	private Integer amount;
 	private String comment;
-	private int viewId;
 
 	public Integer getAmount() {
 		return this.amount;
@@ -24,14 +23,6 @@ public class OrderProductDetail implements Serializable {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-	public int getViewId() {
-		return this.viewId;
-	}
-
-	public void setViewId(int viewId) {
-		this.viewId = viewId;
 	}
 
 }

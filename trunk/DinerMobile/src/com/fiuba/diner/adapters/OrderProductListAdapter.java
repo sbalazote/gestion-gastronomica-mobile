@@ -53,7 +53,6 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		EditText productCommentEditText = (EditText) childView.findViewById(R.id.productCommentEditText);
 		productAmountEditText.setText(String.valueOf(detail.getAmount()));
 		productCommentEditText.setText(detail.getComment());
-		detail.setViewId(childView.findViewById(R.id.deleteProductButton).getId());
 
 		this.childViews.put(groupPosition, childView);
 		return childView;
@@ -90,7 +89,7 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		Product group = (Product) this.getGroup(groupPosition);
 		productTextView.setText(group.getDescription());
 
-		DecimalFormat formatter = new DecimalFormat("#.00");
+		DecimalFormat formatter = new DecimalFormat("0.00");
 		productPriceTextView.setText("$" + formatter.format(group.getPrice()));
 		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 		return convertView;

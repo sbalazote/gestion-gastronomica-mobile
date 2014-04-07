@@ -36,7 +36,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 		Product product = this.products.get(position);
 		productTextView.setText(product.getDescription());
 
-		DecimalFormat formatter = new DecimalFormat("#.00");
+		DecimalFormat formatter = new DecimalFormat("0.00");
 		productPriceTextView.setText("$" + formatter.format(product.getPrice()));
 		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 
