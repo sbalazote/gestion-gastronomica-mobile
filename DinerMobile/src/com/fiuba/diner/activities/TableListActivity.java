@@ -37,6 +37,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 
 	private void showView() {
 		this.setContentView(R.layout.activity_table_list);
+		this.setTitle(R.string.hardcodedWaiter);
 		this.populateList();
 	}
 

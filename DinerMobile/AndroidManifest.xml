@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name="com.fiuba.diner.activities.OrderActivity"
-            android:label="@string/title_activity_order" >
+            android:label="@string/hardcodedWaiter" >
         </activity>
         <activity
             android:name="com.fiuba.diner.activities.CategoryListActivity"

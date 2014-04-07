@@ -6,7 +6,7 @@
     
     <string name="add_product">Agregar Producto</string>
     
-    <string name="table">Mesa</string>
+    <string name="table">Mesa </string>
     <string name="state">Estado</string>
     <string name="title_activity_order">Carga de Pedidos</string>
     
@@ -19,7 +19,9 @@
     <string name="products">Productos</string>
     
     <string name="total">Total:</string>
-    <string name="diners">Comensales</string>
+    <string name="diners">Comensales: </string>
     <string name="waiterField">Mozo: </string>
+    
+    <string name="hardcodedWaiter">Mozo: Rodriguez, Carlos</string>
 
 </resources>

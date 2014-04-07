@@ -1,5 +1,6 @@
 package com.fiuba.diner.adapters;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -34,7 +35,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product product = this.products.get(position);
 		productTextView.setText(product.getDescription());
-		productPriceTextView.setText("$" + String.valueOf(product.getPrice()));
+
+		DecimalFormat formatter = new DecimalFormat("#.00");
+		productPriceTextView.setText("$" + formatter.format(product.getPrice()));
 		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 
 		return rowView;
