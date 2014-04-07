@@ -1,5 +1,6 @@
 package com.fiuba.diner.activities;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class OrderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_order);
 
-		this.setTitle(this.getIntent().getStringExtra(TableListActivity.EXTRA_TITLE));
+		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
+		tableTextView.setText(this.getIntent().getStringExtra(TableListActivity.EXTRA_TITLE));
 
 		this.products = new ArrayList<Product>();
 		ListView listView = (ListView) this.findViewById(R.id.orderListView);
@@ -45,8 +47,10 @@ public class OrderActivity extends Activity {
 			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
 			this.products.add(selectedProduct);
 			this.total = this.total + selectedProduct.getPrice();
+
+			DecimalFormat formatter = new DecimalFormat("#.00");
 			TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
-			totalTextView.setText("$" + String.valueOf(this.total));
+			totalTextView.setText("$" + formatter.format(this.total));
 			this.adapter.notifyDataSetChanged();
 		}
 	}
