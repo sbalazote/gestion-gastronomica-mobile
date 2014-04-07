@@ -90,13 +90,21 @@ public class OrderActivity extends Activity {
 		if (requestCode == 1 && resultCode == RESULT_OK) {
 			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
 			this.products.add(selectedProduct);
-			this.total = this.total.add(BigDecimal.valueOf(selectedProduct.getPrice()));
-
-			DecimalFormat formatter = new DecimalFormat("0.00");
-			TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
-			totalTextView.setText("$" + formatter.format(this.total));
 			this.adapter.notifyDataSetChanged();
+			this.updateTotal();
 		}
+	}
+
+	public void updateTotal() {
+		double total = 0;
+		for (Product product : this.products) {
+			total += (product.getPrice() * product.getDetails().get(0).getAmount());
+		}
+
+		this.total = BigDecimal.valueOf(total);
+		DecimalFormat formatter = new DecimalFormat("0.00");
+		TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
+		totalTextView.setText("$" + formatter.format(this.total));
 	}
 
 }

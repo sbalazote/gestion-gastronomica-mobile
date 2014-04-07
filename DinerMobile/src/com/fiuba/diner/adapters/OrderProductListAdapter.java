@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fiuba.diner.R;
+import com.fiuba.diner.activities.OrderActivity;
 import com.fiuba.diner.adapters.expandablelist.OrderProductDetail;
 import com.fiuba.diner.model.Product;
 
@@ -90,7 +91,7 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		productTextView.setText(group.getDescription());
 
 		DecimalFormat formatter = new DecimalFormat("0.00");
-		productPriceTextView.setText("$" + formatter.format(group.getPrice()));
+		productPriceTextView.setText("$" + formatter.format(group.getPrice().doubleValue() * group.getDetails().get(0).getAmount()));
 		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 		return convertView;
 	}
@@ -114,6 +115,9 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		EditText productCommentEditText = (EditText) childView.findViewById(R.id.productCommentEditText);
 		detail.setAmount(Integer.valueOf(productAmountEditText.getText().toString()));
 		detail.setComment(productCommentEditText.getText().toString());
+
+		OrderActivity activity = (OrderActivity) this.activity;
+		activity.updateTotal();
 	}
 
 }
