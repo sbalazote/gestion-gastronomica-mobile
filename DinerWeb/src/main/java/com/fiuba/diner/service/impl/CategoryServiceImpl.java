@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public void save(Category category) {
 		this.categoryDAO.save(category);
-		logger.info("Se han guardado los cambios exitosamente. Id de Categoryo: " + category.getId());
+		logger.info("Se han guardado los cambios exitosamente. Id de Categoría: " + category.getId());
 	}
 
 	@Override

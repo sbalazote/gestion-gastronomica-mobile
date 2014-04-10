@@ -21,6 +21,9 @@ public class Product {
 	@Column(name = "price", nullable = false)
 	private Double price;
 
+	@Column(name = "celiac_allowed", nullable = false)
+	private Boolean celiacAllowed;
+
 	@Column(name = "active", nullable = false)
 	private Boolean active;
 
@@ -41,15 +44,23 @@ public class Product {
 	}
 
 	public Double getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(Double price) {
 		this.price = price;
 	}
 
+	public Boolean getCeliacAllowed() {
+		return this.celiacAllowed;
+	}
+
+	public void setCeliacAllowed(Boolean celiacAllowed) {
+		this.celiacAllowed = celiacAllowed;
+	}
+
 	public Boolean getActive() {
-		return active;
+		return this.active;
 	}
 
 	public void setActive(Boolean active) {
