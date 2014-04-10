@@ -28,7 +28,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 	@Override
 	public void save(Subcategory subcategory) {
 		this.subcategoryDAO.save(subcategory);
-		logger.info("Se han guardado los cambios exitosamente. Id de Subcategoryo: " + subcategory.getId());
+		logger.info("Se han guardado los cambios exitosamente. Id de Subcategoría: " + subcategory.getId());
 	}
 
 	@Override

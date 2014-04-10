@@ -18,7 +18,7 @@ CREATE TABLE `diner`.`table_state` (
 
 CREATE TABLE `diner`.`table` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
-	`state_id` int(2) NOT NULL,
+	`state_id` int(8) NOT NULL,
 	`waiter_id` int(8) DEFAULT NULL,
 	`active` bit(1) NOT NULL,
 	PRIMARY KEY (`id`),
@@ -26,12 +26,6 @@ CREATE TABLE `diner`.`table` (
 	CONSTRAINT `fk_table_table_state` FOREIGN KEY (`state_id`) REFERENCES `table_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	KEY `fk_table_waiter_idx` (`waiter_id`),
 	CONSTRAINT `fk_table_waiter` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `diner`.`order` (
-	`id` int(8) NOT NULL AUTO_INCREMENT,
-	`customer_amount` int(2) NOT NULL,
-	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`category` (
@@ -63,6 +57,12 @@ CREATE TABLE `diner`.`product` (
 	CONSTRAINT `fk_product_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner`.`order` (
+	`id` int(8) NOT NULL AUTO_INCREMENT,
+	`customer_amount` int(8) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `diner`.`order_detail_state` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(30) NOT NULL,
@@ -71,16 +71,16 @@ CREATE TABLE `diner`.`order_detail_state` (
 
 CREATE TABLE `diner`.`order_detail` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
-	`amount` int(4) NOT NULL,
+	`amount` int(8) NOT NULL,
 	`comment` varchar(100) NOT NULL,
 	`order_id` int(8) NOT NULL,
 	`product_id` int(8) NOT NULL,
-	`state_id` int(2) NOT NULL,
+	`state_id` int(8) NOT NULL,
 	`request_date` datetime NOT NULL,
-	`preparation_date` datetime NOT NULL,
-	`prepared_date` datetime NOT NULL,
-	`delivered_date` datetime NOT NULL,
-	`closed_date` datetime NOT NULL,
+	`preparation_start_date` datetime NOT NULL,
+	`preparation_end_date` datetime NOT NULL,
+	`delivery_date` datetime NOT NULL,
+	`billing_date` datetime NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `fk_order_detail_order_idx` (`order_id`),
 	CONSTRAINT `fk_order_detail_order` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
