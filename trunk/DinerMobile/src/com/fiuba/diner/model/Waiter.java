@@ -1,10 +1,14 @@
 package com.fiuba.diner.model;
 
-public class Waiter {
+import java.io.Serializable;
+
+public class Waiter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String name;
-	private String lastName;
+	private String surname;
 
 	public Integer getId() {
 		return this.id;
@@ -22,11 +26,12 @@ public class Waiter {
 		this.name = name;
 	}
 
-	public String getLastName() {
-		return this.lastName;
+	public String getSurname() {
+		return this.surname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
+
 }

@@ -7,8 +7,9 @@ public class Table implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private String description;
-	private String state;
+	private TableState state;
+	private Waiter waiter;
+	private Boolean active;
 
 	public Integer getId() {
 		return this.id;
@@ -18,20 +19,28 @@ public class Table implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getState() {
+	public TableState getState() {
 		return this.state;
 	}
 
-	public void setState(String state) {
+	public void setState(TableState state) {
 		this.state = state;
+	}
+
+	public Waiter getWaiter() {
+		return this.waiter;
+	}
+
+	public void setWaiter(Waiter waiter) {
+		this.waiter = waiter;
+	}
+
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

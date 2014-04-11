@@ -1,11 +1,5 @@
 package com.fiuba.diner.activities;
 
-import static com.fiuba.diner.constant.Constants.AVAILABLE_STATE;
-import static com.fiuba.diner.constant.Constants.OPEN_STATE;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,19 +14,19 @@ import android.widget.TextView;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.TableListAdapter;
 import com.fiuba.diner.helper.Caller;
-import com.fiuba.diner.helper.ProductProviderHelper;
-import com.fiuba.diner.model.Category;
+import com.fiuba.diner.helper.DataHolder;
+import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.tasks.GetCategoriesTask;
+import com.fiuba.diner.tasks.SetUpTask;
 
-public class TableListActivity extends Activity implements Caller<List<Category>> {
+public class TableListActivity extends Activity implements Caller<Void> {
 
 	public static final String EXTRA_TITLE = "com.fiuba.diner.activities.TITLE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		new GetCategoriesTask(this).execute();
+		new SetUpTask(this).execute();
 	}
 
 	private void showView() {
@@ -44,16 +38,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 	private void populateList() {
 		ListView listview = (ListView) this.findViewById(R.id.tableListView);
 
-		List<Table> tables = new ArrayList<Table>();
-		for (int i = 1; i < 21; ++i) {
-			Table table = new Table();
-			table.setId(i);
-			table.setDescription(String.valueOf(i));
-			table.setState(AVAILABLE_STATE);
-			tables.add(table);
-		}
-
-		TableListAdapter adapter = new TableListAdapter(this, tables);
+		TableListAdapter adapter = new TableListAdapter(this, DataHolder.getTables());
 		listview.setAdapter(adapter);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,7 +46,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Table table = (Table) parent.getItemAtPosition(position);
-				if (AVAILABLE_STATE.equals(table.getState())) {
+				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					this.openDialog(view, table);
 				} else {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
@@ -72,13 +57,13 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 
 			private void openDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
-				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getDescription() + "?");
+				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getId() + "?");
 				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						table.setState(OPEN_STATE);
+						table.setState(TableStateHelper.TAKEN.getState());
 						TextView stateTextView = (TextView) view.findViewById(R.id.stateTextView);
-						stateTextView.setText(OPEN_STATE);
+						stateTextView.setText(table.getState().getDescription());
 						stateTextView.setTextColor(Color.BLUE);
 					}
 				});
@@ -96,8 +81,7 @@ public class TableListActivity extends Activity implements Caller<List<Category>
 	}
 
 	@Override
-	public void afterCall(List<Category> result) {
-		ProductProviderHelper.setCategories(result);
+	public void afterCall(Void result) {
 		this.showView();
 	}
 

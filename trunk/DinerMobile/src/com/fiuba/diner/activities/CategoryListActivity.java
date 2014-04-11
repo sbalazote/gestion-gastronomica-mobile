@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.CategoryListAdapter;
-import com.fiuba.diner.helper.ProductProviderHelper;
+import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Product;
 
@@ -27,7 +27,7 @@ public class CategoryListActivity extends Activity {
 	private void populateList() {
 		ListView listview = (ListView) this.findViewById(R.id.categoryListView);
 
-		CategoryListAdapter adapter = new CategoryListAdapter(this, ProductProviderHelper.getCategories());
+		CategoryListAdapter adapter = new CategoryListAdapter(this, DataHolder.getCategories());
 		listview.setAdapter(adapter);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
