@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "product")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
 
 	@Id
