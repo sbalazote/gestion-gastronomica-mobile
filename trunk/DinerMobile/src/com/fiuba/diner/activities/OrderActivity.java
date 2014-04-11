@@ -21,6 +21,7 @@ import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
+import com.fiuba.diner.tasks.ConfirmOrderParam;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
 
 public class OrderActivity extends Activity {
@@ -90,7 +91,6 @@ public class OrderActivity extends Activity {
 
 	public void confirmOrder(View view) throws Throwable {
 		EditText dinersEditText = (EditText) this.findViewById(R.id.dinersEditText);
-
 		// TODO: cambiar. Validar que no pueda ser < 1
 		if (!dinersEditText.getText().toString().isEmpty()) {
 			this.order.setCustomerAmount(Integer.valueOf(dinersEditText.getText().toString()));
@@ -107,7 +107,13 @@ public class OrderActivity extends Activity {
 			detail.setRequestDate(new Date());
 			this.order.addDetail(detail);
 		}
-		new ConfirmOrderTask(null).execute(this.order);
+		ConfirmOrderParam confirmOrderParam = new ConfirmOrderParam();
+		confirmOrderParam.setOrder(this.order);
+		//Aca hay que setear el numero de mesa para poder asociar la mesa con el pedido.
+		confirmOrderParam.setTableId(1);
+		
+		new ConfirmOrderTask(null).execute(confirmOrderParam);
+		System.out.println(this.order.getId());
 		this.finish();
 	}
 

@@ -4,11 +4,12 @@ import android.os.AsyncTask;
 
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
+import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class ConfirmOrderTask extends AsyncTask<Order, Void, Void> {
+public class ConfirmOrderTask extends AsyncTask<ConfirmOrderParam, Void, Void> {
 
 	private final ConnectionHelper connectionHelper = new ConnectionHelper();
 	private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
@@ -19,10 +20,11 @@ public class ConfirmOrderTask extends AsyncTask<Order, Void, Void> {
 	}
 
 	@Override
-	protected Void doInBackground(Order... params) {
+	protected Void doInBackground(ConfirmOrderParam... params) {
 		try {
-			this.connectionHelper.post("orders", this.gson.toJson(params[0]));
-
+			String response = this.connectionHelper.post("orders", this.gson.toJson(params[0].getOrder()));
+			DataHolder.getOrderTableRelation().put(params[0].getTableId(),Integer.valueOf(response));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

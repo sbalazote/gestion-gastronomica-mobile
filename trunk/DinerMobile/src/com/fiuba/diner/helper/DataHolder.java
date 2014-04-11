@@ -1,6 +1,7 @@
 package com.fiuba.diner.helper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Table;
@@ -9,6 +10,7 @@ public class DataHolder {
 
 	private static List<Category> categories;
 	private static List<Table> tables;
+	private static Map<Integer,Integer> orderTableRelation;
 
 	public static List<Category> getCategories() {
 		return categories;
@@ -24,6 +26,15 @@ public class DataHolder {
 
 	public static void setTables(List<Table> tables) {
 		DataHolder.tables = tables;
+	}
+
+	public static Map<Integer, Integer> getOrderTableRelation() {
+		return orderTableRelation;
+	}
+
+	public static void setOrderTableRelation(
+			Map<Integer, Integer> orderTableRelation) {
+		DataHolder.orderTableRelation = orderTableRelation;
 	}
 
 }
