@@ -39,9 +39,11 @@ public class RestController {
 		return this.tableService.getAll();
 	}
 
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public void postOrder(@RequestBody Order order) throws IOException {
+	@RequestMapping(value = "/orders", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer postOrder(@RequestBody Order order) throws IOException {
 		this.orderService.save(order);
+		return order.getId();
 	}
 
 }

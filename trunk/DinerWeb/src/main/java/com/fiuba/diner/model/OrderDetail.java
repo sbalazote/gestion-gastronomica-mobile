@@ -32,7 +32,7 @@ public class OrderDetail {
 	@JoinColumn(name = "state_id", nullable = false)
 	private OrderDetailState state;
 
-	@Column(name = "request_date")
+	@Column(name = "request_date", nullable = false)
 	private Date requestDate;
 
 	@Column(name = "preparation_start_date")
@@ -46,9 +46,6 @@ public class OrderDetail {
 
 	@Column(name = "billing_date")
 	private Date billingDate;
-
-	@Column(name = "active", nullable = false)
-	private Boolean active;
 
 	public Integer getId() {
 		return this.id;
@@ -128,14 +125,6 @@ public class OrderDetail {
 
 	public void setBillingDate(Date billingDate) {
 		this.billingDate = billingDate;
-	}
-
-	public Boolean getActive() {
-		return this.active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
 	}
 
 }

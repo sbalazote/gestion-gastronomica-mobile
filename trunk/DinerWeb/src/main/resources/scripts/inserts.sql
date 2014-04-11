@@ -3,15 +3,15 @@ START TRANSACTION;
 insert into `diner`.`waiter` (id, name, surname, active) values (1, 'Carlos', 'Rodríguez', true);
 insert into `diner`.`waiter` (id, name, surname, active) values (2, 'Roberto', 'Fernández', true);
 
-insert into `diner`.`order_detail_state` (id, description) values (1, 'NUEVO');
-insert into `diner`.`order_detail_state` (id, description) values (2, 'SOLICITADO');
-insert into `diner`.`order_detail_state` (id, description) values (3, 'EN PREPARACIÓN');
-insert into `diner`.`order_detail_state` (id, description) values (4, 'PREPARADO');
-insert into `diner`.`order_detail_state` (id, description) values (5, 'ENTREGADO');
-insert into `diner`.`order_detail_state` (id, description) values (6, 'FACTURADO');
+insert into `diner`.`order_detail_state` (id, description) values (1, 'Nuevo');
+insert into `diner`.`order_detail_state` (id, description) values (2, 'Solicitado');
+insert into `diner`.`order_detail_state` (id, description) values (3, 'En Preparación');
+insert into `diner`.`order_detail_state` (id, description) values (4, 'Preparado');
+insert into `diner`.`order_detail_state` (id, description) values (5, 'Entregado');
+insert into `diner`.`order_detail_state` (id, description) values (6, 'Facturado');
 
-insert into `diner`.`table_state` (id, description) values (1, 'DISPONIBLE');
-insert into `diner`.`table_state` (id, description) values (2, 'TOMADA');
+insert into `diner`.`table_state` (id, description) values (1, 'Disponible');
+insert into `diner`.`table_state` (id, description) values (2, 'Tomada');
 
 insert into `diner`.`table` (id, state_id, waiter_id, active) values (1, 1, null, true);
 insert into `diner`.`table` (id, state_id, waiter_id, active) values (2, 1, null, true);
