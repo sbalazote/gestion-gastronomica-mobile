@@ -1,13 +1,17 @@
 package com.fiuba.diner.model;
 
-public class OrderListItem {
+import java.io.Serializable;
+
+public class OrderListItem implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Integer amount;
 	private Product product;
 	private Double price;
 	private String status;
 	private String comments;
-	
+
 	public Integer getAmount() {
 		return this.amount;
 	}
@@ -39,7 +43,7 @@ public class OrderListItem {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public String getComments() {
 		return this.comments;
 	}

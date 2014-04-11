@@ -32,8 +32,8 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 		TextView stateTextView = (TextView) rowView.findViewById(R.id.stateTextView);
 
 		Table table = this.tables.get(position);
-		descriptionTextView.setText(table.getDescription());
-		stateTextView.setText(table.getState());
+		descriptionTextView.setText(String.valueOf(table.getId()));
+		stateTextView.setText(table.getState().getDescription());
 
 		return rowView;
 	}

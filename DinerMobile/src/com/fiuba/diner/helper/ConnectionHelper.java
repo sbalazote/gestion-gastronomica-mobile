@@ -7,10 +7,12 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.fiuba.diner.constant.Constants;
+
 public class ConnectionHelper {
 
 	public String get(String fullUrl) throws Exception {
-		URL netUrl = new URL(fullUrl);
+		URL netUrl = new URL(Constants.WEBAPP_HOST + fullUrl);
 		HttpURLConnection connection = (HttpURLConnection) netUrl.openConnection();
 		connection.setRequestMethod("GET");
 		connection.setUseCaches(false);
@@ -21,9 +23,11 @@ public class ConnectionHelper {
 	}
 
 	public String post(String url, String params) throws Exception {
-		URL netUrl = new URL(url);
+		System.out.println(params);
+		URL netUrl = new URL(Constants.WEBAPP_HOST + url);
 		HttpURLConnection connection = (HttpURLConnection) netUrl.openConnection();
 		connection.setRequestMethod("POST");
+		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setUseCaches(false);
 
 		DataOutputStream out = new DataOutputStream(connection.getOutputStream());
