@@ -2,12 +2,15 @@ package com.fiuba.diner.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.model.Category;
@@ -44,6 +47,13 @@ public class RestController {
 	public Integer postOrder(@RequestBody Order order) throws IOException {
 		this.orderService.save(order);
 		return order.getId();
+	}
+
+	@RequestMapping(value = "/order", method = RequestMethod.GET)
+	@ResponseBody
+	public Order getOrder(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+		Integer id = Integer.valueOf(parameters.get("id"));
+		return this.orderService.get(id);
 	}
 
 }
