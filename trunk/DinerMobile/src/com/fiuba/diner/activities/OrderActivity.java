@@ -17,12 +17,15 @@ import android.widget.TextView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderProductListAdapter;
+import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.tasks.ConfirmOrderParam;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
+import com.fiuba.diner.tasks.ObtainOrderTask;
+import com.fiuba.diner.tasks.SetUpTask;
 
 public class OrderActivity extends Activity {
 
@@ -31,7 +34,8 @@ public class OrderActivity extends Activity {
 	private OrderProductListAdapter adapter;
 	private ExpandableListView listView;
 	private int lastExpandedPosition = -1;
-
+	private Integer tableId;
+	
 	private Order order;
 
 	@Override
@@ -41,7 +45,8 @@ public class OrderActivity extends Activity {
 
 		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
 		tableTextView.setText(this.getIntent().getStringExtra(TableListActivity.EXTRA_TITLE));
-
+		this.tableId = Integer.parseInt(this.getIntent().getStringExtra(TableListActivity.TABLE_ID));
+		
 		this.products = new ArrayList<Product>();
 		this.listView = (ExpandableListView) this.findViewById(R.id.orderListView);
 
@@ -59,7 +64,13 @@ public class OrderActivity extends Activity {
 			}
 		});
 
-		this.order = new Order();
+		//aca obtengo la orden si existe.
+		if(!DataHolder.getOrderTableRelation().get(tableId).equals(0)){
+			new ObtainOrderTask(null).execute(DataHolder.getOrderTableRelation().get(tableId));
+			this.order = new Order();
+		}else{
+			this.order = new Order();
+		}
 	}
 
 	public void addProduct(View view) {
@@ -109,8 +120,7 @@ public class OrderActivity extends Activity {
 		}
 		ConfirmOrderParam confirmOrderParam = new ConfirmOrderParam();
 		confirmOrderParam.setOrder(this.order);
-		//Aca hay que setear el numero de mesa para poder asociar la mesa con el pedido.
-		confirmOrderParam.setTableId(1);
+		confirmOrderParam.setTableId(this.tableId);
 		
 		new ConfirmOrderTask(null).execute(confirmOrderParam);
 		System.out.println(this.order.getId());

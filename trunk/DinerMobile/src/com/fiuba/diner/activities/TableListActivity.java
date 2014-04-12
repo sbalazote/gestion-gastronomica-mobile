@@ -22,6 +22,8 @@ import com.fiuba.diner.tasks.SetUpTask;
 public class TableListActivity extends Activity implements Caller<Void> {
 
 	public static final String EXTRA_TITLE = "com.fiuba.diner.activities.TITLE";
+	public static final String TABLE_ID = "com.fiuba.diner.activities.TABLEID";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class TableListActivity extends Activity implements Caller<Void> {
 				} else {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 					intent.putExtra(EXTRA_TITLE, "Mesa: " + String.valueOf(position + 1));
+					intent.putExtra(TABLE_ID, String.valueOf(position + 1));
 					TableListActivity.this.startActivity(intent);
 				}
 			}
