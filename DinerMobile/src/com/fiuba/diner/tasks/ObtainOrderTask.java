@@ -1,43 +1,48 @@
 package com.fiuba.diner.tasks;
 
-import android.os.AsyncTask;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
-import com.fiuba.diner.helper.DataHolder;
+import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-public class ConfirmOrderTask extends AsyncTask<ConfirmOrderParam, Void, Void> {
+import android.os.AsyncTask;
+
+public class ObtainOrderTask extends AsyncTask<Integer, Void, Void>{
 
 	private final ConnectionHelper connectionHelper = new ConnectionHelper();
 	private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 	private final Caller<Void> caller;
 
-	public ConfirmOrderTask(Caller<Void> caller) {
+	public ObtainOrderTask(Caller<Void> caller) {
 		this.caller = caller;
 	}
-
+	
 	@Override
-	protected Void doInBackground(ConfirmOrderParam... params) {
+	protected Void doInBackground(Integer... params) {
+		String response;
 		try {
-			String response = this.connectionHelper.post("orders", this.gson.toJson(params[0].getOrder()));
-			DataHolder.getOrderTableRelation().put(params[0].getTableId(),Integer.valueOf(response));
-			System.out.println("Numero de Mesa: " + params[0].getTableId());
-			System.out.println("Numero de Orden: " + response);
+			response = this.connectionHelper.get("order?id=" + params[0]);
+			System.out.println(response);
+			Type type = (new TypeToken<Order>() {
+			}).getType();
+			Order order = this.gson.fromJson(response, type);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
 
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		if (this.caller != null) {
-			this.caller.afterCall(result);
-		}
+		this.caller.afterCall(result);
 	}
-
 }

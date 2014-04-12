@@ -1,5 +1,6 @@
 package com.fiuba.diner.helper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,10 @@ public class DataHolder {
 
 	public static void setTables(List<Table> tables) {
 		DataHolder.tables = tables;
+		orderTableRelation = new HashMap<Integer,Integer>();
+		for(Table table : tables){
+			orderTableRelation.put(table.getId(), 0);
+		}
 	}
 
 	public static Map<Integer, Integer> getOrderTableRelation() {
