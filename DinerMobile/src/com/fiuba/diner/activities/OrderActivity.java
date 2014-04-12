@@ -67,7 +67,12 @@ public class OrderActivity extends Activity {
 		//aca obtengo la orden si existe.
 		if(!DataHolder.getOrderTableRelation().get(tableId).equals(0)){
 			new ObtainOrderTask(null).execute(DataHolder.getOrderTableRelation().get(tableId));
-			this.order = new Order();
+			this.order = DataHolder.getActualOrder();
+			for(OrderDetail orderDetail: this.order.getDetails()){
+				this.products.add(orderDetail.getProduct());
+				this.adapter.notifyDataSetChanged();
+			}
+			
 		}else{
 			this.order = new Order();
 		}

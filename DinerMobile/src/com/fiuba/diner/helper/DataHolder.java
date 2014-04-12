@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Table;
 
 public class DataHolder {
@@ -12,6 +13,7 @@ public class DataHolder {
 	private static List<Category> categories;
 	private static List<Table> tables;
 	private static Map<Integer,Integer> orderTableRelation;
+	private static Order actualOrder;
 
 	public static List<Category> getCategories() {
 		return categories;
@@ -41,5 +43,15 @@ public class DataHolder {
 			Map<Integer, Integer> orderTableRelation) {
 		DataHolder.orderTableRelation = orderTableRelation;
 	}
+
+	public static Order getActualOrder() {
+		return actualOrder;
+	}
+
+	public static void setActualOrder(Order actualOrder) {
+		DataHolder.actualOrder = actualOrder;
+	}
+	
+	
 
 }

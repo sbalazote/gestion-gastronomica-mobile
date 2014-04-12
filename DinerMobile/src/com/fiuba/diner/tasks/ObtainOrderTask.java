@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
+import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Order;
 import com.google.gson.Gson;
@@ -29,9 +30,9 @@ public class ObtainOrderTask extends AsyncTask<Integer, Void, Void>{
 		try {
 			response = this.connectionHelper.get("order?id=" + params[0]);
 			System.out.println(response);
-			Type type = (new TypeToken<Order>() {
-			}).getType();
-			Order order = this.gson.fromJson(response, type);
+			Order order = this.gson.fromJson(response, Order.class);
+			System.out.println("Se recupero el numeor de orden " + order.getId());
+			DataHolder.setActualOrder(order);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,6 +44,8 @@ public class ObtainOrderTask extends AsyncTask<Integer, Void, Void>{
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		this.caller.afterCall(result);
+		if (this.caller != null) {
+			this.caller.afterCall(result);
+		}
 	}
 }
