@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.fiuba.diner.dao.ParameterDAO;
 import com.fiuba.diner.model.Parameter;
 
+@Repository
 public class ParameterDAOHibernateImpl implements ParameterDAO {
 
 	@Autowired
