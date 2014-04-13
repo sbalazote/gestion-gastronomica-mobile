@@ -1,5 +1,7 @@
 START TRANSACTION;
 
+insert into `diner`.`parameter` (id, restaurant_name, dinner_service_price, dinner_service_active) values (1, 'La Bisteca', 12.00, true);
+
 insert into `diner`.`waiter` (id, name, surname, active) values (1, 'Carlos', 'Rodríguez', true);
 insert into `diner`.`waiter` (id, name, surname, active) values (2, 'Roberto', 'Fernández', true);
 

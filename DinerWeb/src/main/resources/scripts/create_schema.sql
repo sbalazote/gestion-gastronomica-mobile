@@ -101,4 +101,12 @@ CREATE TABLE `diner`.`order_table` (
 	CONSTRAINT `fk_order_table_table` FOREIGN KEY (`table_id`) REFERENCES `table` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner`.`parameter` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+ 	`restaurant_name` VARCHAR(50) NULL,
+ 	`dinner_service_price` DOUBLE NULL,
+  	`dinner_service_active` BIT NULL,
+  PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  
 COMMIT;
