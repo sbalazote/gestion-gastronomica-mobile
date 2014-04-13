@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.service.CategoryService;
 import com.fiuba.diner.service.OrderService;
+import com.fiuba.diner.service.ParameterService;
 import com.fiuba.diner.service.TableService;
 
 @Controller
@@ -29,6 +31,8 @@ public class RestController {
 	private TableService tableService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ParameterService parameterService;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	@ResponseBody
@@ -54,6 +58,13 @@ public class RestController {
 	public Order getOrder(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
 		Integer id = Integer.valueOf(parameters.get("id"));
 		return this.orderService.get(id);
+	}
+
+	@RequestMapping(value = "/parameters", method = RequestMethod.GET)
+	@ResponseBody
+	public Parameter getParameter(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+		Integer id = 1; // Integer.valueOf(parameters.get("id"));
+		return this.parameterService.get(id);
 	}
 
 }
