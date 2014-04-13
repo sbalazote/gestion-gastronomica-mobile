@@ -17,7 +17,14 @@
 
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav">
-
+			<li class="activable dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="common.configuration"/> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+			    	<li><a href="updateParameter"><spring:message code="common.parameters"/></a></li>
+				</ul>
+	        </li>
+		</ul>
+		<ul class="nav navbar-nav">
 			<li class="activable dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="common.administration"/> <b class="caret"></b></a>
 				<ul class="dropdown-menu">

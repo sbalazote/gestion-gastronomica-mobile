@@ -24,6 +24,7 @@
 	        <list>
 	        	<value>WEB-INF/messages/common</value>
 	        	<value>WEB-INF/messages/administration</value>
+	        	<value>WEB-INF/messages/configuration</value>
 	        </list>
 	    </property>
 	</bean>
