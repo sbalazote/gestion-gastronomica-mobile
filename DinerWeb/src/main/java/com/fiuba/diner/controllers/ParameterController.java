@@ -1,5 +1,6 @@
 package com.fiuba.diner.controllers;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,11 @@ public class ParameterController {
 		modelMap.put("dinnerServiceActive", parameter.getDinnerServiceActive());
 
 		return "updateParameter";
+	}
+
+	@RequestMapping(value = "/getParameters", method = RequestMethod.GET)
+	@ResponseBody
+	public Parameter getParameters() throws IOException {
+		return this.parameterService.get(1);
 	}
 }
