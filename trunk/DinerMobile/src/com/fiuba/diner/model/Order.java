@@ -11,7 +11,7 @@ public class Order implements Serializable {
 	private Integer id;
 	private Integer customerAmount;
 	private List<OrderDetail> details;
-	private List<Table> table;
+	private List<Table> tables;
 
 	public Integer getId() {
 		return this.id;
@@ -45,11 +45,11 @@ public class Order implements Serializable {
 	}
 
 	public List<Table> getTable() {
-		return table;
+		return this.tables;
 	}
 
 	public void setTable(List<Table> table) {
-		this.table = table;
+		this.tables = table;
 	}
 
 }
