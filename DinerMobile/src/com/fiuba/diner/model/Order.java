@@ -11,6 +11,7 @@ public class Order implements Serializable {
 	private Integer id;
 	private Integer customerAmount;
 	private List<OrderDetail> details;
+	private List<Table> table;
 
 	public Integer getId() {
 		return this.id;
@@ -41,6 +42,14 @@ public class Order implements Serializable {
 			this.details = new ArrayList<OrderDetail>();
 		}
 		this.details.add(detail);
+	}
+
+	public List<Table> getTable() {
+		return table;
+	}
+
+	public void setTable(List<Table> table) {
+		this.table = table;
 	}
 
 }

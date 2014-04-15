@@ -23,7 +23,6 @@ public class ConfirmOrderTask extends AsyncTask<ConfirmOrderParam, Void, Void> {
 	protected Void doInBackground(ConfirmOrderParam... params) {
 		try {
 			String response = this.connectionHelper.post("orders", this.gson.toJson(params[0].getOrder()));
-			DataHolder.getOrderTableRelation().put(params[0].getTableId(),Integer.valueOf(response));
 			System.out.println("Numero de Mesa: " + params[0].getTableId());
 			System.out.println("Numero de Orden: " + response);
 		} catch (Exception e) {
