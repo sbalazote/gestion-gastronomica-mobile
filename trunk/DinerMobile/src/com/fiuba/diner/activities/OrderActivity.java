@@ -5,10 +5,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.AsyncTask.Status;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -22,6 +24,7 @@ import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
+import com.fiuba.diner.model.Table;
 import com.fiuba.diner.tasks.ConfirmOrderParam;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
 import com.fiuba.diner.tasks.ObtainOrderTask;
@@ -49,9 +52,29 @@ public class OrderActivity extends Activity {
 		
 		this.products = new ArrayList<Product>();
 		this.listView = (ExpandableListView) this.findViewById(R.id.orderListView);
-
 		this.adapter = new OrderProductListAdapter(this, this.products);
 		this.listView.setAdapter(this.adapter);
+		
+		//aca obtengo la orden si existe.
+		ObtainOrderTask obtainOrderTask = new ObtainOrderTask(null);
+		
+		try {
+			obtainOrderTask.execute(tableId).get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		if(DataHolder.getActualOrder() != null){
+			this.order = DataHolder.getActualOrder();
+			for(OrderDetail orderDetail: this.order.getDetails()){
+				this.products.add(orderDetail.getProduct());
+				this.adapter.notifyDataSetChanged();
+			}
+		}else{
+			this.order = new Order();
+		}
 
 		this.listView.setOnGroupExpandListener(new OnGroupExpandListener() {
 
@@ -64,18 +87,6 @@ public class OrderActivity extends Activity {
 			}
 		});
 
-		//aca obtengo la orden si existe.
-		if(!DataHolder.getOrderTableRelation().get(tableId).equals(0)){
-			new ObtainOrderTask(null).execute(DataHolder.getOrderTableRelation().get(tableId));
-			this.order = DataHolder.getActualOrder();
-			for(OrderDetail orderDetail: this.order.getDetails()){
-				this.products.add(orderDetail.getProduct());
-				this.adapter.notifyDataSetChanged();
-			}
-			
-		}else{
-			this.order = new Order();
-		}
 	}
 
 	public void addProduct(View view) {
@@ -120,9 +131,10 @@ public class OrderActivity extends Activity {
 			detail.setComment(product.getDetails().get(0).getComment());
 			detail.setProduct(product);
 			detail.setState(OrderStateHelper.REQUESTED.getState());
-			detail.setRequestDate(new Date());
+			//detail.setRequestDate(new Date());
 			this.order.addDetail(detail);
 		}
+		
 		ConfirmOrderParam confirmOrderParam = new ConfirmOrderParam();
 		confirmOrderParam.setOrder(this.order);
 		confirmOrderParam.setTableId(this.tableId);

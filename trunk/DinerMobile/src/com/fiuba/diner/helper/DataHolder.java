@@ -12,7 +12,6 @@ public class DataHolder {
 
 	private static List<Category> categories;
 	private static List<Table> tables;
-	private static Map<Integer,Integer> orderTableRelation;
 	private static Order actualOrder;
 
 	public static List<Category> getCategories() {
@@ -27,29 +26,16 @@ public class DataHolder {
 		return tables;
 	}
 
-	public static void setTables(List<Table> tables) {
-		DataHolder.tables = tables;
-		orderTableRelation = new HashMap<Integer,Integer>();
-		for(Table table : tables){
-			orderTableRelation.put(table.getId(), 0);
-		}
-	}
-
-	public static Map<Integer, Integer> getOrderTableRelation() {
-		return orderTableRelation;
-	}
-
-	public static void setOrderTableRelation(
-			Map<Integer, Integer> orderTableRelation) {
-		DataHolder.orderTableRelation = orderTableRelation;
-	}
-
 	public static Order getActualOrder() {
 		return actualOrder;
 	}
 
 	public static void setActualOrder(Order actualOrder) {
 		DataHolder.actualOrder = actualOrder;
+	}
+
+	public static void setTables(List<Table> tables) {
+		DataHolder.tables = tables;
 	}
 	
 	
