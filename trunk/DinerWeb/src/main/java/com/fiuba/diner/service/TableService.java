@@ -2,6 +2,7 @@ package com.fiuba.diner.service;
 
 import java.util.List;
 
+import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Table;
 
 public interface TableService {
@@ -11,4 +12,6 @@ public interface TableService {
 	List<Table> getAll();
 
 	void save(Table table);
+
+	Order getOrder(Integer tableId);
 }

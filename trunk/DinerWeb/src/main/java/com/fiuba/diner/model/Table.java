@@ -1,10 +1,16 @@
 package com.fiuba.diner.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -26,6 +32,10 @@ public class Table {
 
 	@Column(name = "active", nullable = false)
 	private Boolean active;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "order_table", joinColumns = @JoinColumn(name = "table_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "order_id", nullable = false))
+	private final List<Order> orders = new ArrayList<Order>();
 
 	public Integer getId() {
 		return this.id;
@@ -57,6 +67,10 @@ public class Table {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public List<Order> getOrders() {
+		return this.orders;
 	}
 
 }

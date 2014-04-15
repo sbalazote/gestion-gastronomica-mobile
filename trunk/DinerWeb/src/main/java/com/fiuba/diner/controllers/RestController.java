@@ -57,7 +57,8 @@ public class RestController {
 	@ResponseBody
 	public Order getOrder(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
 		Integer id = Integer.valueOf(parameters.get("id"));
-		return this.orderService.get(id);
+		Order order = this.tableService.getOrder(id);
+		return order;
 	}
 
 	@RequestMapping(value = "/parameters", method = RequestMethod.GET)
