@@ -14,4 +14,5 @@ public interface OrderDAO {
 
 	void delete(Integer orderId);
 
+	Order getOrder(Integer tableId);
 }

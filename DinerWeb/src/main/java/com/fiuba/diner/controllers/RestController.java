@@ -49,6 +49,7 @@ public class RestController {
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer postOrder(@RequestBody Order order) throws IOException {
+		System.out.println("Mesa " + order.getTables().get(0).getId());
 		this.orderService.save(order);
 		return order.getId();
 	}
@@ -57,7 +58,8 @@ public class RestController {
 	@ResponseBody
 	public Order getOrder(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
 		Integer id = Integer.valueOf(parameters.get("id"));
-		Order order = this.tableService.getOrder(id);
+		System.out.println("Mesa " + id);
+		Order order = this.orderService.getOrder(id);
 		return order;
 	}
 

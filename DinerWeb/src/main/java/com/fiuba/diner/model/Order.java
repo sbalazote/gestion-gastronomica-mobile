@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -25,6 +27,10 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
 	private List<OrderDetail> details;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "order_table", joinColumns = @JoinColumn(name = "order_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "table_id", nullable = false))
+	private List<Table> tables;
 
 	public Integer getId() {
 		return this.id;
@@ -48,6 +54,10 @@ public class Order {
 
 	public void setDetails(List<OrderDetail> details) {
 		this.details = details;
+	}
+
+	public List<Table> getTables() {
+		return this.tables;
 	}
 
 }
