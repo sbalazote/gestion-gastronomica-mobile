@@ -76,7 +76,7 @@ CREATE TABLE `diner`.`order_detail` (
 	`order_id` int(8) NOT NULL,
 	`product_id` int(8) NOT NULL,
 	`state_id` int(8) NOT NULL,
-	`request_date` datetime NOT NULL,
+	`request_date` datetime DEFAULT NULL,
 	`preparation_start_date` datetime DEFAULT NULL,
 	`preparation_end_date` datetime DEFAULT NULL,
 	`delivery_date` datetime DEFAULT NULL,

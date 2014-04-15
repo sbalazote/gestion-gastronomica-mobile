@@ -2,6 +2,7 @@ package com.fiuba.diner.dao;
 
 import java.util.List;
 
+import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Table;
 
 public interface TableDAO {
@@ -11,5 +12,7 @@ public interface TableDAO {
 	List<Table> getAll();
 
 	void save(Table table);
+
+	List<Order> getOrder(Integer tableId);
 
 }

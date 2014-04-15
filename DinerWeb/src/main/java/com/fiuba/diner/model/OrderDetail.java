@@ -32,7 +32,7 @@ public class OrderDetail {
 	@JoinColumn(name = "state_id", nullable = false)
 	private OrderDetailState state;
 
-	@Column(name = "request_date", nullable = false)
+	@Column(name = "request_date")
 	private Date requestDate;
 
 	@Column(name = "preparation_start_date")
