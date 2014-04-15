@@ -41,4 +41,8 @@ public class OrderServiceImpl implements OrderService {
 		this.orderDAO.delete(orderId);
 	}
 
+	@Override
+	public Order getOrder(Integer tableId) {
+		return this.orderDAO.getOrder(tableId);
+	}
 }

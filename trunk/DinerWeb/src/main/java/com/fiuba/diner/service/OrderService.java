@@ -14,4 +14,6 @@ public interface OrderService {
 
 	void delete(Integer orderId);
 
+	Order getOrder(Integer tableId);
+
 }
