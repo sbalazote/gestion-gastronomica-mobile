@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.fiuba.diner.R;
 import com.fiuba.diner.activities.OrderActivity;
 import com.fiuba.diner.adapters.expandablelist.OrderProductDetail;
+import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.model.OrderDetail;
 
 public class OrderProductListAdapter extends BaseExpandableListAdapter {
@@ -58,6 +59,12 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		if (this.groups.get(groupPosition) != null) {
 			if (this.groups.get(groupPosition).getState() != null) {
 				productState.setText(String.valueOf(this.groups.get(groupPosition).getState().getDescription()));
+				productAmountEditText.setEnabled(false);
+				productCommentEditText.setEnabled(false);
+			} else {
+				productState.setText(OrderStateHelper.NEW.getState().getDescription());
+				productAmountEditText.setEnabled(true);
+				productCommentEditText.setEnabled(true);
 			}
 		}
 
