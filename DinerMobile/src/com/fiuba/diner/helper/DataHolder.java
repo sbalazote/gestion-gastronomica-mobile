@@ -1,8 +1,6 @@
 package com.fiuba.diner.helper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Order;
@@ -13,6 +11,7 @@ public class DataHolder {
 	private static List<Category> categories;
 	private static List<Table> tables;
 	private static Order actualOrder;
+	private static Table actualTable;
 
 	public static List<Category> getCategories() {
 		return categories;
@@ -37,7 +36,13 @@ public class DataHolder {
 	public static void setTables(List<Table> tables) {
 		DataHolder.tables = tables;
 	}
-	
-	
+
+	public static Table getActualTable() {
+		return actualTable;
+	}
+
+	public static void setActualTable(Table actualTable) {
+		DataHolder.actualTable = actualTable;
+	}
 
 }

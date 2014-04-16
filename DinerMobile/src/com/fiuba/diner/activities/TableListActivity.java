@@ -24,7 +24,6 @@ public class TableListActivity extends Activity implements Caller<Void> {
 	public static final String EXTRA_TITLE = "com.fiuba.diner.activities.TITLE";
 	public static final String TABLE_ID = "com.fiuba.diner.activities.TABLEID";
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,6 +49,7 @@ public class TableListActivity extends Activity implements Caller<Void> {
 				Table table = (Table) parent.getItemAtPosition(position);
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					this.openDialog(view, table);
+					DataHolder.setActualTable(table);
 				} else {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 					intent.putExtra(EXTRA_TITLE, "Mesa: " + String.valueOf(position + 1));
@@ -62,6 +62,7 @@ public class TableListActivity extends Activity implements Caller<Void> {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
 				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getId() + "?");
 				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						table.setState(TableStateHelper.TAKEN.getState());
@@ -71,6 +72,7 @@ public class TableListActivity extends Activity implements Caller<Void> {
 					}
 				});
 				alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
