@@ -17,25 +17,25 @@ import android.widget.TextView;
 import com.fiuba.diner.R;
 import com.fiuba.diner.activities.OrderActivity;
 import com.fiuba.diner.adapters.expandablelist.OrderProductDetail;
-import com.fiuba.diner.model.Product;
+import com.fiuba.diner.model.OrderDetail;
 
 public class OrderProductListAdapter extends BaseExpandableListAdapter {
 
 	public Activity activity;
 	public LayoutInflater inflater;
-	private final List<Product> groups;
+	private final List<OrderDetail> groups;
 	private final Map<Integer, View> childViews;
 
-	public OrderProductListAdapter(Activity activity, List<Product> groups) {
+	public OrderProductListAdapter(Activity activity, List<OrderDetail> products) {
 		this.activity = activity;
 		this.inflater = activity.getLayoutInflater();
-		this.groups = groups;
+		this.groups = products;
 		this.childViews = new HashMap<Integer, View>();
 	}
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return this.groups.get(groupPosition).getDetails().get(childPosition);
+		return this.groups.get(groupPosition).getProduct().getDetails().get(childPosition);
 	}
 
 	@Override
@@ -54,6 +54,12 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		EditText productCommentEditText = (EditText) childView.findViewById(R.id.productCommentEditText);
 		productAmountEditText.setText(String.valueOf(detail.getAmount()));
 		productCommentEditText.setText(detail.getComment());
+		TextView productState = (TextView) childView.findViewById(R.id.stateTextView);
+		if (this.groups.get(groupPosition) != null) {
+			if (this.groups.get(groupPosition).getState() != null) {
+				productState.setText(String.valueOf(this.groups.get(groupPosition).getState().getDescription()));
+			}
+		}
 
 		this.childViews.put(groupPosition, childView);
 		return childView;
@@ -61,7 +67,7 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return this.groups.get(groupPosition).getDetails().size();
+		return this.groups.get(groupPosition).getProduct().getDetails().size();
 	}
 
 	@Override
@@ -87,11 +93,11 @@ public class OrderProductListAdapter extends BaseExpandableListAdapter {
 		TextView productTextView = (TextView) convertView.findViewById(R.id.productTextView);
 		TextView productPriceTextView = (TextView) convertView.findViewById(R.id.productPriceTextView);
 
-		Product group = (Product) this.getGroup(groupPosition);
-		productTextView.setText(group.getDescription());
+		OrderDetail group = (OrderDetail) this.getGroup(groupPosition);
+		productTextView.setText(group.getProduct().getDescription());
 
 		DecimalFormat formatter = new DecimalFormat("0.00");
-		productPriceTextView.setText("$" + formatter.format(group.getPrice().doubleValue() * group.getDetails().get(0).getAmount()));
+		productPriceTextView.setText("$" + formatter.format(group.getProduct().getPrice().doubleValue() * group.getProduct().getDetails().get(0).getAmount()));
 		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 		return convertView;
 	}

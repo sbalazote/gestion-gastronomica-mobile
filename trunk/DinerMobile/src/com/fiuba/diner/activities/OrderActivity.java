@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderProductListAdapter;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.OrderStateHelper;
-import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
@@ -30,7 +30,7 @@ import com.fiuba.diner.tasks.ObtainOrderTask;
 
 public class OrderActivity extends Activity {
 
-	private List<Product> products;
+	private List<OrderDetail> products;
 	private BigDecimal total = BigDecimal.valueOf(0);
 	private OrderProductListAdapter adapter;
 	private ExpandableListView listView;
@@ -48,7 +48,7 @@ public class OrderActivity extends Activity {
 		tableTextView.setText(this.getIntent().getStringExtra(TableListActivity.EXTRA_TITLE));
 		this.tableId = Integer.parseInt(this.getIntent().getStringExtra(TableListActivity.TABLE_ID));
 
-		this.products = new ArrayList<Product>();
+		this.products = new ArrayList<OrderDetail>();
 		this.listView = (ExpandableListView) this.findViewById(R.id.orderListView);
 		this.adapter = new OrderProductListAdapter(this, this.products);
 		this.listView.setAdapter(this.adapter);
@@ -66,8 +66,11 @@ public class OrderActivity extends Activity {
 
 		if (DataHolder.getActualOrder() != null) {
 			this.order = DataHolder.getActualOrder();
+			EditText dinersEditText = (EditText) this.findViewById(R.id.dinersEditText);
+			dinersEditText.setText(String.valueOf(this.order.getCustomerAmount()));
+
 			for (OrderDetail orderDetail : this.order.getDetails()) {
-				this.products.add(orderDetail.getProduct());
+				this.products.add(orderDetail);
 				this.adapter.notifyDataSetChanged();
 			}
 		} else {
@@ -95,10 +98,22 @@ public class OrderActivity extends Activity {
 	public void deleteProduct(View view) {
 		int position = this.listView.getPositionForView(view) - 1;
 
-		Product product = this.products.get(position);
-		product.getDetails().clear();
-		this.products.remove(position);
+		if (this.products.get(position).getState() != null) {
+			if (this.products.get(position).getState().equals(OrderStateHelper.REQUESTED.getState())
+					|| this.products.get(position).getState().equals(OrderStateHelper.NEW.getState())) {
+				this.delete(position);
+			} else {
+				this.openDialog(view);
+			}
+		} else {
+			this.delete(position);
+		}
+	}
 
+	private void delete(Integer position) {
+
+		OrderDetail orderDetail = this.products.get(position);
+		this.products.remove(orderDetail);
 		this.updateTotal();
 
 		this.adapter.notifyDataSetChanged();
@@ -108,6 +123,14 @@ public class OrderActivity extends Activity {
 			this.listView.collapseGroup(i);
 		}
 		this.lastExpandedPosition = -1;
+	}
+
+	private void openDialog(final View view) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
+		alertDialogBuilder.setMessage("No puede eliminarse el pedido ya ha sido Solicitado");
+		alertDialogBuilder.setNeutralButton("OK", null);
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	public void cancelOrder(View view) throws Throwable {
@@ -123,22 +146,17 @@ public class OrderActivity extends Activity {
 			this.order.setCustomerAmount(1);
 		}
 
-		for (Product product : this.products) {
-			OrderDetail detail = new OrderDetail();
-			detail.setAmount(product.getDetails().get(0).getAmount());
-			detail.setComment(product.getDetails().get(0).getComment());
-			detail.setProduct(product);
-			detail.setState(OrderStateHelper.REQUESTED.getState());
-			// detail.setRequestDate(new Date());
-			this.order.addDetail(detail);
+		for (OrderDetail orderDetail : this.products) {
+			if (orderDetail.getId() == null) {
+				this.order.addDetail(orderDetail);
+				Product product = orderDetail.getProduct();
+				orderDetail.setAmount(product.getDetails().get(0).getAmount());
+				orderDetail.setComment(product.getDetails().get(0).getComment());
+				orderDetail.setState(OrderStateHelper.NEW.getState());
+			}
 		}
-		// obtener la table, esto no va
-		Table table = new Table();
-		table.setActive(true);
-		table.setId(this.tableId);
-		table.setState(TableStateHelper.AVAILABLE.getState());
 		List<Table> tables = new ArrayList<Table>();
-		tables.add(table);
+		tables.add(DataHolder.getActualTable());
 		this.order.setTable(tables);
 
 		ConfirmOrderParam confirmOrderParam = new ConfirmOrderParam();
@@ -154,7 +172,9 @@ public class OrderActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) {
 			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
-			this.products.add(selectedProduct);
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setProduct(selectedProduct);
+			this.products.add(orderDetail);
 			this.adapter.notifyDataSetChanged();
 			this.updateTotal();
 		}
@@ -162,8 +182,8 @@ public class OrderActivity extends Activity {
 
 	public void updateTotal() {
 		double total = 0;
-		for (Product product : this.products) {
-			total += (product.getPrice() * product.getDetails().get(0).getAmount());
+		for (OrderDetail orderDetail : this.products) {
+			total += (orderDetail.getProduct().getPrice() * orderDetail.getProduct().getDetails().get(0).getAmount());
 		}
 
 		this.total = BigDecimal.valueOf(total);
