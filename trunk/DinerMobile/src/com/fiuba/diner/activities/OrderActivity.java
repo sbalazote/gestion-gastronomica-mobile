@@ -36,7 +36,6 @@ public class OrderActivity extends Activity {
 	private ExpandableListView listView;
 	private int lastExpandedPosition = -1;
 	private Integer tableId;
-
 	private Order order;
 
 	@Override
@@ -99,8 +98,8 @@ public class OrderActivity extends Activity {
 		int position = this.listView.getPositionForView(view) - 1;
 
 		if (this.products.get(position).getState() != null) {
-			if (this.products.get(position).getState().equals(OrderStateHelper.REQUESTED.getState())
-					|| this.products.get(position).getState().equals(OrderStateHelper.NEW.getState())) {
+			if (this.products.get(position).getState().getId().equals(OrderStateHelper.REQUESTED.getState().getId())
+					|| this.products.get(position).getState().getId().equals(OrderStateHelper.NEW.getState().getId())) {
 				this.delete(position);
 			} else {
 				this.openDialog(view);
@@ -152,9 +151,10 @@ public class OrderActivity extends Activity {
 				Product product = orderDetail.getProduct();
 				orderDetail.setAmount(product.getDetails().get(0).getAmount());
 				orderDetail.setComment(product.getDetails().get(0).getComment());
-				orderDetail.setState(OrderStateHelper.NEW.getState());
+				orderDetail.setState(OrderStateHelper.REQUESTED.getState());
 			}
 		}
+
 		List<Table> tables = new ArrayList<Table>();
 		tables.add(DataHolder.getActualTable());
 		this.order.setTable(tables);

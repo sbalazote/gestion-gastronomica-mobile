@@ -3,6 +3,7 @@ package com.fiuba.diner.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fiuba.diner.R;
+import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
 
 public class TableListAdapter extends ArrayAdapter<Table> {
@@ -34,6 +36,9 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 		Table table = this.tables.get(position);
 		descriptionTextView.setText(String.valueOf(table.getId()));
 		stateTextView.setText(table.getState().getDescription());
+		if (table.getState().getId().equals(TableStateHelper.TAKEN.getState().getId())) {
+			stateTextView.setTextColor(Color.BLUE);
+		}
 
 		return rowView;
 	}
