@@ -47,6 +47,7 @@ public class ProductController {
 		product.setDescription(productDTO.getDescription());
 		product.setActive(productDTO.isActive());
 		product.setPrice(productDTO.getPrice());
+		product.setCeliacAllowed(productDTO.isCeliacAllowed());
 
 		Subcategory subcategory = this.subcategoryService.get(productDTO.getSubcategoryId());
 		if (productDTO.getId() != null) {
@@ -59,6 +60,7 @@ public class ProductController {
 					prod.setDescription(productDTO.getDescription());
 					prod.setActive(productDTO.isActive());
 					prod.setPrice(productDTO.getPrice());
+					prod.setCeliacAllowed(productDTO.isCeliacAllowed());
 				}
 			}
 		} else {
@@ -96,6 +98,7 @@ public class ProductController {
 		modelMap.put("subcategoryId", subcategoryId);
 		modelMap.put("price", product.getPrice());
 		modelMap.put("active", product.getActive());
+		modelMap.put("celiacAllowed", product.getCeliacAllowed());
 
 		return "updateProduct";
 	}
