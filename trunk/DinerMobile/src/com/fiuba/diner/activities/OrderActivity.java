@@ -33,9 +33,7 @@ public class OrderActivity extends Activity {
 	private BigDecimal total = BigDecimal.valueOf(0);
 	private OrderListAdapter adapter;
 	private ListView listView;
-	private final int lastExpandedPosition = -1;
 	private Integer tableId;
-	private List<OrderDetail> requestedOrdersToDelete;
 	private Order order;
 
 	@Override
@@ -51,8 +49,6 @@ public class OrderActivity extends Activity {
 		this.listView = (ListView) this.findViewById(R.id.orderListView);
 		this.adapter = new OrderListAdapter(this, this.products);
 		this.listView.setAdapter(this.adapter);
-
-		this.requestedOrdersToDelete = new ArrayList<OrderDetail>();
 
 		// aca obtengo la orden si existe.
 		ObtainOrderTask obtainOrderTask = new ObtainOrderTask(null);

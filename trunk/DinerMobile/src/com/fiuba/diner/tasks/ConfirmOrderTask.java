@@ -4,8 +4,6 @@ import android.os.AsyncTask;
 
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
-import com.fiuba.diner.helper.DataHolder;
-import com.fiuba.diner.model.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
