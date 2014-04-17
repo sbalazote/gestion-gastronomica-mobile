@@ -12,12 +12,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fiuba.diner.R;
-import com.fiuba.diner.adapters.OrderProductListAdapter;
+import com.fiuba.diner.adapters.OrderListAdapter;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.model.Order;
@@ -32,10 +31,11 @@ public class OrderActivity extends Activity {
 
 	private List<OrderDetail> products;
 	private BigDecimal total = BigDecimal.valueOf(0);
-	private OrderProductListAdapter adapter;
-	private ExpandableListView listView;
-	private int lastExpandedPosition = -1;
+	private OrderListAdapter adapter;
+	private ListView listView;
+	private final int lastExpandedPosition = -1;
 	private Integer tableId;
+	private List<OrderDetail> requestedOrdersToDelete;
 	private Order order;
 
 	@Override
@@ -48,9 +48,11 @@ public class OrderActivity extends Activity {
 		this.tableId = Integer.parseInt(this.getIntent().getStringExtra(TableListActivity.TABLE_ID));
 
 		this.products = new ArrayList<OrderDetail>();
-		this.listView = (ExpandableListView) this.findViewById(R.id.orderListView);
-		this.adapter = new OrderProductListAdapter(this, this.products);
+		this.listView = (ListView) this.findViewById(R.id.orderListView);
+		this.adapter = new OrderListAdapter(this, this.products);
 		this.listView.setAdapter(this.adapter);
+
+		this.requestedOrdersToDelete = new ArrayList<OrderDetail>();
 
 		// aca obtengo la orden si existe.
 		ObtainOrderTask obtainOrderTask = new ObtainOrderTask(null);
@@ -76,17 +78,6 @@ public class OrderActivity extends Activity {
 			this.order = new Order();
 		}
 
-		this.listView.setOnGroupExpandListener(new OnGroupExpandListener() {
-
-			@Override
-			public void onGroupExpand(int groupPosition) {
-				if (OrderActivity.this.lastExpandedPosition != -1 && groupPosition != OrderActivity.this.lastExpandedPosition) {
-					OrderActivity.this.listView.collapseGroup(OrderActivity.this.lastExpandedPosition);
-				}
-				OrderActivity.this.lastExpandedPosition = groupPosition;
-			}
-		});
-
 	}
 
 	public void addProduct(View view) {
@@ -95,33 +86,25 @@ public class OrderActivity extends Activity {
 	}
 
 	public void deleteProduct(View view) {
-		int position = this.listView.getPositionForView(view) - 1;
+		int position = this.listView.getPositionForView(view);
 
 		if (this.products.get(position).getState() != null) {
 			if (this.products.get(position).getState().getId().equals(OrderStateHelper.REQUESTED.getState().getId())
 					|| this.products.get(position).getState().getId().equals(OrderStateHelper.NEW.getState().getId())) {
-				this.delete(position);
+				this.delete(position, view);
 			} else {
 				this.openDialog(view);
 			}
 		} else {
-			this.delete(position);
+			this.delete(position, view);
 		}
 	}
 
-	private void delete(Integer position) {
-
+	private void delete(Integer position, View view) {
 		OrderDetail orderDetail = this.products.get(position);
 		this.products.remove(orderDetail);
 		this.updateTotal();
-
 		this.adapter.notifyDataSetChanged();
-
-		int count = this.adapter.getGroupCount();
-		for (int i = 0; i < count; i++) {
-			this.listView.collapseGroup(i);
-		}
-		this.lastExpandedPosition = -1;
 	}
 
 	private void openDialog(final View view) {
@@ -145,15 +128,7 @@ public class OrderActivity extends Activity {
 			this.order.setCustomerAmount(1);
 		}
 
-		for (OrderDetail orderDetail : this.products) {
-			if (orderDetail.getId() == null) {
-				this.order.addDetail(orderDetail);
-				Product product = orderDetail.getProduct();
-				orderDetail.setAmount(product.getDetails().get(0).getAmount());
-				orderDetail.setComment(product.getDetails().get(0).getComment());
-				orderDetail.setState(OrderStateHelper.REQUESTED.getState());
-			}
-		}
+		this.order.setDetails(this.products);
 
 		List<Table> tables = new ArrayList<Table>();
 		tables.add(DataHolder.getActualTable());
@@ -174,6 +149,9 @@ public class OrderActivity extends Activity {
 			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setProduct(selectedProduct);
+			orderDetail.setAmount(1);
+			orderDetail.setComment("");
+			orderDetail.setState(OrderStateHelper.NEW.getState());
 			this.products.add(orderDetail);
 			this.adapter.notifyDataSetChanged();
 			this.updateTotal();
@@ -183,7 +161,7 @@ public class OrderActivity extends Activity {
 	public void updateTotal() {
 		double total = 0;
 		for (OrderDetail orderDetail : this.products) {
-			total += (orderDetail.getProduct().getPrice() * orderDetail.getProduct().getDetails().get(0).getAmount());
+			total += (orderDetail.getProduct().getPrice() * orderDetail.getAmount());
 		}
 
 		this.total = BigDecimal.valueOf(total);

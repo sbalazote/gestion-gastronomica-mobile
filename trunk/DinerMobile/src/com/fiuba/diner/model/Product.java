@@ -1,10 +1,6 @@
 package com.fiuba.diner.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fiuba.diner.adapters.expandablelist.OrderProductDetail;
 
 public class Product implements Serializable {
 
@@ -15,15 +11,6 @@ public class Product implements Serializable {
 	private Double price;
 	private Boolean celiacAllowed;
 	private Boolean active;
-
-	private List<OrderProductDetail> details;
-
-	public Product() {
-		this.details = new ArrayList<OrderProductDetail>();
-		OrderProductDetail detail = new OrderProductDetail();
-		detail.setAmount(1);
-		this.details.add(detail);
-	}
 
 	public Integer getId() {
 		return this.id;
@@ -63,14 +50,6 @@ public class Product implements Serializable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
-	}
-
-	public List<OrderProductDetail> getDetails() {
-		return this.details;
-	}
-
-	public void setDetails(List<OrderProductDetail> details) {
-		this.details = details;
 	}
 
 }
