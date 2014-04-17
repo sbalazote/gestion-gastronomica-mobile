@@ -44,6 +44,7 @@ SaveProduct = function() {
 					"subcategoryId": $("#subcategorySelect option:selected").val(),
 					"price": $("#priceInput").val(),
 					"active": $("#activeSelect option:selected").val(),
+					"celiacAllowed": $("#celiacAllowedSelect option:selected").val(),
 					"oldSubcategoryId": $("#idSubcategory").val()
 			};
 

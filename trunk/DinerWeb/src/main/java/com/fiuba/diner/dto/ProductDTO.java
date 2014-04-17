@@ -10,6 +10,7 @@ public class ProductDTO implements Serializable {
 	private Integer subcategoryId;
 	private Double price;
 	private boolean active;
+	private boolean celiacAllowed;
 	private Integer oldSubcategoryId;
 
 	public Integer getId() {
@@ -58,6 +59,14 @@ public class ProductDTO implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public boolean isCeliacAllowed() {
+		return this.celiacAllowed;
+	}
+
+	public void setCeliacAllowed(boolean celiacAllowed) {
+		this.celiacAllowed = celiacAllowed;
 	}
 
 }
