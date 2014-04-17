@@ -39,11 +39,13 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		OrderDetail orderDetail = this.orderDetails.get(position);
 		EditText productAmountEditText = (EditText) rowView.findViewById(R.id.productAmountEditText);
 		EditText productCommentEditText = (EditText) rowView.findViewById(R.id.productCommentEditText);
+
 		productAmountEditText.setText(String.valueOf(orderDetail.getAmount()));
 		productCommentEditText.setText(orderDetail.getComment());
 		TextView productState = (TextView) rowView.findViewById(R.id.stateTextView);
+
 		if (this.orderDetails.get(position) != null) {
-			if (this.orderDetails.get(position).getState() != null) {
+			if (!this.orderDetails.get(position).getState().equals(OrderStateHelper.NEW.getState())) {
 				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
 				productAmountEditText.setEnabled(false);
 				productCommentEditText.setEnabled(false);

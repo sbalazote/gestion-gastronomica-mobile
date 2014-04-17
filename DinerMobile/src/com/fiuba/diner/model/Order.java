@@ -44,12 +44,12 @@ public class Order implements Serializable {
 		this.details.add(detail);
 	}
 
-	public List<Table> getTable() {
+	public List<Table> getTables() {
 		return this.tables;
 	}
 
-	public void setTable(List<Table> table) {
-		this.tables = table;
+	public void setTables(List<Table> tables) {
+		this.tables = tables;
 	}
 
 }
