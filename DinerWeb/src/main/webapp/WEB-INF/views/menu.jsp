@@ -34,5 +34,8 @@
 				</ul>
 	        </li>
 		</ul>
+		<ul class="nav navbar-nav">
+		   	<li><a href="ordersReception"><spring:message code="common.kitchen"/></a></li>
+		</ul>
 	</div>
 </nav>
