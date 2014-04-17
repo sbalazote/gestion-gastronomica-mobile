@@ -16,4 +16,6 @@ public interface OrderService {
 
 	Order getOrder(Integer tableId);
 
+	List<Order> getRequestedOrders();
+
 }

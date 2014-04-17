@@ -27,7 +27,7 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/addCategory.jsp" />
     </definition>
     
-     <definition name="entitySaved" extends="base.definition">
+    <definition name="entitySaved" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/administration/entitySaved.jsp" />
     </definition>
      
@@ -63,7 +63,12 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/updateProduct.jsp" />
     </definition>
     
-     <definition name="updateParameter" extends="base.definition">
+    <definition name="updateParameter" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/configuration/updateParameter.jsp" />
     </definition>
+    
+    <definition name="ordersReception" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/kitchen/ordersReception.jsp" />
+    </definition>
+    
 </tiles-definitions>

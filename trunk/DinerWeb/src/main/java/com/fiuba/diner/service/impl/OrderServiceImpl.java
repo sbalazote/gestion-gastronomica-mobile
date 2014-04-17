@@ -45,4 +45,9 @@ public class OrderServiceImpl implements OrderService {
 	public Order getOrder(Integer tableId) {
 		return this.orderDAO.getOrder(tableId);
 	}
+
+	@Override
+	public List<Order> getRequestedOrders() {
+		return this.orderDAO.getRequestedOrders();
+	}
 }

@@ -54,4 +54,19 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 			return null;
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> getRequestedOrders() {
+		try {
+			String sentence = "select o from Order as o inner join o.details as d where d.state <> " + State.FACTURADO.getId() + ")";
+			Query query;
+			query = this.sessionFactory.getCurrentSession().createQuery(sentence);
+
+			return query.list();
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+	}
+
 }
