@@ -1,6 +1,7 @@
 package com.fiuba.diner.tasks;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.util.ComparatorByID;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -40,6 +42,7 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 			type = (new TypeToken<List<Table>>() {
 			}).getType();
 			List<Table> tables = this.gson.fromJson(response, type);
+			Collections.sort(tables, new ComparatorByID());
 
 			DataHolder.setCategories(categories);
 			DataHolder.setTables(tables);

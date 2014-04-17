@@ -23,17 +23,14 @@ import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.tasks.ConfirmOrderParam;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
 import com.fiuba.diner.tasks.ObtainOrderTask;
 
 public class OrderActivity extends Activity {
 
-	private List<OrderDetail> products;
 	private BigDecimal total = BigDecimal.valueOf(0);
 	private OrderListAdapter adapter;
 	private ListView listView;
-	private Integer tableId;
 	private Order order;
 
 	@Override
@@ -43,18 +40,12 @@ public class OrderActivity extends Activity {
 
 		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
 		tableTextView.setText(this.getIntent().getStringExtra(TableListActivity.EXTRA_TITLE));
-		this.tableId = Integer.parseInt(this.getIntent().getStringExtra(TableListActivity.TABLE_ID));
-
-		this.products = new ArrayList<OrderDetail>();
-		this.listView = (ListView) this.findViewById(R.id.orderListView);
-		this.adapter = new OrderListAdapter(this, this.products);
-		this.listView.setAdapter(this.adapter);
 
 		// aca obtengo la orden si existe.
 		ObtainOrderTask obtainOrderTask = new ObtainOrderTask(null);
 
 		try {
-			obtainOrderTask.execute(this.tableId).get();
+			obtainOrderTask.execute(DataHolder.getActualTable().getId()).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -66,13 +57,16 @@ public class OrderActivity extends Activity {
 			EditText dinersEditText = (EditText) this.findViewById(R.id.dinersEditText);
 			dinersEditText.setText(String.valueOf(this.order.getCustomerAmount()));
 
-			for (OrderDetail orderDetail : this.order.getDetails()) {
-				this.products.add(orderDetail);
-				this.adapter.notifyDataSetChanged();
-			}
 		} else {
 			this.order = new Order();
 		}
+
+		this.listView = (ListView) this.findViewById(R.id.orderListView);
+		if (this.order.getDetails() == null) {
+			this.order.setDetails(new ArrayList<OrderDetail>());
+		}
+		this.adapter = new OrderListAdapter(this, this.order.getDetails());
+		this.listView.setAdapter(this.adapter);
 
 	}
 
@@ -84,9 +78,9 @@ public class OrderActivity extends Activity {
 	public void deleteProduct(View view) {
 		int position = this.listView.getPositionForView(view);
 
-		if (this.products.get(position).getState() != null) {
-			if (this.products.get(position).getState().getId().equals(OrderStateHelper.REQUESTED.getState().getId())
-					|| this.products.get(position).getState().getId().equals(OrderStateHelper.NEW.getState().getId())) {
+		if (this.order.getDetails().get(position).getState() != null) {
+			if (this.order.getDetails().get(position).getState().getId().equals(OrderStateHelper.REQUESTED.getState().getId())
+					|| this.order.getDetails().get(position).getState().getId().equals(OrderStateHelper.NEW.getState().getId())) {
 				this.delete(position, view);
 			} else {
 				this.openDialog(view);
@@ -97,8 +91,8 @@ public class OrderActivity extends Activity {
 	}
 
 	private void delete(Integer position, View view) {
-		OrderDetail orderDetail = this.products.get(position);
-		this.products.remove(orderDetail);
+		OrderDetail orderDetail = this.order.getDetails().get(position);
+		this.order.getDetails().remove(orderDetail);
 		this.updateTotal();
 		this.adapter.notifyDataSetChanged();
 	}
@@ -124,18 +118,21 @@ public class OrderActivity extends Activity {
 			this.order.setCustomerAmount(1);
 		}
 
-		this.order.setDetails(this.products);
+		for (OrderDetail orderDetail : this.order.getDetails()) {
+			if (orderDetail.getId() == null) {
+				orderDetail.setState(OrderStateHelper.REQUESTED.getState());
+				orderDetail.setComment("");
+				orderDetail.setAmount(1);
+			}
+		}
+
+		this.order.setDetails(this.order.getDetails());
 
 		List<Table> tables = new ArrayList<Table>();
 		tables.add(DataHolder.getActualTable());
-		this.order.setTable(tables);
+		this.order.setTables(tables);
 
-		ConfirmOrderParam confirmOrderParam = new ConfirmOrderParam();
-		confirmOrderParam.setOrder(this.order);
-		confirmOrderParam.setTableId(this.tableId);
-
-		new ConfirmOrderTask(null).execute(confirmOrderParam);
-		System.out.println(this.order.getId());
+		new ConfirmOrderTask(null).execute(this.order);
 		this.finish();
 	}
 
@@ -145,10 +142,9 @@ public class OrderActivity extends Activity {
 			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setProduct(selectedProduct);
-			orderDetail.setAmount(1);
-			orderDetail.setComment("");
 			orderDetail.setState(OrderStateHelper.NEW.getState());
-			this.products.add(orderDetail);
+			orderDetail.setAmount(1);
+			this.order.getDetails().add(orderDetail);
 			this.adapter.notifyDataSetChanged();
 			this.updateTotal();
 		}
@@ -156,7 +152,7 @@ public class OrderActivity extends Activity {
 
 	public void updateTotal() {
 		double total = 0;
-		for (OrderDetail orderDetail : this.products) {
+		for (OrderDetail orderDetail : this.order.getDetails()) {
 			total += (orderDetail.getProduct().getPrice() * orderDetail.getAmount());
 		}
 

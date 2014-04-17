@@ -10,8 +10,8 @@ public class DataHolder {
 
 	private static List<Category> categories;
 	private static List<Table> tables;
-	private static Order actualOrder;
-	private static Table actualTable;
+	private static Order currentOrder;
+	private static Table currentTable;
 
 	public static List<Category> getCategories() {
 		return categories;
@@ -26,11 +26,11 @@ public class DataHolder {
 	}
 
 	public static Order getActualOrder() {
-		return actualOrder;
+		return currentOrder;
 	}
 
 	public static void setActualOrder(Order actualOrder) {
-		DataHolder.actualOrder = actualOrder;
+		DataHolder.currentOrder = actualOrder;
 	}
 
 	public static void setTables(List<Table> tables) {
@@ -38,11 +38,11 @@ public class DataHolder {
 	}
 
 	public static Table getActualTable() {
-		return actualTable;
+		return currentTable;
 	}
 
 	public static void setActualTable(Table actualTable) {
-		DataHolder.actualTable = actualTable;
+		DataHolder.currentTable = actualTable;
 	}
 
 }
