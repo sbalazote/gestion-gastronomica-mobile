@@ -47,9 +47,9 @@ public class TableListActivity extends Activity implements Caller<Void> {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Table table = (Table) parent.getItemAtPosition(position);
+				DataHolder.setActualTable(table);
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					this.openDialog(view, table);
-					DataHolder.setActualTable(table);
 				} else {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 					intent.putExtra(EXTRA_TITLE, "Mesa: " + String.valueOf(position + 1));
