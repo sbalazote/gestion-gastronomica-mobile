@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fiuba.diner.R;
@@ -31,10 +32,15 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 		View rowView = inflater.inflate(R.layout.product_list_item, parent, false);
 
 		TextView productTextView = (TextView) rowView.findViewById(R.id.productTextView);
+		ImageView celiacImageView = (ImageView) rowView.findViewById(R.id.celiacImageView);
 		TextView productPriceTextView = (TextView) rowView.findViewById(R.id.productPriceTextView);
 
 		Product product = this.products.get(position);
 		productTextView.setText(product.getDescription());
+
+		if (!product.getCeliacAllowed()) {
+			celiacImageView.setVisibility(View.INVISIBLE);
+		}
 
 		DecimalFormat formatter = new DecimalFormat("0.00");
 		productPriceTextView.setText("$" + formatter.format(product.getPrice()));
