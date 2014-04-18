@@ -23,5 +23,7 @@
     <string name="waiterField">Mozo: </string>
     
     <string name="hardcodedWaiter">Mozo: Rodriguez, Carlos</string>
+    
+    <string name="dinnerServiceTotal">Servicio de Mesa:</string>
 
 </resources>

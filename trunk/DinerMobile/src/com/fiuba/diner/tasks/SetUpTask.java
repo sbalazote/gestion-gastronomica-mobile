@@ -10,6 +10,7 @@ import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.util.ComparatorByID;
 import com.google.gson.Gson;
@@ -44,8 +45,16 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 			List<Table> tables = this.gson.fromJson(response, type);
 			Collections.sort(tables, new ComparatorByID());
 
+			// Se obtienen los parametros de configuracion
+			response = this.connectionHelper.get("parameters");
+			System.out.println(response);
+			type = (new TypeToken<Parameter>() {
+			}).getType();
+			Parameter parameter = this.gson.fromJson(response, type);
+
 			DataHolder.setCategories(categories);
 			DataHolder.setTables(tables);
+			DataHolder.setParameter(parameter);
 
 		} catch (Exception e) {
 			e.printStackTrace();

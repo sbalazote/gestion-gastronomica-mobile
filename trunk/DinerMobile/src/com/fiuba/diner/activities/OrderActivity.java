@@ -11,8 +11,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fiuba.diner.R;
@@ -52,21 +55,22 @@ public class OrderActivity extends Activity {
 			e.printStackTrace();
 		}
 
+		int customerAmount = com.fiuba.diner.constant.Constants.MIN_CUSTOMERS;
 		if (DataHolder.getActualOrder() != null) {
 			this.order = DataHolder.getActualOrder();
-			EditText dinersEditText = (EditText) this.findViewById(R.id.dinersEditText);
-			dinersEditText.setText(String.valueOf(this.order.getCustomerAmount()));
-
+			customerAmount = this.order.getCustomerAmount();
 		} else {
 			this.order = new Order();
 		}
 
-		this.listView = (ListView) this.findViewById(R.id.orderListView);
 		if (this.order.getDetails() == null) {
 			this.order.setDetails(new ArrayList<OrderDetail>());
 		}
+		this.listView = (ListView) this.findViewById(R.id.orderListView);
 		this.adapter = new OrderListAdapter(this, this.order.getDetails());
 		this.listView.setAdapter(this.adapter);
+
+		this.initializeCustomerSpinner(customerAmount);
 
 	}
 
@@ -110,13 +114,8 @@ public class OrderActivity extends Activity {
 	}
 
 	public void confirmOrder(View view) throws Throwable {
-		EditText dinersEditText = (EditText) this.findViewById(R.id.dinersEditText);
-		// TODO: cambiar. Validar que no pueda ser < 1
-		if (!dinersEditText.getText().toString().isEmpty()) {
-			this.order.setCustomerAmount(Integer.valueOf(dinersEditText.getText().toString()));
-		} else {
-			this.order.setCustomerAmount(1);
-		}
+		Spinner dinersSpinner = (Spinner) this.findViewById(R.id.dinersSpinner);
+		this.order.setCustomerAmount(Integer.parseInt(dinersSpinner.getSelectedItem().toString()));
 
 		for (OrderDetail orderDetail : this.order.getDetails()) {
 			if (orderDetail.getId() == null) {
@@ -152,14 +151,65 @@ public class OrderActivity extends Activity {
 
 	public void updateTotal() {
 		double total = 0;
-		for (OrderDetail orderDetail : this.order.getDetails()) {
-			total += (orderDetail.getProduct().getPrice() * orderDetail.getAmount());
+		double dinnerServiceTotal = 0;
+		DecimalFormat formatter = new DecimalFormat("0.00");
+
+		if (this.order.getDetails() != null) {
+			for (OrderDetail orderDetail : this.order.getDetails()) {
+				total += (orderDetail.getProduct().getPrice() * orderDetail.getAmount());
+			}
 		}
 
+		// Se agrega el servicio de mesa
+		dinnerServiceTotal = this.getDinnerServiceTotal();
+		TextView dinnerServiceTotalText = (TextView) this.findViewById(R.id.dinnerServiceTotalTextView);
+		dinnerServiceTotalText.setText("$" + formatter.format(dinnerServiceTotal));
+
+		total += dinnerServiceTotal;
+
 		this.total = BigDecimal.valueOf(total);
-		DecimalFormat formatter = new DecimalFormat("0.00");
 		TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
 		totalTextView.setText("$" + formatter.format(this.total));
 	}
 
+	public double getDinnerServiceTotal() {
+		double dinnerServiceTotal = Double.valueOf(0);
+
+		if (DataHolder.getParameter().getDinnerServiceActive()) {
+			Spinner dinersSpinner = (Spinner) this.findViewById(R.id.dinersSpinner);
+			dinnerServiceTotal = (Integer.parseInt(dinersSpinner.getSelectedItem().toString()) * DataHolder.getParameter().getDinnerServicePrice());
+		}
+
+		return dinnerServiceTotal;
+	}
+
+	public void initializeCustomerSpinner(int customerAmount) {
+		Spinner spinner = (Spinner) this.findViewById(R.id.dinersSpinner);
+		List<String> list = new ArrayList<String>();
+
+		// Se cargan los valores del combo
+		for (int i = com.fiuba.diner.constant.Constants.MIN_CUSTOMERS; i <= com.fiuba.diner.constant.Constants.MAX_CUSTOMERS; i++) {
+			list.add(String.valueOf(i));
+		}
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(dataAdapter);
+
+		// Se setea el valor que trae la orden
+		int spinnerPosition = dataAdapter.getPosition(String.valueOf(customerAmount));
+		spinner.setSelection(spinnerPosition);
+
+		// Se define el evento cuando cambia el valor del combo
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				OrderActivity.this.updateTotal();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+			}
+		});
+	}
 }

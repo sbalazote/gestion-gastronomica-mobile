@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
 
 public class DataHolder {
@@ -12,6 +13,7 @@ public class DataHolder {
 	private static List<Table> tables;
 	private static Order currentOrder;
 	private static Table currentTable;
+	private static Parameter parameter;
 
 	public static List<Category> getCategories() {
 		return categories;
@@ -45,4 +47,11 @@ public class DataHolder {
 		DataHolder.currentTable = actualTable;
 	}
 
+	public static Parameter getParameter() {
+		return DataHolder.parameter;
+	}
+
+	public static void setParameter(Parameter parameter) {
+		DataHolder.parameter = parameter;
+	}
 }
