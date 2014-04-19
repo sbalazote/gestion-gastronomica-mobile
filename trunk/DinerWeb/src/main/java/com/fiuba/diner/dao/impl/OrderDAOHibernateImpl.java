@@ -39,7 +39,6 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 		this.sessionFactory.getCurrentSession().delete(order);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Order getOrder(Integer tableId) {
 		try {
@@ -49,7 +48,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 			query = this.sessionFactory.getCurrentSession().createQuery(sentence);
 			query.setParameter("tableId", tableId);
 
-			return this.get(((Integer) query.list().get(0)));
+			return this.get((Integer) query.list().get(0));
 		} catch (IndexOutOfBoundsException e) {
 			return null;
 		}
