@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.OrderDetail;
 
 @Repository
 public class OrderDAOHibernateImpl implements OrderDAO {
@@ -30,7 +31,32 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 
 	@Override
 	public void save(Order order) {
-		this.sessionFactory.getCurrentSession().saveOrUpdate(order);
+		boolean found = false;
+		if (order.getId() != null) {
+			Order currentOrder = this.get(order.getId());
+			for (OrderDetail currentOrderDetail : currentOrder.getDetails()) {
+				found = false;
+				for (OrderDetail orderDetail : order.getDetails()) {
+					if (orderDetail.getId() != null) {
+						if (orderDetail.getId().equals(currentOrderDetail.getId())) {
+							found = true;
+						}
+					}
+				}
+				if (!found) {
+					this.sessionFactory.getCurrentSession().createQuery("delete from OrderDetail where id = " + currentOrderDetail.getId());
+				}
+			}
+			currentOrder.getDetails().clear();
+			for (OrderDetail orderDetail : order.getDetails()) {
+				currentOrder.getDetails().add(orderDetail);
+			}
+			currentOrder.setCustomerAmount(order.getCustomerAmount());
+			this.sessionFactory.getCurrentSession().saveOrUpdate(currentOrder);
+		} else {
+			this.sessionFactory.getCurrentSession().saveOrUpdate(order);
+		}
+
 	}
 
 	@Override
