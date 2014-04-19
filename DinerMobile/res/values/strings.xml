@@ -25,5 +25,10 @@
     <string name="hardcodedWaiter">Mozo: Rodriguez, Carlos</string>
     
     <string name="dinnerServiceTotal">Servicio de Mesa:</string>
+    
+    <string name="showTables">Ver Mesas</string>
+    <string name="listTables">Listar Mesas</string>
+    
+    <string name="floor">Piso</string>
 
 </resources>

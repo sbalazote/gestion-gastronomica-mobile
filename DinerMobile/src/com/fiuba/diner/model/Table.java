@@ -43,4 +43,16 @@ public class Table implements Serializable {
 		this.active = active;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Table)) {
+			return false;
+		}
+		Table that = (Table) o;
+		if (this.id == null || that.id == null) {
+			return false;
+		}
+		return this.id.equals(that.id);
+	}
+
 }

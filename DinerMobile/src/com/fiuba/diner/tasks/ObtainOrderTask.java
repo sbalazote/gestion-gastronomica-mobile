@@ -29,7 +29,7 @@ public class ObtainOrderTask extends AsyncTask<Integer, Void, Void> {
 			if (order != null) {
 				System.out.println("Se recupero el numeor de orden " + order.getId());
 			}
-			DataHolder.setActualOrder(order);
+			DataHolder.setCurrentOrder(order);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

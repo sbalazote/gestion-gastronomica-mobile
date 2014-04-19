@@ -4,7 +4,7 @@ import com.fiuba.diner.model.TableState;
 
 public enum TableStateHelper {
 
-	AVAILABLE(1, "Disponible"), TAKEN(2, "Abierta");
+	AVAILABLE(1, "Disponible"), OPEN(2, "Abierta");
 
 	private TableState state;
 

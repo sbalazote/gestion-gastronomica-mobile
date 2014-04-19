@@ -9,6 +9,7 @@ public class Waiter implements Serializable {
 	private Integer id;
 	private String name;
 	private String surname;
+	private Boolean active;
 
 	public Integer getId() {
 		return this.id;
@@ -32,6 +33,14 @@ public class Waiter implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

@@ -5,58 +5,58 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 
 import com.fiuba.diner.R;
-import com.fiuba.diner.adapters.TableListAdapter;
+import com.fiuba.diner.adapters.TableImageAdapter;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.model.TableLayout;
 
-public class TableListActivity extends Activity {
+public class FloorActivity extends Activity {
+
+	private BaseAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_table_list);
-		this.populateList();
-	}
+		this.setContentView(R.layout.floor);
 
-	private void populateList() {
-		ListView listview = (ListView) this.findViewById(R.id.tableListView);
+		GridView gridview = (GridView) this.findViewById(R.id.floorGridView);
+		gridview.setNumColumns(DataHolder.getCurrentFloor().getWidth());
 
-		TableListAdapter adapter = new TableListAdapter(this, DataHolder.getTables());
-		listview.setAdapter(adapter);
+		this.adapter = new TableImageAdapter(this);
+		gridview.setAdapter(this.adapter);
 
-		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+		gridview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Table table = (Table) parent.getItemAtPosition(position);
-				DataHolder.setCurrentTable(table);
+				TableLayout tableLayout = DataHolder.getCurrentTableLayout()[position];
+				if (tableLayout != null) {
+					Table table = tableLayout.getTable();
+					DataHolder.setCurrentTable(table);
 
-				// Si la mesa esta disponible la abro
-				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
-					this.openDialog(view, table);
+					if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
+						this.openDialog(view, table);
 
-					// Si ya esta abierta y es mia, sigo
-				} else if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
-					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
-					TableListActivity.this.startActivity(intent);
+					} else if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
+						Intent intent = new Intent(FloorActivity.this, OrderActivity.class);
+						FloorActivity.this.startActivity(intent);
 
-					// Si ya esta abierta pero no es mia, muestro mensaje
-				} else {
-					this.notAvailableDialog(view, table);
+					} else {
+						this.notAvailableDialog(view, table);
+					}
 				}
 			}
 
 			private void openDialog(final View view, final Table table) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
 				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getId() + "?");
 				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
@@ -64,9 +64,7 @@ public class TableListActivity extends Activity {
 					public void onClick(DialogInterface dialog, int id) {
 						table.setState(TableStateHelper.OPEN.getState());
 						// table.setWaiter(DataHolder.getCurrentWaiter());
-						TextView stateTextView = (TextView) view.findViewById(R.id.stateTextView);
-						stateTextView.setText(table.getState().getDescription());
-						stateTextView.setTextColor(Color.BLUE);
+						FloorActivity.this.adapter.notifyDataSetChanged();
 					}
 				});
 				alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -81,7 +79,7 @@ public class TableListActivity extends Activity {
 			}
 
 			private void notAvailableDialog(final View view, final Table table) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
 				alertDialogBuilder.setMessage("La mesa no está disponible");
 				alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 					@Override
