@@ -1,5 +1,7 @@
 package com.fiuba.diner.adapters;
 
+import static com.fiuba.diner.constant.Constants.HARDCODED_WAITER_ID;
+
 import java.util.List;
 
 import android.content.Context;
@@ -36,8 +38,14 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 		Table table = this.tables.get(position);
 		descriptionTextView.setText(String.valueOf(table.getId()));
 		stateTextView.setText(table.getState().getDescription());
-		if (table.getState().getId().equals(TableStateHelper.TAKEN.getState().getId())) {
-			stateTextView.setTextColor(Color.BLUE);
+
+		if (table.getState().getId().equals(TableStateHelper.OPEN.getState().getId())) {
+			if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
+				stateTextView.setTextColor(Color.BLUE);
+			} else {
+				stateTextView.setTextColor(Color.RED);
+				stateTextView.setText("No disponible");
+			}
 		}
 
 		return rowView;

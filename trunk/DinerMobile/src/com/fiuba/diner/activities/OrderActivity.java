@@ -42,13 +42,13 @@ public class OrderActivity extends Activity {
 		this.setContentView(R.layout.activity_order);
 
 		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
-		tableTextView.setText(this.getIntent().getStringExtra(TableListActivity.EXTRA_TITLE));
+		tableTextView.setText("Mesa: " + DataHolder.getCurrentTable().getId());
 
 		// aca obtengo la orden si existe.
 		ObtainOrderTask obtainOrderTask = new ObtainOrderTask(null);
 
 		try {
-			obtainOrderTask.execute(DataHolder.getActualTable().getId()).get();
+			obtainOrderTask.execute(DataHolder.getCurrentTable().getId()).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -56,8 +56,8 @@ public class OrderActivity extends Activity {
 		}
 
 		int customerAmount = com.fiuba.diner.constant.Constants.MIN_CUSTOMERS;
-		if (DataHolder.getActualOrder() != null) {
-			this.order = DataHolder.getActualOrder();
+		if (DataHolder.getCurrentOrder() != null) {
+			this.order = DataHolder.getCurrentOrder();
 			customerAmount = this.order.getCustomerAmount();
 		} else {
 			this.order = new Order();
@@ -128,7 +128,7 @@ public class OrderActivity extends Activity {
 		this.order.setDetails(this.order.getDetails());
 
 		List<Table> tables = new ArrayList<Table>();
-		tables.add(DataHolder.getActualTable());
+		tables.add(DataHolder.getCurrentTable());
 		this.order.setTables(tables);
 
 		new ConfirmOrderTask(null).execute(this.order);
