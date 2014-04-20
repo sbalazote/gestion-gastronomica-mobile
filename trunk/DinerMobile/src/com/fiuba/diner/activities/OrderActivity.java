@@ -1,7 +1,6 @@
 package com.fiuba.diner.activities;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -28,6 +27,7 @@ import com.fiuba.diner.model.Product;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
 import com.fiuba.diner.tasks.ObtainOrderTask;
+import com.fiuba.diner.util.Formatter;
 
 public class OrderActivity extends Activity {
 
@@ -70,7 +70,7 @@ public class OrderActivity extends Activity {
 		this.adapter = new OrderListAdapter(this, this.order.getDetails());
 		this.listView.setAdapter(this.adapter);
 
-		this.initializeCustomerSpinner(customerAmount);
+		this.populateCustomerSpinner(customerAmount);
 
 	}
 
@@ -120,8 +120,6 @@ public class OrderActivity extends Activity {
 		for (OrderDetail orderDetail : this.order.getDetails()) {
 			if (orderDetail.getId() == null) {
 				orderDetail.setState(OrderStateHelper.REQUESTED.getState());
-				orderDetail.setComment("");
-				orderDetail.setAmount(1);
 			}
 		}
 
@@ -152,7 +150,6 @@ public class OrderActivity extends Activity {
 	public void updateTotal() {
 		double total = 0;
 		double dinnerServiceTotal = 0;
-		DecimalFormat formatter = new DecimalFormat("0.00");
 
 		if (this.order.getDetails() != null) {
 			for (OrderDetail orderDetail : this.order.getDetails()) {
@@ -163,13 +160,13 @@ public class OrderActivity extends Activity {
 		// Se agrega el servicio de mesa
 		dinnerServiceTotal = this.getDinnerServiceTotal();
 		TextView dinnerServiceTotalText = (TextView) this.findViewById(R.id.dinnerServiceTotalTextView);
-		dinnerServiceTotalText.setText("$" + formatter.format(dinnerServiceTotal));
+		dinnerServiceTotalText.setText(Formatter.getPriceFormat(dinnerServiceTotal));
 
 		total += dinnerServiceTotal;
 
 		this.total = BigDecimal.valueOf(total);
 		TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
-		totalTextView.setText("$" + formatter.format(this.total));
+		totalTextView.setText(Formatter.getPriceFormat(total));
 	}
 
 	public double getDinnerServiceTotal() {
@@ -183,7 +180,7 @@ public class OrderActivity extends Activity {
 		return dinnerServiceTotal;
 	}
 
-	public void initializeCustomerSpinner(int customerAmount) {
+	public void populateCustomerSpinner(int customerAmount) {
 		Spinner spinner = (Spinner) this.findViewById(R.id.dinersSpinner);
 		List<String> list = new ArrayList<String>();
 

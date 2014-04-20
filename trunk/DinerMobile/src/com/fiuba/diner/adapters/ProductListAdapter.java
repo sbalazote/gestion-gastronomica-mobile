@@ -1,6 +1,5 @@
 package com.fiuba.diner.adapters;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.model.Product;
+import com.fiuba.diner.util.Formatter;
 
 public class ProductListAdapter extends ArrayAdapter<Product> {
 
@@ -42,8 +42,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 			celiacImageView.setVisibility(View.INVISIBLE);
 		}
 
-		DecimalFormat formatter = new DecimalFormat("0.00");
-		productPriceTextView.setText("$" + formatter.format(product.getPrice()));
+		productPriceTextView.setText(Formatter.getPriceFormat(product.getPrice()));
 		productPriceTextView.setTextColor(Color.rgb(48, 128, 20));
 
 		return rowView;
