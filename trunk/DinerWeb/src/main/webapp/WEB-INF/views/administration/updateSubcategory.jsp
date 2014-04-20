@@ -8,6 +8,9 @@
 	});
 </script>
 
+<div id="body">
+<div class="content">
+
 <form id="subcategoryAdministrationForm" action="" onsubmit="return false;">
 
 <div class="row">
@@ -53,3 +56,6 @@
 </div>
 
 </form>
+
+</div>
+</div>

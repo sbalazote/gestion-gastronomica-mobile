@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fiuba.diner.dao.OrderDAO;
+import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.service.OrderService;
 
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getRequestedOrders() {
-		return this.orderDAO.getRequestedOrders();
+	public List<OrderDetailDTO> getRequestedOrders(boolean kitchen) {
+		return this.orderDAO.getRequestedOrders(kitchen);
 	}
 }

@@ -67,8 +67,12 @@
         <put-attribute name="body" value="/WEB-INF/views/configuration/updateParameter.jsp" />
     </definition>
     
-    <definition name="ordersReception" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/kitchen/ordersReception.jsp" />
+    <definition name="kitchen" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/kitchen/kitchen.jsp" />
+    </definition>
+    
+    <definition name="bar" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/bar/bar.jsp" />
     </definition>
     
 </tiles-definitions>

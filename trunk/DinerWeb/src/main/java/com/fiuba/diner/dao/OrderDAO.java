@@ -2,6 +2,7 @@ package com.fiuba.diner.dao;
 
 import java.util.List;
 
+import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
 
 public interface OrderDAO {
@@ -16,5 +17,5 @@ public interface OrderDAO {
 
 	Order getOrder(Integer tableId);
 
-	List<Order> getRequestedOrders();
+	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 }
