@@ -27,6 +27,9 @@ public class Product {
 	@Column(name = "celiac_allowed", nullable = false)
 	private Boolean celiacAllowed;
 
+	@Column(name = "kitchen", nullable = false)
+	private Boolean kitchen;
+
 	@Column(name = "active", nullable = false)
 	private Boolean active;
 
@@ -60,6 +63,14 @@ public class Product {
 
 	public void setCeliacAllowed(Boolean celiacAllowed) {
 		this.celiacAllowed = celiacAllowed;
+	}
+
+	public Boolean getKitchen() {
+		return this.kitchen;
+	}
+
+	public void setKitchen(Boolean kitchen) {
+		this.kitchen = kitchen;
 	}
 
 	public Boolean getActive() {

@@ -37,11 +37,7 @@
 	        <div id="menu">
 	            <tiles:insertAttribute name="menu" />
 	        </div>
-	        <div id="body">
-	        	<div class="content">
-	            	<tiles:insertAttribute name="body" />
-	            </div>
-	        </div>
+	        <tiles:insertAttribute name="body" />
 	    </div>
         <div id="footer">
             <tiles:insertAttribute name="footer" />

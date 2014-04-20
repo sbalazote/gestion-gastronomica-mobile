@@ -2,6 +2,7 @@ package com.fiuba.diner.service;
 
 import java.util.List;
 
+import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
 
 public interface OrderService {
@@ -16,6 +17,6 @@ public interface OrderService {
 
 	Order getOrder(Integer tableId);
 
-	List<Order> getRequestedOrders();
+	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 
 }

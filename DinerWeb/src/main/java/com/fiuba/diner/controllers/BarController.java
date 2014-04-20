@@ -14,20 +14,20 @@ import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.service.OrderService;
 
 @Controller
-public class KitchenController {
+public class BarController {
 
 	@Autowired
 	private OrderService orderService;
 
-	@RequestMapping(value = "/kitchen", method = RequestMethod.GET)
-	public String kitchen(ModelMap modelMap) throws Exception {
-		return "kitchen";
+	@RequestMapping(value = "/bar", method = RequestMethod.GET)
+	public String bar(ModelMap modelMap) throws Exception {
+		return "bar";
 	}
 
-	@RequestMapping(value = "/getKitchenOrders", method = RequestMethod.GET)
+	@RequestMapping(value = "/getBarOrders", method = RequestMethod.GET)
 	@ResponseBody
-	public List<OrderDetailDTO> getKitchenOrders() throws IOException {
-		List<OrderDetailDTO> details = this.orderService.getRequestedOrders(true);
+	public List<OrderDetailDTO> getBarOrders() throws IOException {
+		List<OrderDetailDTO> details = this.orderService.getRequestedOrders(false);
 		return details;
 	}
 

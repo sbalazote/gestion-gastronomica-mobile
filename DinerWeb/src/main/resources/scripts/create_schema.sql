@@ -52,6 +52,7 @@ CREATE TABLE `diner`.`product` (
 	`description` varchar(100) NOT NULL,
 	`price` decimal(6,2) NOT NULL,
 	`celiac_allowed` bit(1) NOT NULL,
+	`kitchen` bit(1) NOT NULL,
 	`active` bit(1) NOT NULL,
 	`subcategory_id` int(8) NOT NULL,
 	PRIMARY KEY (`id`),

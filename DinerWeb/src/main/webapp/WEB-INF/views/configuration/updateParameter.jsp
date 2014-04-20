@@ -8,8 +8,10 @@
 	});
 </script>
 
-<form id="parameterAdministrationForm" action="" onsubmit="return false;">
+<div id="body">
+<div class="content">
 
+<form id="parameterAdministrationForm" action="" onsubmit="return false;">
 
 <div class="row">
 	<div class="col-md-9 form-group">
@@ -57,3 +59,6 @@
 	</div>
 </div>
 </form>
+
+</div>
+</div>

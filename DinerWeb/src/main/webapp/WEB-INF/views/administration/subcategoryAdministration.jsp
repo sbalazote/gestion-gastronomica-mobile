@@ -8,6 +8,9 @@
 	});
 </script>
 
+<div id="body">
+<div class="content">
+
 <div class="row">
 	<div class="col-md-9 form-group">
 		<h2><spring:message code="administration.subcategory.menu"/></h2>
@@ -67,4 +70,7 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+</div>
 </div>
