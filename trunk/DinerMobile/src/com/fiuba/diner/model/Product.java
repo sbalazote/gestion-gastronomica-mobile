@@ -10,6 +10,7 @@ public class Product implements Serializable {
 	private String description;
 	private Double price;
 	private Boolean celiacAllowed;
+	private Boolean kitchen;
 	private Boolean active;
 
 	public Integer getId() {
@@ -42,6 +43,14 @@ public class Product implements Serializable {
 
 	public void setCeliacAllowed(Boolean celiacAllowed) {
 		this.celiacAllowed = celiacAllowed;
+	}
+
+	public Boolean getKitchen() {
+		return this.kitchen;
+	}
+
+	public void setKitchen(Boolean kitchen) {
+		this.kitchen = kitchen;
 	}
 
 	public Boolean getActive() {
