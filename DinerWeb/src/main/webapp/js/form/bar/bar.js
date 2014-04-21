@@ -17,7 +17,13 @@ Bar = function() {
 				orderDetail.push(response[i].detail.comment);
 				//orderDetail.push(response[i].tables[0].waiter.surname + " " + response[i].tables[0].waiter.name );
 				orderDetail.push("Rodriguez");
-				orderDetail.push(response[i].detail.requestDate);
+				
+				if (response[i].detail.requestDate) {
+					var requestDate = new Date(response[i].detail.requestDate);
+					orderDetail.push(requestDate.format("dd-mm-yyyy HH:MM:ss"));
+				} else {
+					orderDetail.push("");
+				}
 				
 				if (response[i].detail.state.id == 2) {
 					orderDetail.push("<strong><span style='color:blue'>" + response[i].detail.state.description + "</span></strong>");

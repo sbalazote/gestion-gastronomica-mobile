@@ -31,6 +31,7 @@
 		<script type="text/javascript" src="js/datatables.esp.js"></script>
 		<script type="text/javascript" src="js/dataTables.bootstrap.js"></script>
 		<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+		<script type="text/javascript" src="js/dateFormatter.js"></script>
 	</head>
 	<body>
 		<div id="wrap">
