@@ -27,7 +27,7 @@ public class ConnectionHelper {
 		URL netUrl = new URL(Constants.WEBAPP_HOST + url);
 		HttpURLConnection connection = (HttpURLConnection) netUrl.openConnection();
 		connection.setRequestMethod("POST");
-		connection.setRequestProperty("Content-Type", "application/json");
+		connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 		connection.setUseCaches(false);
 
 		DataOutputStream out = new DataOutputStream(connection.getOutputStream());
