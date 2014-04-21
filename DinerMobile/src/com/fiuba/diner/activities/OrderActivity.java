@@ -1,7 +1,7 @@
 package com.fiuba.diner.activities;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -31,7 +31,6 @@ import com.fiuba.diner.util.Formatter;
 
 public class OrderActivity extends Activity {
 
-	private BigDecimal total = BigDecimal.valueOf(0);
 	private OrderListAdapter adapter;
 	private ListView listView;
 	private Order order;
@@ -103,8 +102,8 @@ public class OrderActivity extends Activity {
 
 	private void openDialog(final View view) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("No puede eliminarse el pedido ya ha sido Solicitado");
-		alertDialogBuilder.setNeutralButton("OK", null);
+		alertDialogBuilder.setMessage("No puede eliminarse el pedido, ya ha ingresado a la cocina.");
+		alertDialogBuilder.setNeutralButton("Aceptar", null);
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
@@ -120,6 +119,7 @@ public class OrderActivity extends Activity {
 		for (OrderDetail orderDetail : this.order.getDetails()) {
 			if (orderDetail.getId() == null) {
 				orderDetail.setState(OrderStateHelper.REQUESTED.getState());
+				orderDetail.setRequestDate(new Date());
 			}
 		}
 
@@ -164,7 +164,6 @@ public class OrderActivity extends Activity {
 
 		total += dinnerServiceTotal;
 
-		this.total = BigDecimal.valueOf(total);
 		TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
 		totalTextView.setText(Formatter.getPriceFormat(total));
 	}

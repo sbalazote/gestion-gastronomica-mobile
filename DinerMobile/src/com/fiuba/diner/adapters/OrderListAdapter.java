@@ -80,16 +80,16 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 			}
 		});
 
-		TextView productState = (TextView) rowView.findViewById(R.id.stateTextView);
+		TextView productState = (TextView) rowView.findViewById(R.id.orderStateTextView);
 		if (this.orderDetails.get(position) != null) {
 			if (!this.orderDetails.get(position).getState().equals(OrderStateHelper.NEW.getState())) {
 				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
-				productAmountSpinner.setEnabled(false);
-				productCommentEditText.setEnabled(false);
+				// productAmountSpinner.setEnabled(false);
+				// productCommentEditText.setEnabled(false);
 			} else {
 				productState.setText(OrderStateHelper.NEW.getState().getDescription());
-				productAmountSpinner.setEnabled(true);
-				productCommentEditText.setEnabled(true);
+				// productAmountSpinner.setEnabled(true);
+				// productCommentEditText.setEnabled(true);
 			}
 		}
 
