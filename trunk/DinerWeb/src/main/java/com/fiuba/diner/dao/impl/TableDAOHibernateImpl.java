@@ -23,7 +23,7 @@ public class TableDAOHibernateImpl implements TableDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Table> getAll() {
-		return this.sessionFactory.getCurrentSession().createCriteria(Table.class).list();
+		return this.sessionFactory.getCurrentSession().createQuery("from Table where active = true order by id").list();
 	}
 
 	@Override
