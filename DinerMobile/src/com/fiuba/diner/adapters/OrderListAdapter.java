@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -64,15 +66,17 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		productCommentEditText.setText(orderDetail.getComment());
 		productCommentEditText.setTag(this.orderDetails.get(position));
 		productCommentEditText.setFocusable(true);
-		productCommentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		productCommentEditText.setOnKeyListener(new OnKeyListener() {
 
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (event.getAction() == KeyEvent.ACTION_UP) {
 					EditText comment = (EditText) v;
 					OrderDetail orderDetail = (OrderDetail) comment.getTag();
 					orderDetail.setComment(comment.getText().toString());
+					return true;
 				}
+				return false;
 			}
 		});
 
