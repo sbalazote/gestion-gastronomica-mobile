@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -62,6 +63,9 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		productAmountSpinner.setTag(viewHolder);
 		this.populateProductAmountSpinner(productAmountSpinner, orderDetail.getAmount());
 
+		ImageButton confirmDeliveryButton = (ImageButton) rowView.findViewById(R.id.confirmDeliveryButton);
+		ImageButton deleteProductButton = (ImageButton) rowView.findViewById(R.id.deleteProductButton);
+
 		EditText productCommentEditText = (EditText) rowView.findViewById(R.id.productCommentEditText);
 		productCommentEditText.setText(orderDetail.getComment());
 		productCommentEditText.setTag(this.orderDetails.get(position));
@@ -84,12 +88,17 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		if (this.orderDetails.get(position) != null) {
 			if (!this.orderDetails.get(position).getState().equals(OrderStateHelper.NEW.getState())) {
 				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
-				// productAmountSpinner.setEnabled(false);
-				// productCommentEditText.setEnabled(false);
+				if (this.orderDetails.get(position).getState().equals(OrderStateHelper.PREPARED.getState())) {
+					deleteProductButton.setVisibility(ImageButton.GONE);
+					confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
+				} else {
+					deleteProductButton.setVisibility(ImageButton.VISIBLE);
+					confirmDeliveryButton.setVisibility(ImageButton.GONE);
+				}
 			} else {
 				productState.setText(OrderStateHelper.NEW.getState().getDescription());
-				// productAmountSpinner.setEnabled(true);
-				// productCommentEditText.setEnabled(true);
+				deleteProductButton.setVisibility(ImageButton.VISIBLE);
+				confirmDeliveryButton.setVisibility(ImageButton.GONE);
 			}
 		}
 

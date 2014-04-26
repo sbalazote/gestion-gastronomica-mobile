@@ -63,6 +63,15 @@
             android:layout_height="wrap_content"
             android:onClick="deleteProduct"
             android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+        <ImageButton
+            android:id="@+id/confirmDeliveryButton"
+            android:layout_width="wrap_content"
+            android:onClick="confirmDelivered"
+            android:layout_height="wrap_content" 
+            
+            />
+
     </LinearLayout>
 
     <TextView
