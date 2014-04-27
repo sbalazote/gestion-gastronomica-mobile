@@ -11,10 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -98,20 +98,18 @@ public class OrderActivity extends Activity {
 	public void confirmDelivered(View view) {
 		int position = this.listView.getPositionForView(view);
 		OrderDetail orderDetail = this.order.getDetails().get(position);
-		this.openConfirmDialog(view, orderDetail);
-		this.adapter.notifyDataSetChanged();
+		this.openConfirmDialog(view, orderDetail, this.adapter);
 	}
 
-	private void openConfirmDialog(final View view, final OrderDetail orderDetail) {
+	private void openConfirmDialog(final View view, final OrderDetail orderDetail, final Adapter adapter) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
 		alertDialogBuilder.setMessage("¡Esta seguro que desea confirma la entrega?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				ImageButton confirmDeliveryButton = (ImageButton) view.findViewById(R.id.confirmDeliveryButton);
-				confirmDeliveryButton.setVisibility(ImageButton.GONE);
 				orderDetail.setState(OrderStateHelper.DELIVERED.getState());
+				OrderActivity.this.adapter.notifyDataSetChanged();
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -123,6 +121,7 @@ public class OrderActivity extends Activity {
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+
 	}
 
 	private void delete(Integer position, View view) {
