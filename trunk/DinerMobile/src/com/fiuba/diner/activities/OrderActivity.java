@@ -36,6 +36,7 @@ public class OrderActivity extends Activity {
 	private OrderListAdapter adapter;
 	private ListView listView;
 	private Order order;
+	private boolean hasChanged;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class OrderActivity extends Activity {
 		this.listView = (ListView) this.findViewById(R.id.orderListView);
 		this.adapter = new OrderListAdapter(this, this.order.getDetails());
 		this.listView.setAdapter(this.adapter);
-
+		this.hasChanged = false;
 		this.populateCustomerSpinner(customerAmount);
 
 	}
@@ -87,11 +88,13 @@ public class OrderActivity extends Activity {
 			if (this.order.getDetails().get(position).getState().getId().equals(OrderStateHelper.REQUESTED.getState().getId())
 					|| this.order.getDetails().get(position).getState().getId().equals(OrderStateHelper.NEW.getState().getId())) {
 				this.delete(position, view);
+				this.hasChanged = true;
 			} else {
 				this.openDialog(view);
 			}
 		} else {
 			this.delete(position, view);
+			this.hasChanged = true;
 		}
 	}
 
@@ -109,6 +112,7 @@ public class OrderActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				orderDetail.setState(OrderStateHelper.DELIVERED.getState());
+				OrderActivity.this.hasChanged = true;
 				OrderActivity.this.adapter.notifyDataSetChanged();
 			}
 		});
@@ -137,10 +141,6 @@ public class OrderActivity extends Activity {
 		alertDialogBuilder.setNeutralButton("Aceptar", null);
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-	}
-
-	public void cancelOrder(View view) throws Throwable {
-		this.finish();
 	}
 
 	public void confirmOrder(View view) throws Throwable {
@@ -175,6 +175,7 @@ public class OrderActivity extends Activity {
 			this.order.getDetails().add(orderDetail);
 			this.adapter.notifyDataSetChanged();
 			this.updateTotal();
+			this.hasChanged = true;
 		}
 	}
 
@@ -239,4 +240,38 @@ public class OrderActivity extends Activity {
 			}
 		});
 	}
+
+	@Override
+	public void onBackPressed() {
+		if (this.hasChanged) {
+			this.openConfirmExit();
+			// super.onBackPressed();
+		} else {
+			super.onBackPressed();
+		}
+
+	}
+
+	private void openConfirmExit() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
+		alertDialogBuilder.setMessage("Existen cambios sin guardar, ¿desea continuar?");
+		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+
+			}
+		});
+		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+
+	}
+
 }
