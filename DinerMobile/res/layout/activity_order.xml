@@ -134,14 +134,6 @@
 	    android:orientation="horizontal">
 	    
 	    <Button
-	        android:id="@+id/cancelOrderButton"
-	        android:layout_width="0dp"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:onClick="cancelOrder"
-	        android:text="@string/cancel" />
-	    
-	    <Button
 	        android:id="@+id/confirmOrderButton"
 	        android:layout_width="0dp"
 	        android:layout_weight="1"
