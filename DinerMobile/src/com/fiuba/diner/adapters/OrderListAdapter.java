@@ -86,14 +86,20 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 
 		TextView productState = (TextView) rowView.findViewById(R.id.orderStateTextView);
 		if (this.orderDetails.get(position) != null) {
-			if (!this.orderDetails.get(position).getState().equals(OrderStateHelper.NEW.getState())) {
+			Integer stateId = this.orderDetails.get(position).getState().getId();
+			if (!stateId.equals(OrderStateHelper.NEW.getState().getId())) {
 				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
-				if (this.orderDetails.get(position).getState().equals(OrderStateHelper.PREPARED.getState())) {
+				if (stateId.equals(OrderStateHelper.PREPARED.getState().getId())) {
 					deleteProductButton.setVisibility(ImageButton.GONE);
 					confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
 				} else {
-					deleteProductButton.setVisibility(ImageButton.VISIBLE);
-					confirmDeliveryButton.setVisibility(ImageButton.GONE);
+					if (stateId.equals(OrderStateHelper.REQUESTED.getState().getId())) {
+						deleteProductButton.setVisibility(ImageButton.VISIBLE);
+						confirmDeliveryButton.setVisibility(ImageButton.GONE);
+					} else {
+						deleteProductButton.setVisibility(ImageButton.GONE);
+						confirmDeliveryButton.setVisibility(ImageButton.GONE);
+					}
 				}
 			} else {
 				productState.setText(OrderStateHelper.NEW.getState().getDescription());
