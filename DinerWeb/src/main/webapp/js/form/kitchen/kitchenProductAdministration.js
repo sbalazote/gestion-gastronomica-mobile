@@ -21,10 +21,20 @@ KitchenProductAdministration = function() {
 							product.push(response[i].description);
 							product.push(response[i].subcategories[j].description);
 							
-							product.push("<a href='javascript:void(0);' class='no-stock-row'>No Hay Stock</span></a>" +
-									"<a href='javascript:void(0);' style='display:none' class='stock-row'>Hay Stock</span></a>" +
-									"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>"
-									+ "<span class='span-subcategoryId' style='display:none'>" + response[i].subcategories[j].id + "</span>");
+							var string = "<a href='javascript:void(0);'";
+							if(response[i].subcategories[j].products[k].stock == false){
+								string += " style='display:none'";
+							}
+							string += "class='no-stock-row'>No Hay Stock</span></a>";
+							string += "<a href='javascript:void(0);'";
+							if(response[i].subcategories[j].products[k].stock == true){
+								string += " style='display:none'";
+							}
+							string += " class='stock-row'>Hay Stock</span></a>"
+						    string += "<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>"
+							+ "<span class='span-subcategoryId' style='display:none'>" + response[i].subcategories[j].id + "</span>";
+							
+							product.push(string);
 							aaData.push(product);
 							}
 						}
