@@ -146,5 +146,14 @@ CREATE TABLE `diner`.`table_layout` (
   CONSTRAINT `fk_table_layout_floor` FOREIGN KEY (`floor_id`) REFERENCES `floor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_table_layout_table` FOREIGN KEY (`table_id`) REFERENCES `table` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-  
+
+CREATE TABLE `diner`.`device` (
+  `id` VARCHAR(20) NOT NULL,
+  `waiter_id` INT NULL,
+  `registration_id` VARCHAR(20) NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_mobile_waiter_idx` (`waiter_id`),
+  CONSTRAINT `fk_mobile_waiter_id` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 COMMIT;

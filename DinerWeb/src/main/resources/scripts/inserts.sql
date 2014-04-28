@@ -5,6 +5,8 @@ insert into `diner`.`parameter` (id, restaurant_name, dinner_service_price, dinn
 insert into `diner`.`waiter` (id, name, surname, active) values (1, 'Carlos', 'Rodríguez', true);
 insert into `diner`.`waiter` (id, name, surname, active) values (2, 'Roberto', 'Fernández', true);
 
+insert into `diner`.`device` (id, waiter_id, registration_id) values ('00B0D086BBF7', 1,'66666666666');
+
 insert into `diner`.`order_detail_state` (id, description) values (1, 'Nuevo');
 insert into `diner`.`order_detail_state` (id, description) values (2, 'Solicitado');
 insert into `diner`.`order_detail_state` (id, description) values (3, 'En Preparación');
