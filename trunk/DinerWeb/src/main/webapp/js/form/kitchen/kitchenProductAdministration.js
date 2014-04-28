@@ -14,7 +14,7 @@ KitchenProductAdministration = function() {
 				for (var j = 0; j < len; ++j) {
 					var long = response[i].subcategories[j].products.length;
 					for (var k = 0; k < long; ++k) {	
-						if(response[i].subcategories[j].products[k].kitchen == true){
+						if(response[i].subcategories[j].products[k].kitchen == true && response[i].subcategories[j].products[k].active == true){
 							var product = [];
 							product.push(response[i].subcategories[j].products[k].id);
 							product.push(response[i].subcategories[j].products[k].description);
@@ -62,14 +62,7 @@ KitchenProductAdministration = function() {
 	});
 	
 	$("#stockStateChange").click(function() {
-		if(!stock){
-			parent.find(".no-stock-row").hide();
-			parent.find(".stock-row").show();
-		}else{
-			parent.find(".stock-row").hide();
-			parent.find(".no-stock-row").show();
-		}
-			
+
 		$.ajax({
 			url: "updateProductStock",
 			type: "POST",
@@ -79,7 +72,13 @@ KitchenProductAdministration = function() {
 			},
 			async: true,
 			success: function(response) {
-				//window.location = "deleteConfirmation";
+				if(!stock){
+					parent.find(".no-stock-row").hide();
+					parent.find(".stock-row").show();
+				}else{
+					parent.find(".stock-row").hide();
+					parent.find(".no-stock-row").show();
+				}
 			},
 			error: function(response) {
 			}
