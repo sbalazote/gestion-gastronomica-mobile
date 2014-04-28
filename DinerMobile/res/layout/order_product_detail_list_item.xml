@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="confirmDelivered"
-            android:src="@drawable/btn_check_on" />
+            android:src="@drawable/ic_cab_done_holo_light" />
 
     </LinearLayout>
 
