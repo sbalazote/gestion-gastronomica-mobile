@@ -37,6 +37,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product product = this.products.get(position);
 		productTextView.setText(product.getDescription());
+		if (!product.getStock()) {
+			productTextView.setTextColor(Color.rgb(250, 0, 12));
+		}
 
 		if (!product.getCeliacAllowed()) {
 			celiacImageView.setVisibility(View.INVISIBLE);

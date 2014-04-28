@@ -12,6 +12,7 @@ public class Product implements Serializable {
 	private Boolean celiacAllowed;
 	private Boolean kitchen;
 	private Boolean active;
+	private Boolean stock;
 
 	public Integer getId() {
 		return this.id;
@@ -59,6 +60,14 @@ public class Product implements Serializable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public Boolean getStock() {
+		return this.stock;
+	}
+
+	public void setStock(Boolean stock) {
+		this.stock = stock;
 	}
 
 }

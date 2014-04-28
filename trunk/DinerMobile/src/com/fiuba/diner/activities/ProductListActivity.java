@@ -1,6 +1,7 @@
 package com.fiuba.diner.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -39,13 +40,19 @@ public class ProductListActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Product product = (Product) parent.getItemAtPosition(position);
-
-				Intent returnIntent = new Intent();
-				returnIntent.putExtra(ProductListActivity.EXTRA_PRODUCT, product);
-				ProductListActivity.this.setResult(RESULT_OK, returnIntent);
-				ProductListActivity.this.finish();
+				if (product.getStock()) {
+					Intent returnIntent = new Intent();
+					returnIntent.putExtra(ProductListActivity.EXTRA_PRODUCT, product);
+					ProductListActivity.this.setResult(RESULT_OK, returnIntent);
+					ProductListActivity.this.finish();
+				} else {
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProductListActivity.this);
+					alertDialogBuilder.setMessage("No hay stock del producto seleccionado.");
+					alertDialogBuilder.setNeutralButton("Aceptar", null);
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					alertDialog.show();
+				}
 			}
-
 		});
 	}
 
