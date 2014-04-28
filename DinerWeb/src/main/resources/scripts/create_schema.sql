@@ -55,6 +55,7 @@ CREATE TABLE `diner`.`product` (
 	`kitchen` bit(1) NOT NULL,
 	`active` bit(1) NOT NULL,
 	`subcategory_id` int(8) NOT NULL,
+	`stock` bit(1) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `fk_product_subcategory_idx` (`subcategory_id`),
 	CONSTRAINT `fk_product_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION

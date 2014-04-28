@@ -35,7 +35,13 @@
 	        </li>
 		</ul>
 		<ul class="nav navbar-nav">
-		   	<li class="activable"><a href="kitchen"><spring:message code="common.kitchen"/></a></li>
+		   	<li class="activable dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="common.kitchen"/> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+			    	<li><a href="kitchen"><spring:message code="common.requests"/></a></li>
+			    	<li><a href="kitchenProductAdministration"><spring:message code="common.products"/></a></li>
+				</ul>
+	        </li>
 		</ul>
 		<ul class="nav navbar-nav">
 		   	<li class="activable"><a href="bar"><spring:message code="common.bar"/></a></li>

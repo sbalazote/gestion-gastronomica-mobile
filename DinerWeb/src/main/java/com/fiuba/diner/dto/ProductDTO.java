@@ -12,6 +12,7 @@ public class ProductDTO implements Serializable {
 	private boolean active;
 	private boolean celiacAllowed;
 	private Integer oldSubcategoryId;
+	private boolean stock;
 
 	public Integer getId() {
 		return this.id;
@@ -67,6 +68,14 @@ public class ProductDTO implements Serializable {
 
 	public void setCeliacAllowed(boolean celiacAllowed) {
 		this.celiacAllowed = celiacAllowed;
+	}
+
+	public boolean isStock() {
+		return this.stock;
+	}
+
+	public void setStock(boolean stock) {
+		this.stock = stock;
 	}
 
 }
