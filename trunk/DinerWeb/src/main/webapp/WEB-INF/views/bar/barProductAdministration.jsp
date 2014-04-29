@@ -1,10 +1,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<script type="text/javascript" src="js/form/kitchen/kitchenProductAdministration.js"></script>
+<script type="text/javascript" src="js/form/bar/barProductAdministration.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		new KitchenProductAdministration();
+		new BarProductAdministration();
 	});
 </script>
 

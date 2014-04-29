@@ -31,4 +31,9 @@ public class BarController {
 		return details;
 	}
 
+	@RequestMapping(value = "/barProductAdministration", method = RequestMethod.GET)
+	public String barProductAdministration(ModelMap modelMap) throws Exception {
+		return "barProductAdministration";
+	}
+
 }

@@ -35,6 +35,7 @@
 	            <th><spring:message code="common.category"/></th>
 	            <th><spring:message code="common.subcategory"/></th>
 	            <th><spring:message code="common.price"/></th>
+	            <th><spring:message code="common.celiacAllowed"/></th>
 	           	<th><spring:message code="common.active"/></th>
 	           	<th><spring:message code="common.action"/></th>
 	        </tr>
