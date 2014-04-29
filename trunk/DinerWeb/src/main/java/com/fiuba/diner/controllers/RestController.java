@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.service.CategoryService;
+import com.fiuba.diner.service.DeviceService;
 import com.fiuba.diner.service.FloorService;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
@@ -42,6 +44,8 @@ public class RestController {
 	private OrderService orderService;
 	@Autowired
 	private ParameterService parameterService;
+	@Autowired
+	private DeviceService deviceService;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	@ResponseBody
@@ -77,6 +81,13 @@ public class RestController {
 	@ResponseBody
 	public List<Table> getTables() throws IOException {
 		return this.tableService.getAll();
+	}
+
+	@RequestMapping(value = "/devices", method = RequestMethod.POST)
+	@ResponseBody
+	public String postDevice(@RequestBody Device device) throws IOException {
+		this.deviceService.updateRegistrationId(device);
+		return device.getId();
 	}
 
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
