@@ -19,4 +19,6 @@ public interface OrderService {
 
 	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 
+	void changeState(Integer id);
+
 }

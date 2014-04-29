@@ -102,4 +102,11 @@ public class RestController {
 		return this.parameterService.get(id);
 	}
 
+	@RequestMapping(value = "/changeState", method = RequestMethod.POST)
+	public @ResponseBody
+	void changeState(@RequestParam Integer id) throws Exception {
+		System.out.println(id);
+		this.orderService.changeState(id);
+	}
+
 }

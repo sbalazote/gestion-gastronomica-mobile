@@ -51,4 +51,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDetailDTO> getRequestedOrders(boolean kitchen) {
 		return this.orderDAO.getRequestedOrders(kitchen);
 	}
+
+	@Override
+	public void changeState(Integer id) {
+		this.orderDAO.changeState(id);
+	}
 }
