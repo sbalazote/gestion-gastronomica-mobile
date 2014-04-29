@@ -1,6 +1,7 @@
 package com.fiuba.diner.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -35,31 +36,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 
 	@Override
 	public void save(Order order) {
-		// boolean found = false;
-		// if (order.getId() != null) {
-		// Order currentOrder = this.get(order.getId());
-		// for (OrderDetail currentOrderDetail : currentOrder.getDetails()) {
-		// found = false;
-		// for (OrderDetail orderDetail : order.getDetails()) {
-		// if (orderDetail.getId() != null) {
-		// if (orderDetail.getId().equals(currentOrderDetail.getId())) {
-		// found = true;
-		// }
-		// }
-		// }
-		// if (!found) {
-		// this.sessionFactory.getCurrentSession().createQuery("delete from OrderDetail where id = " + currentOrderDetail.getId());
-		// }
-		// }
-		// currentOrder.getDetails().clear();
-		// for (OrderDetail orderDetail : order.getDetails()) {
-		// currentOrder.getDetails().add(orderDetail);
-		// }
-		// currentOrder.setCustomerAmount(order.getCustomerAmount());
-		// this.sessionFactory.getCurrentSession().saveOrUpdate(currentOrder);
-		// } else {
 		this.sessionFactory.getCurrentSession().merge(order);
-		// }
 	}
 
 	@Override
@@ -108,15 +85,25 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	}
 
 	@Override
-	public void changeState(Integer id) {
+	public OrderDetail changeState(Integer id) {
 		Query query;
 		query = this.sessionFactory.getCurrentSession().createQuery("select o From OrderDetail as o where o.id = " + id);
 
 		OrderDetail orderDetail = (OrderDetail) query.list().get(0);
+
 		Integer orderDetailStateTo = orderDetail.getState().getId() + 1;
+
 		query = this.sessionFactory.getCurrentSession().createQuery("select o from OrderDetailState as o where o.id =" + orderDetailStateTo);
 		OrderDetailState orderDetailState = (OrderDetailState) query.list().get(0);
 		orderDetail.setState(orderDetailState);
+		if (orderDetailStateTo.equals(3)) {
+			orderDetail.setPreparationStartDate(new Date());
+		}
+		if (orderDetailStateTo.equals(4)) {
+			orderDetail.setPreparationEndDate(new Date());
+		}
 		this.sessionFactory.getCurrentSession().saveOrUpdate(orderDetail);
+
+		return orderDetail;
 	}
 }
