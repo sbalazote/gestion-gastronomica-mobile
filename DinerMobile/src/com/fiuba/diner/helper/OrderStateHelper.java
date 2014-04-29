@@ -4,7 +4,7 @@ import com.fiuba.diner.model.OrderDetailState;
 
 public enum OrderStateHelper {
 
-	NEW(1, "Nuevo"), REQUESTED(2, "Solicitado"), IN_PROCESS(3, "En preparación"), PREPARED(4, "Preparado"), DELIVERED(5, "Entregado"), BILLED(6, "Facturado");
+	NEW(1, "Nuevo"), REQUESTED(2, "Solicitado"), IN_PROCESS(3, "En preparación"), PREPARED(4, "Preparado"), DELIVERED(5, "Entregado");
 
 	private OrderDetailState state;
 

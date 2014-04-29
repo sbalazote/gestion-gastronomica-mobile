@@ -87,11 +87,14 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		TextView productState = (TextView) rowView.findViewById(R.id.orderStateTextView);
 		if (this.orderDetails.get(position) != null) {
 			Integer stateId = this.orderDetails.get(position).getState().getId();
+
 			if (!stateId.equals(OrderStateHelper.NEW.getState().getId())) {
 				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
 				if (stateId.equals(OrderStateHelper.PREPARED.getState().getId())) {
 					deleteProductButton.setVisibility(ImageButton.GONE);
 					confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
+					productCommentEditText.setEnabled(false);
+					productAmountSpinner.setEnabled(false);
 				} else {
 					if (stateId.equals(OrderStateHelper.REQUESTED.getState().getId())) {
 						deleteProductButton.setVisibility(ImageButton.VISIBLE);
@@ -99,6 +102,8 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 					} else {
 						deleteProductButton.setVisibility(ImageButton.GONE);
 						confirmDeliveryButton.setVisibility(ImageButton.GONE);
+						productCommentEditText.setEnabled(false);
+						productAmountSpinner.setEnabled(false);
 					}
 				}
 			} else {

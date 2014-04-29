@@ -106,7 +106,7 @@ public class OrderActivity extends Activity {
 
 	private void openConfirmDialog(final View view, final OrderDetail orderDetail, final Adapter adapter) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("¡Esta seguro que desea confirma la entrega?");
+		alertDialogBuilder.setMessage("¿Esta seguro que desea confirmar la entrega?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -245,7 +245,7 @@ public class OrderActivity extends Activity {
 	public void onBackPressed() {
 		if (this.hasChanged) {
 			this.openConfirmExit();
-			// super.onBackPressed();
+			super.onBackPressed();
 		} else {
 			super.onBackPressed();
 		}
@@ -259,7 +259,7 @@ public class OrderActivity extends Activity {
 
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-
+				OrderActivity.this.finish();
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
