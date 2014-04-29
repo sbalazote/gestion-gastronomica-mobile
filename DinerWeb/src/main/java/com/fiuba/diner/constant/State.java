@@ -2,7 +2,7 @@ package com.fiuba.diner.constant;
 
 public enum State {
 
-	NUEVO(1), SOLICITADO(2), EN_PREPARACION(3), PREPARADO(4), ENTREGADO(5), FACTURADO(6);
+	NUEVO(1), SOLICITADO(2), EN_PREPARACION(3), PREPARADO(4), ENTREGADO(5);
 
 	private Integer id;
 

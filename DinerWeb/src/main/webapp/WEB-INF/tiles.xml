@@ -79,5 +79,7 @@
         <put-attribute name="body" value="/WEB-INF/views/kitchen/kitchenProductAdministration.jsp" />
     </definition>
     
-    
+    <definition name="barProductAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/bar/barProductAdministration.jsp" />
+    </definition>
 </tiles-definitions>

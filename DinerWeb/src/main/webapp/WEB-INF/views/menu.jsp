@@ -44,7 +44,13 @@
 	        </li>
 		</ul>
 		<ul class="nav navbar-nav">
-		   	<li class="activable"><a href="bar"><spring:message code="common.bar"/></a></li>
+			<li class="activable dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="common.bar"/> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+			    	<li><a href="bar"><spring:message code="common.requests"/></a></li>
+			    	<li><a href="barProductAdministration"><spring:message code="common.products"/></a></li>
+				</ul>
+	        </li>
 		</ul>
 	</div>
 </nav>

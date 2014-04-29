@@ -1,4 +1,4 @@
-KitchenProductAdministration = function() {
+BarProductAdministration = function() {
 	var categoryId = null;
 	var parent;
 	var stock;
@@ -14,13 +14,12 @@ KitchenProductAdministration = function() {
 				for (var j = 0; j < len; ++j) {
 					var long = response[i].subcategories[j].products.length;
 					for (var k = 0; k < long; ++k) {	
-						if(response[i].subcategories[j].products[k].kitchen == true && response[i].subcategories[j].products[k].active == true){
+						if(response[i].subcategories[j].products[k].kitchen == false && response[i].subcategories[j].products[k].active == true){
 							var product = [];
 							product.push(response[i].subcategories[j].products[k].id);
 							product.push(response[i].subcategories[j].products[k].description);
 							product.push(response[i].description);
 							product.push(response[i].subcategories[j].description);
-							product.push(response[i].subcategories[j].products[k].celiacAllowed);
 							
 							if(response[i].subcategories[j].products[k].stock==true){
 								product.push("Disponible");	

@@ -70,8 +70,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	@Override
 	public Order getOrder(Integer tableId) {
 		try {
-			String sentence = "select o from Order as o inner join o.tables as t inner join o.details as d where t.id = :tableId and d.state.id <>"
-					+ State.FACTURADO.getId();
+			String sentence = "select o from Order as o inner join o.tables as t inner join o.details as d where t.id = :tableId";
 			Query query;
 			query = this.sessionFactory.getCurrentSession().createQuery(sentence);
 			query.setParameter("tableId", tableId);
@@ -88,7 +87,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	public List<OrderDetailDTO> getRequestedOrders(boolean kitchen) {
 		try {
 			String sentence = "select d, t from Order as o inner join o.details as d inner join o.tables as t where d.product.kitchen = " + kitchen
-					+ " and d.state.id <> " + State.FACTURADO.getId() + " order by d.id desc";
+					+ " and d.state.id <> " + State.ENTREGADO.getId() + " order by d.id desc";
 			Query query;
 			query = this.sessionFactory.getCurrentSession().createQuery(sentence);
 

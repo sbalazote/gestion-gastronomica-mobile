@@ -45,7 +45,6 @@ public class KitchenController {
 	public @ResponseBody
 	void saveProduct(@RequestParam Integer productId, boolean stock) throws Exception {
 		Product product = this.productService.get(productId);
-		System.out.println("Aca setea el nuevo estado de stock " + stock + "para el producto" + product.getId());
 		product.setStock(stock);
 		this.productService.save(product);
 	}

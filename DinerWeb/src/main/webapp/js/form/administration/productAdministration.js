@@ -19,6 +19,12 @@ ProductAdministration = function() {
 						product.push(response[i].subcategories[j].description);
 						product.push(response[i].subcategories[j].products[k].price);
 						
+						if(response[i].subcategories[j].products[k].celiacAllowed==true){
+							product.push("Si");	
+						}else{
+							product.push("No");
+						}
+						
 						if(response[i].subcategories[j].products[k].active==true){
 							product.push("Si");	
 						}else{
