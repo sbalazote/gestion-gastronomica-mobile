@@ -28,6 +28,7 @@
 	           	<th><spring:message code="common.comment"/></th>
 	           	<th><spring:message code="common.waiter"/></th>
 	           	<th><spring:message code="common.requestDate"/></th>
+	           	<th><spring:message code="common.time"/></th>
 	           	<th><spring:message code="common.state"/></th>
 	           	<th><spring:message code="common.action"/></th>
 	        </tr>
