@@ -1,5 +1,6 @@
 
 Bar = function() {
+	
 	var orderDetailId;
 	window.setInterval(function() {
     	$.ajax({
@@ -25,6 +26,7 @@ Bar = function() {
     				} else {
     					orderDetail.push("");
     				}
+    				orderDetail.push("<abbr class='timeago' title='"+ requestDate.format("yyyy-mm-dd HH:MM:ss") + "'>09:24:17Z</abbr>");
     				
     				if (response[i].detail.state.id == 2) {
     					orderDetail.push("<strong><span style='color:blue'>" + response[i].detail.state.description + "</span></strong>");
@@ -45,12 +47,12 @@ Bar = function() {
     			    "iDisplayLength": -1,
     			    "aaSorting": [[ 0, "desc" ]] // Sort by first column descending
     			});
+    			$('.timeago').timeago();
     		},
     		error: function(response) {
     		}
     	});
 	}, 5000);
-	
 	
 	
 	$('#divTable').on("click", ".a-start", function() {

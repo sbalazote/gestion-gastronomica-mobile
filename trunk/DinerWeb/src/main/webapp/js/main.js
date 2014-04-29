@@ -125,4 +125,9 @@ $(document).ready(function() {
 	    return value > param;
 	},"Por favor, ingrese un número mayor a cero");
 	
+	jQuery(document).ready(function() {
+		  jQuery("abbr.timeago").timeago();
+	});
+	
+	
 });

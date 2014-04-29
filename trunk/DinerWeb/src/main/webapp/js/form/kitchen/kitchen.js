@@ -25,6 +25,7 @@ Kitchen = function() {
 					} else {
 						orderDetail.push("");
 					}
+					orderDetail.push("<abbr class='timeago' title='"+ requestDate.format("yyyy-mm-dd HH:MM:ss") + "'>09:24:17Z</abbr>");
 					
 					if (response[i].detail.state.id == 2) {
 						orderDetail.push("<strong><span style='color:blue'>" + response[i].detail.state.description + "</span></strong>");
@@ -45,6 +46,7 @@ Kitchen = function() {
 				    "iDisplayLength": -1,
 				    "aaSorting": [[ 0, "desc" ]] // Sort by first column descending
 				});
+				$('.timeago').timeago();
 			},
 			error: function(response) {
 			}
