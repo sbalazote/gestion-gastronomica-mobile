@@ -59,16 +59,16 @@ Bar = function() {
 		parent = $(this).parent().parent();
 		orderDetailId = parent.find("td:first-child").html();
 		changeState();
-		parent.find("td:eq(7)").html("<strong><span style='color:orange'>En Preparación</span></strong>");
-		parent.find("td:eq(8)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
+		parent.find("td:eq(8)").html("<strong><span style='color:orange'>En Preparación</span></strong>");
+		parent.find("td:eq(9)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
 	});
 	
 	$('#divTable').on("click", ".a-end", function() {
 		parent = $(this).parent().parent();
 		orderDetailId = parent.find("td:first-child").html();
 		changeState();
-		parent.find("td:eq(7)").html("<strong><span style='color:green'>Preparado</span></strong>");
-		parent.find("td:eq(8)").html("");
+		parent.find("td:eq(8)").html("<strong><span style='color:green'>Preparado</span></strong>");
+		parent.find("td:eq(9)").html("");
 	});
 	
 	var changeState = function() {
