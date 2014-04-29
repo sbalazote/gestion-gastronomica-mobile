@@ -161,6 +161,13 @@ public class OrderActivity extends Activity {
 		this.order.setTables(tables);
 
 		new ConfirmOrderTask(null).execute(this.order);
+
+		// Updatear el Registration ID
+		/*
+		 * Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
+		 * UpdateDeviceTask(null).execute(device);
+		 */
+
 		this.finish();
 	}
 
