@@ -18,6 +18,7 @@ import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.model.Waiter;
@@ -93,7 +94,6 @@ public class RestController {
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer postOrder(@RequestBody Order order) throws IOException {
-		System.out.println("Mesa " + order.getTables().get(0).getId());
 		this.orderService.save(order);
 		return order.getId();
 	}
@@ -115,9 +115,8 @@ public class RestController {
 
 	@RequestMapping(value = "/changeState", method = RequestMethod.POST)
 	public @ResponseBody
-	void changeState(@RequestParam Integer id) throws Exception {
-		System.out.println(id);
-		this.orderService.changeState(id);
+	OrderDetail changeState(@RequestParam Integer id) throws Exception {
+		return this.orderService.changeState(id);
 	}
 
 }

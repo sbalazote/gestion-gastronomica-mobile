@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.service.OrderService;
 
 @Service
@@ -53,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void changeState(Integer id) {
-		this.orderDAO.changeState(id);
+	public OrderDetail changeState(Integer id) {
+		return this.orderDAO.changeState(id);
 	}
 }

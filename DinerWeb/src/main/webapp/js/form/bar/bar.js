@@ -1,17 +1,18 @@
 
 Bar = function() {
-	
 	var orderDetailId;
+	var orderDetailStartDate;
+	
 	window.setInterval(function() {
-    	$.ajax({
-    		url: "getBarOrders",
-    		type: "GET",
-    		async: false,
-    		success: function(response) {
-    			var aaData = [];
-    			for (var i = 0, l = response.length; i < l; ++i) {
-    				var orderDetail = [];
-    				
+		$.ajax({
+			url: "getBarOrders",
+			type: "GET",
+			async: false,
+			success: function(response) {
+				var aaData = [];
+				for (var i = 0, l = response.length; i < l; ++i) {
+					var orderDetail = [];
+					
     				orderDetail.push(response[i].detail.id);
     				orderDetail.push(response[i].table.id);
     				orderDetail.push(response[i].detail.product.description);
@@ -26,7 +27,6 @@ Bar = function() {
     				} else {
     					orderDetail.push("");
     				}
-    				orderDetail.push("<abbr class='timeago' title='"+ requestDate.format("yyyy-mm-dd HH:MM:ss") + "'>09:24:17Z</abbr>");
     				
     				if (response[i].detail.state.id == 2) {
     					orderDetail.push("<strong><span style='color:blue'>" + response[i].detail.state.description + "</span></strong>");
@@ -38,7 +38,12 @@ Bar = function() {
     					orderDetail.push("<strong><span style='color:green'>" + response[i].detail.state.description + "</span></strong>");
     					orderDetail.push("");
     				}
-    				
+    				if(response[i].detail.preparationStartDate != undefined && response[i].detail.preparationEndDate == undefined ){
+    					var newDate = dateFormat(response[i].detail.preparationStartDate, "yyyy-mm-dd HH:MM:ss");
+    					orderDetail.push("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
+    				}else{
+    					orderDetail.push("");
+    				}
     				aaData.push(orderDetail);
     			}
     			$('.datatable').dataTable({
@@ -48,26 +53,29 @@ Bar = function() {
     			    "aaSorting": [[ 0, "desc" ]] // Sort by first column descending
     			});
     			$('.timeago').timeago();
-    		},
-    		error: function(response) {
-    		}
-    	});
+			},
+			error: function(response) {
+			}
+		});
 	}, 5000);
-	
 	
 	$('#divTable').on("click", ".a-start", function() {
 		parent = $(this).parent().parent();
 		orderDetailId = parent.find("td:first-child").html();
 		changeState();
-		parent.find("td:eq(8)").html("<strong><span style='color:orange'>En Preparación</span></strong>");
-		parent.find("td:eq(9)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
+		parent.find("td:eq(7)").html("<strong><span style='color:orange'>En Preparación</span></strong>");
+		var newDate = dateFormat(orderDetailStartDate, "yyyy-mm-dd HH:MM:ss");
+		parent.find("td:eq(8)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
+		parent.find("td:eq(9)").html("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
+		$('.timeago').timeago();
 	});
 	
 	$('#divTable').on("click", ".a-end", function() {
 		parent = $(this).parent().parent();
 		orderDetailId = parent.find("td:first-child").html();
 		changeState();
-		parent.find("td:eq(8)").html("<strong><span style='color:green'>Preparado</span></strong>");
+		parent.find("td:eq(7)").html("<strong><span style='color:green'>Preparado</span></strong>");
+		parent.find("td:eq(8)").html("");
 		parent.find("td:eq(9)").html("");
 	});
 	
@@ -81,10 +89,11 @@ Bar = function() {
 			},
 			async: true,
 			success: function(response) {
+				orderDetailStartDate = response.preparationStartDate;
 			},
 			error: function(response) {
 			}
 		});
 	};
-	
+    	
 };

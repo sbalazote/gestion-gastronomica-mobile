@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.OrderDetail;
 
 public interface OrderService {
 
@@ -19,6 +20,6 @@ public interface OrderService {
 
 	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 
-	void changeState(Integer id);
+	OrderDetail changeState(Integer id);
 
 }
