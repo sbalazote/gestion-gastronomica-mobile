@@ -13,6 +13,7 @@ import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
+import com.fiuba.diner.model.OrderDetailState;
 import com.fiuba.diner.model.Table;
 
 @Repository
@@ -106,4 +107,16 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 		}
 	}
 
+	@Override
+	public void changeState(Integer id) {
+		Query query;
+		query = this.sessionFactory.getCurrentSession().createQuery("select o From OrderDetail as o where o.id = " + id);
+
+		OrderDetail orderDetail = (OrderDetail) query.list().get(0);
+		Integer orderDetailStateTo = orderDetail.getState().getId() + 1;
+		query = this.sessionFactory.getCurrentSession().createQuery("select o from OrderDetailState as o where o.id =" + orderDetailStateTo);
+		OrderDetailState orderDetailState = (OrderDetailState) query.list().get(0);
+		orderDetail.setState(orderDetailState);
+		this.sessionFactory.getCurrentSession().saveOrUpdate(orderDetail);
+	}
 }

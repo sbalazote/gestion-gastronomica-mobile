@@ -1,6 +1,6 @@
 
 Bar = function() {
-	
+	var orderDetailId;
 	$.ajax({
 		url: "getBarOrders",
 		type: "GET",
@@ -49,6 +49,36 @@ Bar = function() {
 		}
 	});
 	
+	$('#divTable').on("click", ".a-start", function() {
+		parent = $(this).parent().parent();
+		orderDetailId = parent.find("td:first-child").html();
+		changeState();
+		parent.find("td:eq(7)").html("<strong><span style='color:orange'>En Preparación</span></strong>");
+		parent.find("td:eq(8)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
+	});
 	
+	$('#divTable').on("click", ".a-end", function() {
+		parent = $(this).parent().parent();
+		orderDetailId = parent.find("td:first-child").html();
+		changeState();
+		parent.find("td:eq(7)").html("<strong><span style='color:red'>Preparado</span></strong>");
+		parent.find("td:eq(8)").html("");
+	});
+	
+	var changeState = function() {
+
+		$.ajax({
+			url: "changeState",
+			type: "POST",
+			data: {
+				id: orderDetailId,
+			},
+			async: true,
+			success: function(response) {
+			},
+			error: function(response) {
+			}
+		});
+	};
 	
 };

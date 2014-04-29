@@ -18,4 +18,6 @@ public interface OrderDAO {
 	Order getOrder(Integer tableId);
 
 	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
+
+	void changeState(Integer id);
 }
