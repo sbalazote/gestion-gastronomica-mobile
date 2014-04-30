@@ -9,8 +9,8 @@ insert into `diner`.`device` (id, waiter_id, registration_id) values ('00B0D086B
 
 insert into `diner`.`order_detail_state` (id, description) values (1, 'Nuevo');
 insert into `diner`.`order_detail_state` (id, description) values (2, 'Solicitado');
-insert into `diner`.`order_detail_state` (id, description) values (3, 'En Preparación');
-insert into `diner`.`order_detail_state` (id, description) values (4, 'Preparado');
+insert into `diner`.`order_detail_state` (id, description) values (3, 'Iniciado');
+insert into `diner`.`order_detail_state` (id, description) values (4, 'Finalizado');
 insert into `diner`.`order_detail_state` (id, description) values (5, 'Entregado');
 
 insert into `diner`.`table_state` (id, description) values (1, 'Disponible');
