@@ -63,21 +63,29 @@ Kitchen = function() {
 		parent = $(this).parent().parent();
 		orderDetailId = parent.find("td:first-child").html();
 		changeState();
-		parent.find("td:eq(7)").html("<strong><span style='color:orange'>En Preparación</span></strong>");
-		var newDate = dateFormat(orderDetailStartDate, "yyyy-mm-dd HH:MM:ss");
-		parent.find("td:eq(8)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
-		parent.find("td:eq(9)").html("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
-		$('.timeago').timeago();
+		afterStart();
 	});
 	
 	$('#divTable').on("click", ".a-end", function() {
 		parent = $(this).parent().parent();
 		orderDetailId = parent.find("td:first-child").html();
 		changeState();
-		parent.find("td:eq(7)").html("<strong><span style='color:green'>Preparado</span></strong>");
+		afterEnds();
+	});
+	
+	var afterStart = function() {
+		parent.find("td:eq(7)").html("<strong><span style='color:orange'>Iniciado</span></strong>");
+		var newDate = dateFormat(orderDetailStartDate, "yyyy-mm-dd HH:MM:ss");
+		parent.find("td:eq(8)").html("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
+		parent.find("td:eq(9)").html("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
+		$('.timeago').timeago();
+	}
+	
+	var afterEnds = function() {
+		parent.find("td:eq(7)").html("<strong><span style='color:green'>Finalizado</span></strong>");
 		parent.find("td:eq(8)").html("");
 		parent.find("td:eq(9)").html("");
-	});
+	}
 	
 	var changeState = function() {
 
