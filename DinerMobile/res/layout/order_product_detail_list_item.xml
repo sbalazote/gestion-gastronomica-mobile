@@ -80,6 +80,8 @@
         android:gravity="left"
         android:paddingLeft="4dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/stateColor" />
+        android:textColor="@color/stateColor" 
+        android:textStyle="bold"
+        />
 
 </LinearLayout>

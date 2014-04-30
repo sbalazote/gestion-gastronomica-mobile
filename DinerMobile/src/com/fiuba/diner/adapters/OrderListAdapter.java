@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,21 +96,29 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 					confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
 					productCommentEditText.setEnabled(false);
 					productAmountSpinner.setEnabled(false);
+					productState.setTextColor(Color.rgb(34, 139, 34));
 				} else {
 					if (stateId.equals(OrderStateHelper.REQUESTED.getState().getId())) {
 						deleteProductButton.setVisibility(ImageButton.VISIBLE);
 						confirmDeliveryButton.setVisibility(ImageButton.GONE);
+						productState.setTextColor(Color.BLUE);
 					} else {
 						deleteProductButton.setVisibility(ImageButton.GONE);
 						confirmDeliveryButton.setVisibility(ImageButton.GONE);
 						productCommentEditText.setEnabled(false);
 						productAmountSpinner.setEnabled(false);
+						if (stateId.equals(OrderStateHelper.DELIVERED.getState().getId())) {
+							productState.setTextColor(Color.RED);
+						} else {
+							productState.setTextColor(Color.rgb(255, 140, 0));
+						}
 					}
 				}
 			} else {
 				productState.setText(OrderStateHelper.NEW.getState().getDescription());
 				deleteProductButton.setVisibility(ImageButton.VISIBLE);
 				confirmDeliveryButton.setVisibility(ImageButton.GONE);
+				productState.setTextColor(Color.BLACK);
 			}
 		}
 
