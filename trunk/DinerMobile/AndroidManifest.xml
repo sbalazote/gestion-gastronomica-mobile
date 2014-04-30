@@ -9,7 +9,21 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+ 	<!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+     <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+     <!-- Creates a custom permission so only this app can receive its messages.
+          NOTE: the permission *must* be called PACKAGE.permission.C2D_MESSAGE,
+          where PACKAGE is the application's package name.
+    -->
+    <permission
+        android:name="com.fiuba.diner.tasks.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.fiuba.diner.tasks.permission.C2D_MESSAGE" />
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -51,6 +65,18 @@
             android:name="com.fiuba.diner.activities.ProductListActivity"
             android:label="@string/new_order" >
         </activity>
+        
+        <receiver
+            android:name="com.fiuba.diner.gcm.BroadcastReceiverGcm"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.fiuba.diner.tasks" />
+            </intent-filter>
+        </receiver>
+        
+        <service android:name="com.fiuba.diner.gcm.IntentServiceGcm" />
+        
     </application>
 
 </manifest>
