@@ -5,6 +5,7 @@ import java.util.List;
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
+import com.fiuba.diner.model.OrderDetailState;
 
 public interface OrderDAO {
 
@@ -20,5 +21,9 @@ public interface OrderDAO {
 
 	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 
-	OrderDetail changeState(Integer id);
+	void saveOrderDetail(OrderDetail orderDetail);
+
+	OrderDetail getOrderDetail(Integer orderDetailId);
+
+	OrderDetailState getOrderDetailState(Integer stateId);
 }
