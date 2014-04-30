@@ -82,10 +82,10 @@ Bar = function() {
 	var changeState = function() {
 
 		$.ajax({
-			url: "changeState",
+			url: "changeOrderDetailState",
 			type: "POST",
 			data: {
-				id: orderDetailId,
+				orderDetailId: orderDetailId,
 			},
 			async: true,
 			success: function(response) {

@@ -1,7 +1,6 @@
 package com.fiuba.diner.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -85,25 +84,21 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	}
 
 	@Override
-	public OrderDetail changeState(Integer id) {
+	public OrderDetail getOrderDetail(Integer orderDetailId) {
 		Query query;
-		query = this.sessionFactory.getCurrentSession().createQuery("select o From OrderDetail as o where o.id = " + id);
+		query = this.sessionFactory.getCurrentSession().createQuery("select o From OrderDetail as o where o.id = " + orderDetailId);
 
-		OrderDetail orderDetail = (OrderDetail) query.list().get(0);
+		return (OrderDetail) query.list().get(0);
+	}
 
-		Integer orderDetailStateTo = orderDetail.getState().getId() + 1;
+	@Override
+	public void saveOrderDetail(OrderDetail orderDetail) {
+		this.sessionFactory.getCurrentSession().merge(orderDetail);
+	}
 
-		query = this.sessionFactory.getCurrentSession().createQuery("select o from OrderDetailState as o where o.id =" + orderDetailStateTo);
-		OrderDetailState orderDetailState = (OrderDetailState) query.list().get(0);
-		orderDetail.setState(orderDetailState);
-		if (orderDetailStateTo.equals(3)) {
-			orderDetail.setPreparationStartDate(new Date());
-		}
-		if (orderDetailStateTo.equals(4)) {
-			orderDetail.setPreparationEndDate(new Date());
-		}
-		this.sessionFactory.getCurrentSession().saveOrUpdate(orderDetail);
-
-		return orderDetail;
+	@Override
+	public OrderDetailState getOrderDetailState(Integer stateId) {
+		Query query = this.sessionFactory.getCurrentSession().createQuery("select o from OrderDetailState as o where o.id =" + stateId);
+		return (OrderDetailState) query.list().get(0);
 	}
 }

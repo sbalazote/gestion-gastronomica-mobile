@@ -1,5 +1,6 @@
 package com.fiuba.diner.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -7,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
+import com.fiuba.diner.model.OrderDetailState;
 import com.fiuba.diner.service.OrderService;
 
 @Service
@@ -54,7 +57,24 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderDetail changeState(Integer id) {
-		return this.orderDAO.changeState(id);
+	public OrderDetail changeOrderDetailState(Integer orderDetailId) {
+
+		OrderDetail orderDetail = this.orderDAO.getOrderDetail(orderDetailId);
+
+		Integer orderDetailStateTo = orderDetail.getState().getId() + 1;
+
+		OrderDetailState orderDetailState = this.orderDAO.getOrderDetailState(orderDetailStateTo);
+
+		orderDetail.setState(orderDetailState);
+
+		if (orderDetailStateTo.equals(State.EN_PREPARACION.getId())) {
+			orderDetail.setPreparationStartDate(new Date());
+		}
+		if (orderDetailStateTo.equals(State.PREPARADO.getId())) {
+			orderDetail.setPreparationEndDate(new Date());
+		}
+		this.orderDAO.saveOrderDetail(orderDetail);
+
+		return orderDetail;
 	}
 }

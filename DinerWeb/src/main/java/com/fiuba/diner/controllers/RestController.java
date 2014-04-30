@@ -113,10 +113,10 @@ public class RestController {
 		return this.parameterService.get(id);
 	}
 
-	@RequestMapping(value = "/changeState", method = RequestMethod.POST)
+	@RequestMapping(value = "/changeOrderDetailState", method = RequestMethod.POST)
 	public @ResponseBody
-	OrderDetail changeState(@RequestParam Integer id) throws Exception {
-		return this.orderService.changeState(id);
+	OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
+		return this.orderService.changeOrderDetailState(orderDetailId);
 	}
 
 }

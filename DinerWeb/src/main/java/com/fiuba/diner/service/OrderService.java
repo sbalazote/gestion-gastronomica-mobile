@@ -20,6 +20,6 @@ public interface OrderService {
 
 	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 
-	OrderDetail changeState(Integer id);
+	OrderDetail changeOrderDetailState(Integer orderDetailId);
 
 }
