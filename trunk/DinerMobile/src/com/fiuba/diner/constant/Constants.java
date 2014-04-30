@@ -15,4 +15,6 @@ public class Constants {
 
 	public static final Integer HARDCODED_WAITER_ID = 1;
 
+	public static final String PROJECT_ID = "59197394102";
+
 }
