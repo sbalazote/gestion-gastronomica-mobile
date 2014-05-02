@@ -5,14 +5,14 @@ import java.io.IOException;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.SharedPreferencesHelper;
+import com.fiuba.diner.model.Device;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class RegisterGcmTask extends AsyncTask<String, Integer, String> {
 
 	private final Context context;
-
-	// private final ConnectionHelper connectionHelper = new ConnectionHelper();
 
 	public RegisterGcmTask(Context context) {
 		this.context = context;
@@ -28,16 +28,16 @@ public class RegisterGcmTask extends AsyncTask<String, Integer, String> {
 			// Se hace el registro en los servidores de GCM
 			registrationId = gcm.register(com.fiuba.diner.constant.Constants.PROJECT_ID);
 
-			// Se hace el registro en nuestro servidor
-			// String response = this.connectionHelper.get("register/user=" + params[0] + "?regId=" + registrationId);
-			String response = "OK";
+			// Updatear el Registration ID
+			Device device = new Device();
+			device.setId(com.fiuba.diner.constant.Constants.MAC);
+			device.setRegistrationId(registrationId);
+			device.setWaiter(null);
+			new UpdateDeviceTask(null).execute(device);
 
 			// Guardamos los datos del registro
-			if (response == "OK") {
-				SharedPreferencesHelper.setRegistrationId(this.context, params[0], registrationId);
-			} else {
+			SharedPreferencesHelper.setRegistrationId(this.context, DataHolder.getCurrentWaiter().getId().toString(), registrationId);
 
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

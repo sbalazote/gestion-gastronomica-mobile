@@ -23,7 +23,6 @@ public class ConnectionHelper {
 	}
 
 	public String post(String url, String params) throws Exception {
-		System.out.println(params);
 		URL netUrl = new URL(Constants.WEBAPP_HOST + url);
 		HttpURLConnection connection = (HttpURLConnection) netUrl.openConnection();
 		connection.setRequestMethod("POST");
