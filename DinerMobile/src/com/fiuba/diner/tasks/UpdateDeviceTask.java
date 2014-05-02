@@ -21,7 +21,8 @@ public class UpdateDeviceTask extends AsyncTask<Device, Void, Void> {
 	@Override
 	protected Void doInBackground(Device... params) {
 		try {
-			this.connectionHelper.post("devices", this.mapper.writeValueAsString(params[0]));
+			String response = this.connectionHelper.post("devices", this.mapper.writeValueAsString(params[0]));
+			System.out.println("respuestaaa" + response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

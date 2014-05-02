@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.fiuba.diner.util.NotificationOnBar;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class IntentServiceGcm extends IntentService {
@@ -21,10 +22,8 @@ public class IntentServiceGcm extends IntentService {
 
 		if (!extras.isEmpty()) {
 			if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-				// int msg_id = Integer.parseInt(extras.getString("message_id"));
-				// llama al metodo que envia al status bar la notificacion
-				// Utils.sendNotification(this, Utils.REQUEST_CODE_GCM, msg_id, com.flowpro.courier.R.drawable.ic_launcher, "Notificacion de Flowpro Courier",
-				// extras.getString("message"));
+				int msg_id = Integer.parseInt(extras.getString("message_id"));
+				NotificationOnBar.sendNotification(this, 1, msg_id, com.fiuba.diner.R.drawable.ic_launcher, "Diner", extras.getString("message"));
 			}
 		}
 		// Release the wake lock provided by the WakefulBroadcastReceiver.

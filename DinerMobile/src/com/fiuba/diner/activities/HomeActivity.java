@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.helper.Caller;
+import com.fiuba.diner.tasks.RegisterGcmTask;
 import com.fiuba.diner.tasks.SetUpTask;
 
 public class HomeActivity extends Activity implements Caller<Void> {
@@ -16,6 +17,7 @@ public class HomeActivity extends Activity implements Caller<Void> {
 		super.onCreate(savedInstanceState);
 		this.setTitle(R.string.hardcodedWaiter);
 		new SetUpTask(this).execute();
+		new RegisterGcmTask(this).execute();
 	}
 
 	@Override
