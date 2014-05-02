@@ -51,6 +51,7 @@ CREATE TABLE `diner`.`product` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(100) NOT NULL,
 	`price` decimal(6,2) NOT NULL,
+	`estimated_time` int(8),
 	`celiac_allowed` bit(1) NOT NULL,
 	`kitchen` bit(1) NOT NULL,
 	`active` bit(1) NOT NULL,

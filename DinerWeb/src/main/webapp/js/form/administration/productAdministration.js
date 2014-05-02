@@ -19,6 +19,12 @@ ProductAdministration = function() {
 						product.push(response[i].subcategories[j].description);
 						product.push(response[i].subcategories[j].products[k].price);
 						
+						if(response[i].subcategories[j].products[k].estimatedTime==null){
+							product.push("-");	
+						}else{
+							product.push(response[i].subcategories[j].products[k].estimatedTime);
+						}
+						
 						if(response[i].subcategories[j].products[k].celiacAllowed==true){
 							product.push("Si");	
 						}else{
@@ -30,6 +36,19 @@ ProductAdministration = function() {
 						}else{
 							product.push("No");
 						}
+						
+						if(response[i].subcategories[j].products[k].kitchen==true){
+							product.push("Si");	
+						}else{
+							product.push("No");
+						}
+						
+						if(response[i].subcategories[j].products[k].stock==true){
+							product.push("Si");	
+						}else{
+							product.push("No");
+						}
+						
 						product.push("<a href='javascript:void(0);' class='edit-row'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
 								"<a href='javascript:void(0);' class='delete-row'><span class='glyphicon glyphicon-remove'></span></a>" +
 								"<span class='span-categoryId' style='display:none'>" + response[i].id + "</span>"
