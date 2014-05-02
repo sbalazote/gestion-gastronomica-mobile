@@ -24,6 +24,9 @@ public class Product {
 	@Column(name = "price", nullable = false)
 	private Double price;
 
+	@Column(name = "estimated_time")
+	private Integer estimatedTime;
+
 	@Column(name = "celiac_allowed", nullable = false)
 	private Boolean celiacAllowed;
 
@@ -58,6 +61,14 @@ public class Product {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Integer getEstimatedTime() {
+		return this.estimatedTime;
+	}
+
+	public void setEstimatedTime(Integer estimatedTime) {
+		this.estimatedTime = estimatedTime;
 	}
 
 	public Boolean getCeliacAllowed() {

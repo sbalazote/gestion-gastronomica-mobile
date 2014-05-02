@@ -43,7 +43,10 @@ SaveProduct = function() {
 					"description": $("#descriptionInput").val(),
 					"subcategoryId": $("#subcategorySelect option:selected").val(),
 					"price": $("#priceInput").val(),
+					"estimatedTime": $("#estimatedTimeInput").val(),
 					"active": $("#activeSelect option:selected").val(),
+					"kitchen": $("#kitchenSelect option:selected").val(),
+					"stock": $("#stockSelect option:selected").val(),
 					"celiacAllowed": $("#celiacAllowedSelect option:selected").val(),
 					"oldSubcategoryId": $("#idSubcategory").val()
 			};

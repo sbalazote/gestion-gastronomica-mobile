@@ -9,9 +9,11 @@ public class ProductDTO implements Serializable {
 	private String description;
 	private Integer subcategoryId;
 	private Double price;
+	private Integer estimatedTime;
 	private boolean active;
 	private boolean celiacAllowed;
 	private Integer oldSubcategoryId;
+	private boolean kitchen;
 	private boolean stock;
 
 	public Integer getId() {
@@ -62,12 +64,28 @@ public class ProductDTO implements Serializable {
 		this.price = price;
 	}
 
+	public Integer getEstimatedTime() {
+		return this.estimatedTime;
+	}
+
+	public void setEstimatedTime(Integer estimatedTime) {
+		this.estimatedTime = estimatedTime;
+	}
+
 	public boolean isCeliacAllowed() {
 		return this.celiacAllowed;
 	}
 
 	public void setCeliacAllowed(boolean celiacAllowed) {
 		this.celiacAllowed = celiacAllowed;
+	}
+
+	public boolean isKitchen() {
+		return this.kitchen;
+	}
+
+	public void setKitchen(boolean kitchen) {
+		this.kitchen = kitchen;
 	}
 
 	public boolean isStock() {

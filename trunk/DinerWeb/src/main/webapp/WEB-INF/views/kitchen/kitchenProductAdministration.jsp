@@ -26,7 +26,7 @@
 	            <th><spring:message code="common.description"/></th>
 	            <th><spring:message code="common.category"/></th>
 	            <th><spring:message code="common.subcategory"/></th>
-	            <th><spring:message code="common.stockAvaiable"/></th>
+	            <th><spring:message code="common.stockAvailable"/></th>
 	           	<th><spring:message code="common.action"/></th>
 	        </tr>
    	 	</thead>
