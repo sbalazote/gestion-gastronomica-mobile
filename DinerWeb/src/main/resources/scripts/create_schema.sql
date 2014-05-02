@@ -151,7 +151,7 @@ CREATE TABLE `diner`.`table_layout` (
 CREATE TABLE `diner`.`device` (
   `id` VARCHAR(20) NOT NULL,
   `waiter_id` INT NULL,
-  `registration_id` VARCHAR(20) NULL,
+  `registration_id` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
   KEY `fk_mobile_waiter_idx` (`waiter_id`),
   CONSTRAINT `fk_mobile_waiter_id` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION

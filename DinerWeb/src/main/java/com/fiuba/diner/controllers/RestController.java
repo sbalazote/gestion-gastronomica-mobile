@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fiuba.diner.constant.State;
+import com.fiuba.diner.gcm.GCMServer;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.Floor;
@@ -86,7 +88,7 @@ public class RestController {
 
 	@RequestMapping(value = "/devices", method = RequestMethod.POST)
 	@ResponseBody
-	public String postDevice(@RequestBody Device device) throws IOException {
+	public String devices(@RequestBody Device device) throws IOException {
 		this.deviceService.updateRegistrationId(device);
 		return device.getId();
 	}
@@ -116,7 +118,10 @@ public class RestController {
 	@RequestMapping(value = "/changeOrderDetailState", method = RequestMethod.POST)
 	public @ResponseBody
 	OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
-		return this.orderService.changeOrderDetailState(orderDetailId);
+		OrderDetail orderDetail = this.orderService.changeOrderDetailState(orderDetailId);
+		if (orderDetail.getState().getId().equals(State.PREPARADO.getId())) {
+			GCMServer.sendNotification("Se encuentra para retirar el pedido: " + orderDetail.getProduct().getDescription());
+		}
+		return orderDetail;
 	}
-
 }

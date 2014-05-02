@@ -20,7 +20,6 @@ KitchenProductAdministration = function() {
 							product.push(response[i].subcategories[j].products[k].description);
 							product.push(response[i].description);
 							product.push(response[i].subcategories[j].description);
-							product.push(response[i].subcategories[j].products[k].celiacAllowed);
 							
 							if(response[i].subcategories[j].products[k].stock==true){
 								product.push("Disponible");	
