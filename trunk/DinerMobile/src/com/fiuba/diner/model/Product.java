@@ -13,6 +13,7 @@ public class Product implements Serializable {
 	private Boolean kitchen;
 	private Boolean active;
 	private Boolean stock;
+	private Integer estimatedTime;
 
 	public Integer getId() {
 		return this.id;
@@ -68,6 +69,14 @@ public class Product implements Serializable {
 
 	public void setStock(Boolean stock) {
 		this.stock = stock;
+	}
+
+	public Integer getEstimatedTime() {
+		return this.estimatedTime;
+	}
+
+	public void setEstimatedTime(Integer estimatedTime) {
+		this.estimatedTime = estimatedTime;
 	}
 
 }
