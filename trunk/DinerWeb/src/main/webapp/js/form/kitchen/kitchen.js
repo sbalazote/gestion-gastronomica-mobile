@@ -38,6 +38,14 @@ Kitchen = function() {
     					orderDetail.push("<strong><span style='color:green'>" + response[i].detail.state.description + "</span></strong>");
     					orderDetail.push("");
     				}
+    				
+    				if (response[i].detail.product.estimatedTime != null) {
+    					orderDetail.push(response[i].detail.product.estimatedTime);
+    				}
+    				else {
+    					orderDetail.push("-");
+    				}
+    				
     				if(response[i].detail.preparationStartDate != undefined && response[i].detail.preparationEndDate == undefined ){
     					var newDate = dateFormat(response[i].detail.preparationStartDate, "yyyy-mm-dd HH:MM:ss");
     					orderDetail.push("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");

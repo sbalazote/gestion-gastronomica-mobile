@@ -30,6 +30,7 @@
 	           	<th><spring:message code="common.requestDate"/></th>
 	           	<th><spring:message code="common.state"/></th>
 	           	<th><spring:message code="common.action"/></th>
+	           	<th><spring:message code="common.estimatedTime"/></th>
 	           	<th><spring:message code="common.time"/></th>
 	        </tr>
    	 	</thead>
