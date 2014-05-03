@@ -19,7 +19,7 @@ ProductAdministration = function() {
 						product.push(response[i].subcategories[j].description);
 						product.push(response[i].subcategories[j].products[k].price);
 						
-						if(response[i].subcategories[j].products[k].estimatedTime==null){
+						if(response[i].subcategories[j].products[k].estimatedTime == null){
 							product.push("-");	
 						}else{
 							product.push(response[i].subcategories[j].products[k].estimatedTime);
