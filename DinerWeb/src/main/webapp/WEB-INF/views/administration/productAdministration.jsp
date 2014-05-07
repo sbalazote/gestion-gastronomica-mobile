@@ -8,7 +8,7 @@
 	});
 </script>
 
-<div id="body">
+<div id="large-body">
 <div class="content">
 
 <div class="row">

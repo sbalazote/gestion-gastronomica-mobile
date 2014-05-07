@@ -11,7 +11,7 @@ import com.google.android.gcm.server.Sender;
 
 public class GCMServer {
 
-	private static final String REGISTRATION_ID = "APA91bFPYekAloaJiYqHGJbQIcNE7oSu6V1XHA0-iWl6haN1wjEqg-aK861RxVTepMd_oljocE_25_lSPDYQ36lVSEbILiAjgOkmAjB9LkIWAtBdVlcxi-k5EUw1PrGiHyTWKrqdB6G9JGSoDc2JaSnVqIQXV2HR_A";
+	private static final String REGISTRATION_ID = "APA91bHfAcbZEbHpBJQF3eijLukTG20tVDlzxTD_bOehoP0ZjR0dEOqzGPpRNxC7YawsH11jTZLPO1eOXTtAG3vaA89313lxMCyT6GAVlqyV7H3VMkiB2xtWz-5mnkOfYZbAxt05XmUerFtODxy4jrX2c5tIUcndRg";
 	private static final String SENDER_ID = "AIzaSyBsNjZXoDVfiv4AjiYz-JiCoTv2szqEs-4";
 
 	static public void sendNotification(String messageToSend) throws IOException {
