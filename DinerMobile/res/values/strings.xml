@@ -30,5 +30,9 @@
     <string name="listTables">Listar Mesas</string>
     
     <string name="floor">Piso</string>
+    
+    <string name="username">Nombre de Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Ingresar</string>
 
 </resources>
