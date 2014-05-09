@@ -300,4 +300,28 @@ insert into `diner`.`product` (id, description, price, celiac_allowed, kitchen, 
 insert into `diner`.`product` (id, description, price, celiac_allowed, kitchen, active, subcategory_id, stock) values (200, 'Estancia Mendoza Syrah', 38.00 , false, false, true, 18, true);
 insert into `diner`.`product` (id, description, price, celiac_allowed, kitchen, active, subcategory_id, stock) values (201, 'Estancia Mendoza Chardonnay', 38.00 , false, false, true, 18, true);
 
+insert into `diner`.`role` values (1, 'KITCHEN', 'Cocinero y Ayudante de Cocina');
+insert into `diner`.`role` values (2, 'BAR', 'Encargo de Barra o Bartender');
+insert into `diner`.`role` values (3, 'WAITER', 'Mozo');
+insert into `diner`.`role` values (4, 'CASHIER', 'Cajero o Cobrador');
+insert into `diner`.`role` values (5, 'ENTITY_ADMINISTRATION', 'Administración de Entidades');
+insert into `diner`.`role` values (6, 'USER_ADMINISTRATION', 'Administración de Usuarios');
+
+insert into `diner`.`user` values (1, "sbalazote", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (2, "mflongo", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (3, "lpalmieri", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (4, "frago", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (5, "admin", "bba48f6c994c885417a26397ac34aeb59981d0b6", 1);
+
+insert into user_role values (1, 1, 1);
+insert into user_role values (2, 2, 2);
+insert into user_role values (3, 3, 3);
+insert into user_role values (4, 4, 4);
+insert into user_role values (5, 5, 1);
+insert into user_role values (6, 5, 2);
+insert into user_role values (7, 5, 3);
+insert into user_role values (8, 5, 4);
+insert into user_role values (9, 5, 5);
+insert into user_role values (10, 5, 6);
+
 commit;

@@ -157,4 +157,32 @@ CREATE TABLE `diner`.`device` (
   CONSTRAINT `fk_mobile_waiter_id` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner`.`user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `active` bit(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `diner`.`role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `diner`.`user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_role_user_idx` (`user_id`),
+  KEY `fk_user_role_role_idx` (`role_id`),
+  CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_role_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 COMMIT;

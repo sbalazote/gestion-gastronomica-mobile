@@ -11,13 +11,11 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
         
-    <import resource="classpath:persistence-context.xml"/>
+    <import resource="classpath:application-context.xml"/>
     
 	<context:component-scan base-package="com.fiuba.diner.controllers"/>
 	
 	<mvc:annotation-driven/>
-	
-	<mvc:default-servlet-handler/>
 	
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 	    <property name="basenames">
@@ -25,6 +23,7 @@
 	        	<value>WEB-INF/messages/common</value>
 	        	<value>WEB-INF/messages/administration</value>
 	        	<value>WEB-INF/messages/configuration</value>
+	        	<value>WEB-INF/messages/login</value>
 	        </list>
 	    </property>
 	</bean>
