@@ -8,8 +8,7 @@
 	});
 </script>
 
-<div id="large-body">
-<div class="content">
+<form id="productAdministrationForm" action="" onsubmit="return false;">
 
 <div class="row">
 	<div class="col-md-9 form-group">
@@ -78,5 +77,4 @@
 	</div>
 </div>
 
-</div>
-</div>
+</form>

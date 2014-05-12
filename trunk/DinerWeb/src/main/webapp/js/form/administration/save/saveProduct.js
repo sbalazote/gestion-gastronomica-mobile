@@ -52,13 +52,13 @@ SaveProduct = function() {
 			};
 
 			$.ajax({
-				url: "saveProduct.do",
+				url: "saveProduct",
 				type: "POST",
 				contentType:"application/json",
 				data: JSON.stringify(jsonProduct),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved.do";
+					window.location = "entitySaved";
 				}
 			});
 		}

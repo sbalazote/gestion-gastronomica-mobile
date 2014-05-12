@@ -26,13 +26,13 @@ SaveCategory = function() {
 			};
 
 			$.ajax({
-				url: "saveCategory.do",
+				url: "saveCategory",
 				type: "POST",
 				contentType:"application/json",
 				data: JSON.stringify(jsonCategory),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved.do";
+					window.location = "entitySaved";
 				}
 			});
 		}
