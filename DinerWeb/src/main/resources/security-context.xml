@@ -15,18 +15,18 @@
 		<intercept-url pattern="/login**" access="permitAll" />
 		<intercept-url pattern="/logout**" access="permitAll" />
 		
-		<intercept-url pattern="/kitchen*.do" access="hasRole('KITCHEN')" />
-		<intercept-url pattern="/bar*.do" access="hasRole('BAR')" />
-		<intercept-url pattern="/*Administration.do" access="hasRole('ENTITY_ADMINISTRATION')" />
-		<intercept-url pattern="/userAdministration.do" access="hasRole('USER_ADMINISTRATION')" />
+		<intercept-url pattern="/kitchen*" access="hasRole('KITCHEN')" />
+		<intercept-url pattern="/bar*" access="hasRole('BAR')" />
+		<intercept-url pattern="/*Administration" access="hasRole('ENTITY_ADMINISTRATION')" />
+		<intercept-url pattern="/userAdministration" access="hasRole('USER_ADMINISTRATION')" />
 		
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		
-		<form-login login-page="/login.do"
-			default-target-url="/home.do"
-			authentication-failure-url="/loginFailed.do"/>
+		<form-login login-page="/login"
+			default-target-url="/home"
+			authentication-failure-url="/loginFailed"/>
 
-		<logout invalidate-session="true" logout-success-url="/login.do"/>
+		<logout invalidate-session="true" logout-success-url="/login"/>
 	</http>
 
 	<authentication-manager>

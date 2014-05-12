@@ -30,13 +30,13 @@ SaveParameter = function() {
 			};
 
 			$.ajax({
-				url: "saveParameter.do",
+				url: "saveParameter",
 				type: "POST",
 				contentType:"application/json",
 				data: JSON.stringify(jsonCategory),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved.do";
+					window.location = "entitySaved";
 				}
 			});
 		}

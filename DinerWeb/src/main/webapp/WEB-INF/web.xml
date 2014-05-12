@@ -28,7 +28,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>diner</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
 	<listener>

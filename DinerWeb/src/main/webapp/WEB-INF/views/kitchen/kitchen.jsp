@@ -8,8 +8,7 @@
 	});
 </script>
 
-<div id="large-body">
-<div class="content">
+<form id="kitchenForm" action="" onsubmit="return false;">
 
 <div class="row">
 	<div class="col-md-9 form-group">
@@ -39,5 +38,4 @@
 	</table>
 </div>
 
-</div>
-</div>
+</form>

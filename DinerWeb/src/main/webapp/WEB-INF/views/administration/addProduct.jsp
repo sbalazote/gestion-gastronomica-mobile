@@ -8,9 +8,6 @@
 	});
 </script>
 
-<div id="body">
-<div class="content">
-
 <form id="productAdministrationForm" action="" onsubmit="return false;">
 
 <div class="row">
@@ -94,13 +91,10 @@
 
 <div class="row">
 	<div class="col-md-2 col-md-offset-8">
-		<button onclick="location.href='productAdministration.do'" class="btn btn-danger btn-block" id="abort"><span class="glyphicon glyphicon-remove"></span> <spring:message code="common.abort"/></button>
+		<button onclick="location.href='productAdministration'" class="btn btn-danger btn-block" id="abort"><span class="glyphicon glyphicon-remove"></span> <spring:message code="common.abort"/></button>
 	</div>
 	<div class="col-md-2">
 		<button class="btn btn-success btn-block" id="confirm"><span class="glyphicon glyphicon-ok"></span> <spring:message code="common.add.entity"/></button>
 	</div>
 </div>
 </form>
-
-</div>
-</div>

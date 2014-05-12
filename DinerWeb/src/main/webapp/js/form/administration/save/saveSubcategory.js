@@ -31,13 +31,13 @@ SaveSubcategory = function() {
 			};
 
 			$.ajax({
-				url: "saveSubcategory.do",
+				url: "saveSubcategory",
 				type: "POST",
 				contentType:"application/json",
 				data: JSON.stringify(jsonSubcategory),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved.do";
+					window.location = "entitySaved";
 				}
 			});
 		}

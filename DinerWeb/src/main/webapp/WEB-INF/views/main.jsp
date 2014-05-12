@@ -36,10 +36,17 @@
 	</head>
 	<body>
 		<div id="wrap">
+<%-- 	        <div id="header">
+	            <tiles:insertAttribute name="header" />
+	        </div> --%>
 	        <div id="menu">
 	            <tiles:insertAttribute name="menu" />
 	        </div>
-	        <tiles:insertAttribute name="body" />
+	        <div id="body">
+	        	<div class="content">
+	            	<tiles:insertAttribute name="body" />
+	            </div>
+	        </div>
 	    </div>
         <div id="footer">
             <tiles:insertAttribute name="footer" />
