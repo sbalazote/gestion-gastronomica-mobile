@@ -1,5 +1,6 @@
 TableAdministration = function() {
 	var tableId = null;
+	var waiterName;
 	
 	$.ajax({
 		url: "getTablesWithClosedOrder",
@@ -30,6 +31,7 @@ TableAdministration = function() {
 	$('#divTable').on("click", ".print-row", function() {
 		var parent = $(this).parent().parent();
 		tableId = parent.find("td:first-child").html();
+		waiterName = parent.find("td:eq(1)").html();
 		printOrder();
 	});
 	
@@ -43,6 +45,9 @@ TableAdministration = function() {
 			type: "GET",
 			async: false,
 			success: function(response) {
+				
+				$('#modalTitle').html("Mozo: " + waiterName + " - Mesa Nº" + tableId);
+				$('#modalDate').html("Fecha:" + new Date().format("dd-mm-yyyy HH:MM:ss"));
 				for (var i = 0, l = response.details.length; i < l; ++i) {
 					$('#tableModal').append('<tr><td>'+ response.details[i].product.id + '</td><td>' +  response.details[i].product.description + '</td></tr>');
 				}

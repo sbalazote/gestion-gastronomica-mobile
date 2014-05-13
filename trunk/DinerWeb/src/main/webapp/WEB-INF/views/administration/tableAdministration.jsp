@@ -36,11 +36,25 @@
 		<div class="modal-content">
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-9 form-group">
-						<h2><spring:message code="common.receipt"/></h2>
+					<div class="col-md-9">
+						<h3 id="modalTitle"></h3>
 					</div>
 				</div>	
-			
+				<div class="row">
+					<div style="text-align: center;">
+						<h3>${restaurantName}</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-9">
+						<h5 id="modalDate"></h5>
+					</div>
+				</div>		
+				<div class="row">
+					<div class="col-md-9">
+						<h5>Detalle del Pedido</h5>
+					</div>
+				</div>	
 				<table class="table table-striped" id="tableModal">
 					<thead>
 				        <tr>
