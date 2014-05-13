@@ -2,6 +2,7 @@ package com.fiuba.diner.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,12 @@ public class TableDAOHibernateImpl implements TableDAO {
 		this.sessionFactory.getCurrentSession().saveOrUpdate(table);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Table> getTablesWithClosedOrder() {
+		String sentence = "select t from Order as o inner join o.tables as t where o.state.id = 2";
+		Query query;
+		query = this.sessionFactory.getCurrentSession().createQuery(sentence);
+		return query.list();
+	}
 }

@@ -13,6 +13,10 @@ insert into `diner`.`order_detail_state` (id, description) values (3, 'Iniciado'
 insert into `diner`.`order_detail_state` (id, description) values (4, 'Finalizado');
 insert into `diner`.`order_detail_state` (id, description) values (5, 'Entregado');
 
+insert into `diner`.`order_state` (id, description) values (1, 'Abierta');
+insert into `diner`.`order_state` (id, description) values (2, 'Cerrada');
+insert into `diner`.`order_state` (id, description) values (3, 'Facturada');
+
 insert into `diner`.`table_state` (id, description) values (1, 'Disponible');
 insert into `diner`.`table_state` (id, description) values (2, 'Abierta');
 

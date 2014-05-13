@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -31,6 +32,10 @@ public class Order {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "order_table", joinColumns = @JoinColumn(name = "order_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "table_id", nullable = false))
 	private List<Table> tables;
+
+	@ManyToOne
+	@JoinColumn(name = "state_id", nullable = false)
+	private OrderState state;
 
 	public Integer getId() {
 		return this.id;

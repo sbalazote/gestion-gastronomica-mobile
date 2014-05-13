@@ -36,4 +36,8 @@ public class TableServiceImpl implements TableService {
 		logger.info("Se han guardado los cambios exitosamente. Id de Mesa: " + table.getId());
 	}
 
+	@Override
+	public List<Table> getTablesWithClosedOrder() {
+		return this.tableDAO.getTablesWithClosedOrder();
+	}
 }

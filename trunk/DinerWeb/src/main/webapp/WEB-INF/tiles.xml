@@ -94,4 +94,8 @@
     <definition name="barProductAdministration" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/bar/barProductAdministration.jsp" />
     </definition>
+    
+    <definition name="tableAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/tableAdministration.jsp" />
+    </definition>
 </tiles-definitions>

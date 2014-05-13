@@ -44,6 +44,9 @@
 						<li>
 							<a href="productAdministration"><spring:message code="common.products" /></a>
 						</li>
+						<li>
+							<a href="tableAdministration.do"><spring:message code="common.tables" /></a>
+						</li>
 					</ul>
 				</li>
 			</sec:authorize>

@@ -12,4 +12,5 @@ public interface TableService {
 
 	void save(Table table);
 
+	List<Table> getTablesWithClosedOrder();
 }
