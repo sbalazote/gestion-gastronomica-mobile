@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fiuba.diner.helper.OrderStateHelper;
+
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,6 +14,11 @@ public class Order implements Serializable {
 	private Integer customerAmount;
 	private List<OrderDetail> details;
 	private List<Table> tables;
+	private OrderState state;
+
+	public Order() {
+		this.state = OrderStateHelper.OPEN.getState();
+	}
 
 	public Integer getId() {
 		return this.id;
@@ -50,6 +57,14 @@ public class Order implements Serializable {
 
 	public void setTables(List<Table> tables) {
 		this.tables = tables;
+	}
+
+	public OrderState getState() {
+		return this.state;
+	}
+
+	public void setState(OrderState state) {
+		this.state = state;
 	}
 
 }

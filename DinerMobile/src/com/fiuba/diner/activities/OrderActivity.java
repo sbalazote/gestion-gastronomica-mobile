@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
 import com.fiuba.diner.helper.DataHolder;
-import com.fiuba.diner.helper.OrderStateHelper;
+import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
@@ -85,8 +85,8 @@ public class OrderActivity extends Activity {
 		int position = this.listView.getPositionForView(view);
 
 		if (this.order.getDetails().get(position).getState() != null) {
-			if (this.order.getDetails().get(position).getState().getId().equals(OrderStateHelper.REQUESTED.getState().getId())
-					|| this.order.getDetails().get(position).getState().getId().equals(OrderStateHelper.NEW.getState().getId())) {
+			if (this.order.getDetails().get(position).getState().getId().equals(OrderDetailStateHelper.REQUESTED.getState().getId())
+					|| this.order.getDetails().get(position).getState().getId().equals(OrderDetailStateHelper.NEW.getState().getId())) {
 				this.delete(position, view);
 				this.hasChanged = true;
 			} else {
@@ -111,7 +111,7 @@ public class OrderActivity extends Activity {
 
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				orderDetail.setState(OrderStateHelper.DELIVERED.getState());
+				orderDetail.setState(OrderDetailStateHelper.DELIVERED.getState());
 				OrderActivity.this.hasChanged = true;
 				OrderActivity.this.adapter.notifyDataSetChanged();
 			}
@@ -149,7 +149,7 @@ public class OrderActivity extends Activity {
 
 		for (OrderDetail orderDetail : this.order.getDetails()) {
 			if (orderDetail.getId() == null) {
-				orderDetail.setState(OrderStateHelper.REQUESTED.getState());
+				orderDetail.setState(OrderDetailStateHelper.REQUESTED.getState());
 				orderDetail.setRequestDate(new Date());
 			}
 		}
@@ -177,7 +177,7 @@ public class OrderActivity extends Activity {
 			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setProduct(selectedProduct);
-			orderDetail.setState(OrderStateHelper.NEW.getState());
+			orderDetail.setState(OrderDetailStateHelper.NEW.getState());
 			orderDetail.setAmount(1);
 			this.order.getDetails().add(orderDetail);
 			this.adapter.notifyDataSetChanged();

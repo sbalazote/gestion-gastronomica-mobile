@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.activities.OrderActivity;
-import com.fiuba.diner.helper.OrderStateHelper;
+import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.util.Formatter;
 
@@ -89,16 +89,16 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		if (this.orderDetails.get(position) != null) {
 			Integer stateId = this.orderDetails.get(position).getState().getId();
 
-			if (!stateId.equals(OrderStateHelper.NEW.getState().getId())) {
+			if (!stateId.equals(OrderDetailStateHelper.NEW.getState().getId())) {
 				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
-				if (stateId.equals(OrderStateHelper.PREPARED.getState().getId())) {
+				if (stateId.equals(OrderDetailStateHelper.PREPARED.getState().getId())) {
 					deleteProductButton.setVisibility(ImageButton.GONE);
 					confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
 					productCommentEditText.setEnabled(false);
 					productAmountSpinner.setEnabled(false);
 					productState.setTextColor(Color.rgb(34, 139, 34));
 				} else {
-					if (stateId.equals(OrderStateHelper.REQUESTED.getState().getId())) {
+					if (stateId.equals(OrderDetailStateHelper.REQUESTED.getState().getId())) {
 						deleteProductButton.setVisibility(ImageButton.VISIBLE);
 						confirmDeliveryButton.setVisibility(ImageButton.GONE);
 						productState.setTextColor(Color.BLUE);
@@ -107,7 +107,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 						confirmDeliveryButton.setVisibility(ImageButton.GONE);
 						productCommentEditText.setEnabled(false);
 						productAmountSpinner.setEnabled(false);
-						if (stateId.equals(OrderStateHelper.DELIVERED.getState().getId())) {
+						if (stateId.equals(OrderDetailStateHelper.DELIVERED.getState().getId())) {
 							productState.setTextColor(Color.RED);
 						} else {
 							productState.setTextColor(Color.rgb(255, 140, 0));
@@ -115,7 +115,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 					}
 				}
 			} else {
-				productState.setText(OrderStateHelper.NEW.getState().getDescription());
+				productState.setText(OrderDetailStateHelper.NEW.getState().getDescription());
 				deleteProductButton.setVisibility(ImageButton.VISIBLE);
 				confirmDeliveryButton.setVisibility(ImageButton.GONE);
 				productState.setTextColor(Color.BLACK);
