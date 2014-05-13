@@ -1,12 +1,30 @@
 package com.fiuba.diner.controllers;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.Table;
+import com.fiuba.diner.service.OrderService;
+import com.fiuba.diner.service.TableService;
 
 @Controller
 public class AdministrationController {
+
+	@Autowired
+	private TableService tableService;
+
+	@Autowired
+	private OrderService orderService;
 
 	@RequestMapping(value = "/categoryAdministration", method = RequestMethod.GET)
 	public String categoryAdministration(ModelMap modelMap) throws Exception {
@@ -31,5 +49,24 @@ public class AdministrationController {
 	@RequestMapping(value = "/productAdministration", method = RequestMethod.GET)
 	public String productAdministration(ModelMap modelMap) throws Exception {
 		return "productAdministration";
+	}
+
+	@RequestMapping(value = "/tableAdministration", method = RequestMethod.GET)
+	public String tableAdministration(ModelMap modelMap) throws Exception {
+		return "tableAdministration";
+	}
+
+	@RequestMapping(value = "/getTablesWithClosedOrder", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Table> getTablesWithClosedOrder() throws IOException {
+		return this.tableService.getTablesWithClosedOrder();
+	}
+
+	@RequestMapping(value = "/getOrderById", method = RequestMethod.GET)
+	@ResponseBody
+	public Order getOrderById(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+		Integer id = Integer.valueOf(parameters.get("id"));
+		Order order = this.orderService.getOrder(id);
+		return order;
 	}
 }
