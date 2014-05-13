@@ -33,6 +33,7 @@ import com.fiuba.diner.service.TableService;
 import com.fiuba.diner.service.WaiterService;
 
 @Controller
+@RequestMapping(value = "/rest")
 public class RestController {
 
 	@Autowired
