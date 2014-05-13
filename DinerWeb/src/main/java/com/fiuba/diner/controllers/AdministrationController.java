@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.service.OrderService;
+import com.fiuba.diner.service.ParameterService;
 import com.fiuba.diner.service.TableService;
 
 @Controller
@@ -25,6 +26,9 @@ public class AdministrationController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private ParameterService parameterService;
 
 	@RequestMapping(value = "/categoryAdministration", method = RequestMethod.GET)
 	public String categoryAdministration(ModelMap modelMap) throws Exception {
@@ -53,6 +57,7 @@ public class AdministrationController {
 
 	@RequestMapping(value = "/tableAdministration", method = RequestMethod.GET)
 	public String tableAdministration(ModelMap modelMap) throws Exception {
+		modelMap.put("restaurantName", this.parameterService.get(1).getRestaurantName());
 		return "tableAdministration";
 	}
 
