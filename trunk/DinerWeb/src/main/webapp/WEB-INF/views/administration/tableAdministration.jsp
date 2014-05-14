@@ -42,6 +42,7 @@
 			aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
+				<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div>
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-9">
@@ -79,6 +80,7 @@
 							id="printButton">
 							<spring:message code="administration.printReceipt" />
 						</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
 					</div>
 				</div>
 			</div>
@@ -90,6 +92,7 @@
 			aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
+					<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-9">
@@ -117,23 +120,26 @@
 						<div id="cashDiv" style="display: none">
 							<div class="row">
 								<div class="col-md-12 form-group">
-									<label for="cashInput"><spring:message
-											code="common.cash" /></label> <input type="text" class="form-control"
-										id="cashInput" name="cash">
+									<label for="cashInput"><spring:message	code="common.cash" /></label> 
+									<input type="text" class="form-control"	id="cashInput" name="cash">
 								</div>
 							</div>
-
+							<div class="row">
+								<div class="col-md-12 form-group">
+									<label for="changeInput"><spring:message code="common.change" /></label> 
+									<input type="text" class="form-control"	id="changeInput" name="change" disabled>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal"
-							id="confirmPaymentMediaButton">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmPaymentMediaButton">
 							<spring:message code="common.confirm" />
 						</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>

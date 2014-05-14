@@ -1,6 +1,7 @@
 TableAdministration = function() {
 	var tableId = null;
 	var waiterName;
+	var change = null;
 	
 	$.ajax({
 		url: "getTablesWithClosedOrder",
@@ -69,6 +70,16 @@ TableAdministration = function() {
 			$('#cashDiv').show();
 		}
 	});
+
+	
+	$("#cashInput").on("change keyup paste click", function(){
+		if (($("#totalInput").val() - $('#cashInput').val()) > 0){
+			$('#changeInput').val("Debe Ingresar un monto mayor");
+		}else{
+			$('#changeInput').val(-($("#totalInput").val() - $('#cashInput').val()));
+			change = -($("#totalInput").val() - $('#cashInput').val());
+		}
+	})
 	
 	var printOrder = function(){
 		$('#tableModal').empty();
@@ -107,7 +118,7 @@ TableAdministration = function() {
 				tableId: tableId,
 				paymentMediaId: $("#paymentMediaSelect option:selected").val(),
 				total: $("#totalInput").val(),
-				change: 0,
+				change: change,
 			},
 			success: function(response) {
 				window.location = "entitySaved";
