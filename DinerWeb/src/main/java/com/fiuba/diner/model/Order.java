@@ -37,6 +37,16 @@ public class Order {
 	@JoinColumn(name = "state_id", nullable = false)
 	private OrderState state;
 
+	@ManyToOne
+	@JoinColumn(name = "payment_media_id")
+	private PaymentMedia paymentMedia;
+
+	@Column(name = "total")
+	private Double total;
+
+	@Column(name = "change")
+	private Double change;
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -63,6 +73,38 @@ public class Order {
 
 	public List<Table> getTables() {
 		return this.tables;
+	}
+
+	public OrderState getState() {
+		return this.state;
+	}
+
+	public void setState(OrderState state) {
+		this.state = state;
+	}
+
+	public PaymentMedia getPaymentMedia() {
+		return this.paymentMedia;
+	}
+
+	public void setPaymentMedia(PaymentMedia paymentMedia) {
+		this.paymentMedia = paymentMedia;
+	}
+
+	public Double getTotal() {
+		return this.total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public Double getChange() {
+		return this.change;
+	}
+
+	public void setChange(Double change) {
+		this.change = change;
 	}
 
 }
