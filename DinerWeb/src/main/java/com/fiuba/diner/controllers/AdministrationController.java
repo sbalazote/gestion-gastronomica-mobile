@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fiuba.diner.constant.PaymentMediaState;
+import com.fiuba.diner.helper.OrderStateHelper;
+import com.fiuba.diner.helper.PaymentMediaStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.service.OrderService;
@@ -80,17 +81,18 @@ public class AdministrationController {
 	public @ResponseBody
 	Order savePaymentMedia(@RequestParam Integer tableId, Integer paymentMediaId, Double change, Double total) throws Exception {
 		Order order = this.orderService.getOrder(tableId);
-		if (paymentMediaId.equals(PaymentMediaState.EFECTIVO.getState().getId())) {
-			order.setPaymentMedia(PaymentMediaState.EFECTIVO.getState());
-			order.setTotal(total);
+		order.setTotal(total);
+		if (paymentMediaId.equals(PaymentMediaStateHelper.EFECTIVO.getState().getId())) {
+			order.setPaymentMedia(PaymentMediaStateHelper.EFECTIVO.getState());
 			order.setChange(change);
 		} else {
-			if (paymentMediaId.equals(PaymentMediaState.TARJETA_DE_CREDITO.getState().getId())) {
-				order.setPaymentMedia(PaymentMediaState.TARJETA_DE_CREDITO.getState());
+			if (paymentMediaId.equals(PaymentMediaStateHelper.TARJETA_DE_CREDITO.getState().getId())) {
+				order.setPaymentMedia(PaymentMediaStateHelper.TARJETA_DE_CREDITO.getState());
 			} else {
-				order.setPaymentMedia(PaymentMediaState.TARJETA_DE_DEBITO.getState());
+				order.setPaymentMedia(PaymentMediaStateHelper.TARJETA_DE_DEBITO.getState());
 			}
 		}
+		order.setState(OrderStateHelper.FACTURADA.getState());
 		this.orderService.save(order);
 		return order;
 	}
