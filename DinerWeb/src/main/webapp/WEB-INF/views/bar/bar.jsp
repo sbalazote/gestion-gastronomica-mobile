@@ -8,7 +8,8 @@
 	});
 </script>
 
-<form id="barForm" action="" onsubmit="return false;">
+<div id="large-body">
+<div class="content">
 
 <div class="row">
 	<div class="col-md-9 form-group">
@@ -37,4 +38,5 @@
 	</table>
 </div>
 
-</form>
+</div>
+</div>

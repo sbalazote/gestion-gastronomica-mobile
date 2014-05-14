@@ -8,7 +8,8 @@
 	});
 </script>
 
-<form id="subcategoryAdministrationForm" action="" onsubmit="return false;">
+<div id="body">
+<div class="content">
 
 <div class="row">
 	<div class="col-md-9 form-group">
@@ -71,4 +72,5 @@
 	</div>
 </div>
 
-</form>
+</div>
+</div>

@@ -8,6 +8,9 @@
 	});
 </script>
 
+<div id="body">
+<div class="content">
+
 <form id="productAdministrationForm" action="" onsubmit="return false;">
 
 
@@ -103,3 +106,6 @@
 	</div>
 </div>
 </form>
+
+</div>
+</div>
