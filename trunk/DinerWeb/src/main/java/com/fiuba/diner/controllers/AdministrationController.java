@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fiuba.diner.constant.PaymentMediaState;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.service.OrderService;
@@ -72,6 +73,25 @@ public class AdministrationController {
 	public Order getOrderById(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
 		Integer id = Integer.valueOf(parameters.get("id"));
 		Order order = this.orderService.getOrder(id);
+		return order;
+	}
+
+	@RequestMapping(value = "/savePaymentMedia", method = RequestMethod.POST)
+	public @ResponseBody
+	Order savePaymentMedia(@RequestParam Integer tableId, Integer paymentMediaId, Double change, Double total) throws Exception {
+		Order order = this.orderService.getOrder(tableId);
+		if (paymentMediaId.equals(PaymentMediaState.EFECTIVO.getState().getId())) {
+			order.setPaymentMedia(PaymentMediaState.EFECTIVO.getState());
+			order.setTotal(total);
+			order.setChange(change);
+		} else {
+			if (paymentMediaId.equals(PaymentMediaState.TARJETA_DE_CREDITO.getState().getId())) {
+				order.setPaymentMedia(PaymentMediaState.TARJETA_DE_CREDITO.getState());
+			} else {
+				order.setPaymentMedia(PaymentMediaState.TARJETA_DE_DEBITO.getState());
+			}
+		}
+		this.orderService.save(order);
 		return order;
 	}
 }
