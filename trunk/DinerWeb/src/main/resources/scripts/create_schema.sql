@@ -62,6 +62,12 @@ CREATE TABLE `diner`.`product` (
 	CONSTRAINT `fk_product_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner`.`payment_media` (
+	`id` int(8) NOT NULL AUTO_INCREMENT,
+	`description` varchar(30) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `diner`.`order_state` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(30) NOT NULL,
@@ -72,9 +78,14 @@ CREATE TABLE `diner`.`order` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`customer_amount` int(8) NOT NULL,
 	`state_id` int(8) NOT NULL,
+	`payment_media_id` int(8),
+	`total` decimal(6,2) DEFAULT NULL,
+	`change` decimal(6,2) DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	KEY `fk_order_detail_order_detail_state_idx` (`state_id`),
-	CONSTRAINT `fk_order_order_state` FOREIGN KEY (`state_id`) REFERENCES `order_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	KEY `fk_order_order_state_idx` (`state_id`),
+	CONSTRAINT `fk_order_order_state` FOREIGN KEY (`state_id`) REFERENCES `order_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	KEY `fk_order_payment_media_idx` (`payment_media_id`),
+	CONSTRAINT `fk_order_payment_media` FOREIGN KEY (`payment_media_id`) REFERENCES `payment_media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`order_detail_state` (
