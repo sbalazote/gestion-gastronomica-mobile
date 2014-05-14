@@ -20,6 +20,10 @@ insert into `diner`.`order_state` (id, description) values (3, 'Facturada');
 insert into `diner`.`table_state` (id, description) values (1, 'Disponible');
 insert into `diner`.`table_state` (id, description) values (2, 'Abierta');
 
+insert into `diner`.`payment_media` (id, description) values (1, 'Tarjeta de Debito');
+insert into `diner`.`payment_media` (id, description) values (2, 'Tarjeta de Credito');
+insert into `diner`.`payment_media` (id, description) values (3, 'Efectivo');
+
 insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (1, 1, null, 2, 1, true);
 insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (2, 1, null, 2, 1, true);
 insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (3, 1, null, 2, 1, true);
