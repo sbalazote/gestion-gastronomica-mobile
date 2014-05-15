@@ -84,12 +84,12 @@ Bar = function() {
 	var changeState = function() {
 
 		$.ajax({
-			url: "changeOrderDetailState",
-			type: "POST",
+			url: "rest/changeOrderDetailState",
+			crossDomain: true,
+			type: "GET",
 			data: {
 				orderDetailId: orderDetailId,
 			},
-			async: true,
 			success: function(response) {
 				orderDetailStartDate = response.preparationStartDate;
 			},

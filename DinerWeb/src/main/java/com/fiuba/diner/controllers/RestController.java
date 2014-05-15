@@ -116,9 +116,9 @@ public class RestController {
 		return this.parameterService.get(id);
 	}
 
-	@RequestMapping(value = "/changeOrderDetailState", method = RequestMethod.POST)
-	public @ResponseBody
-	OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
+	@RequestMapping(value = "/changeOrderDetailState", method = RequestMethod.GET)
+	@ResponseBody
+	public OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
 		OrderDetail orderDetail = this.orderService.changeOrderDetailState(orderDetailId);
 		if (orderDetail.getState().getId().equals(State.PREPARADO.getId())) {
 			GCMServer.sendNotification("Se encuentra para retirar el pedido: " + orderDetail.getProduct().getDescription());
