@@ -15,6 +15,9 @@ public class Order implements Serializable {
 	private List<OrderDetail> details;
 	private List<Table> tables;
 	private OrderState state;
+	private PaymentMedia paymentMedia;
+	private Float total;
+	private Float change;
 
 	public Order() {
 		this.state = OrderStateHelper.OPEN.getState();
@@ -65,6 +68,30 @@ public class Order implements Serializable {
 
 	public void setState(OrderState state) {
 		this.state = state;
+	}
+
+	public PaymentMedia getPaymentMedia() {
+		return this.paymentMedia;
+	}
+
+	public void setPaymentMedia(PaymentMedia paymentMedia) {
+		this.paymentMedia = paymentMedia;
+	}
+
+	public Float getTotal() {
+		return this.total;
+	}
+
+	public void setTotal(Float total) {
+		this.total = total;
+	}
+
+	public Float getChange() {
+		return this.change;
+	}
+
+	public void setChange(Float change) {
+		this.change = change;
 	}
 
 }

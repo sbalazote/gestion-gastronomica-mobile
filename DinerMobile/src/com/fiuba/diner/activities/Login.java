@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.helper.Caller;
-import com.fiuba.diner.tasks.SetUpTask;
 
 public class Login extends Activity implements Caller<Void> {
 
@@ -23,7 +22,6 @@ public class Login extends Activity implements Caller<Void> {
 		super.onCreate(savedInstanceState);
 		this.setTitle(R.string.app_name);
 		this.setContentView(R.layout.login);
-		new SetUpTask(this).execute();
 
 		this.usernameEditText = (EditText) this.findViewById(R.id.usernameEditText);
 		this.passwordEditText = (EditText) this.findViewById(R.id.passwordEditText);
@@ -37,8 +35,10 @@ public class Login extends Activity implements Caller<Void> {
 				String password = Login.this.passwordEditText.getText().toString();
 
 				if ((username.compareTo("Pi") == 0) && (password.compareTo("Sosa") == 0)) {
-					Intent intent = new Intent(Login.this, HomeActivity.class);
+					Intent intent = new Intent(Login.this.getApplicationContext(), HomeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					Login.this.startActivity(intent);
+					Login.this.finish();
 				} else {
 					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Login.this);
 					alertDialogBuilder.setMessage("Ingreso incorrecto. Intente nuevamente.");
