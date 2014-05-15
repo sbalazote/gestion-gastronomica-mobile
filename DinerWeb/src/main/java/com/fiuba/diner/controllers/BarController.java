@@ -8,9 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.gcm.GCMServer;
+import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.service.OrderService;
 
 @Controller
@@ -36,4 +40,13 @@ public class BarController {
 		return "barProductAdministration";
 	}
 
+	@RequestMapping(value = "/changeBarOrderDetailState", method = RequestMethod.GET)
+	@ResponseBody
+	public OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
+		OrderDetail orderDetail = this.orderService.changeOrderDetailState(orderDetailId);
+		if (orderDetail.getState().getId().equals(State.PREPARADO.getId())) {
+			GCMServer.sendNotification("Se encuentra para retirar el pedido: " + orderDetail.getProduct().getDescription());
+		}
+		return orderDetail;
+	}
 }

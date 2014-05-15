@@ -33,7 +33,7 @@ function refreshTable() {
 					orderDetail.push("<strong><span style='color:green'>" + response[i].detail.state.description + "</span></strong>");
 					orderDetail.push("");
 				}
-				if(response[i].detail.preparationStartDate != undefined && response[i].detail.preparationEndDate == undefined ){
+				if(response[i].detail.preparationStartDate != undefined ){
 					var newDate = dateFormat(response[i].detail.preparationStartDate, "yyyy-mm-dd HH:MM:ss");
 					orderDetail.push("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
 				}else{
@@ -84,7 +84,7 @@ Bar = function() {
 	var changeState = function() {
 
 		$.ajax({
-			url: "rest/changeOrderDetailState",
+			url: "changeBarOrderDetailState",
 			crossDomain: true,
 			type: "GET",
 			data: {
