@@ -64,21 +64,32 @@ TableAdministration = function() {
 	});
 	
 	$("#paymentMediaSelect").change(function() {
-
-		
 		if($("#paymentMediaSelect").val() == 3){
 			$('#cashDiv').show();
+			$("#confirmPaymentMediaButton").prop("disabled",true);
+		}else{
+			change = 0;
 		}
 	});
 
 	
 	$("#cashInput").on("change keyup paste click", function(){
-		if (($("#totalInput").val() - $('#cashInput').val()) > 0){
-			$('#changeInput').val("Debe Ingresar un monto mayor");
-		}else{
-			$('#changeInput').val(-($("#totalInput").val() - $('#cashInput').val()));
-			change = -($("#totalInput").val() - $('#cashInput').val());
-		}
+		var value = $('#cashInput').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	    var intRegex = /^\d+$/;
+	    if(!intRegex.test(value)) {
+	    	$('#changeInput').val("El campo de Efectivo debe ser numerico");
+			$("#confirmPaymentMediaButton").prop("disabled",true);
+	    }else{
+			if (($("#totalInput").val() - $('#cashInput').val()) > 0){
+				$('#changeInput').val("Debe Ingresar un monto mayor");
+				$("#confirmPaymentMediaButton").prop("disabled",true);
+			}else{
+				$('#changeInput').val(-($("#totalInput").val() - $('#cashInput').val()));
+				change = -($("#totalInput").val() - $('#cashInput').val());
+				
+				$("#confirmPaymentMediaButton").prop("disabled",false);
+			}
+	    }
 	})
 	
 	var printOrder = function(){

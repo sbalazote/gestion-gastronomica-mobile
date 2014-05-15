@@ -41,7 +41,7 @@ function refreshTable() {
 					orderDetail.push("-");
 				}
 				
-				if(response[i].detail.preparationStartDate != undefined && response[i].detail.preparationEndDate == undefined ){
+				if(response[i].detail.preparationStartDate != undefined ){
 					var newDate = dateFormat(response[i].detail.preparationStartDate, "yyyy-mm-dd HH:MM:ss");
 					orderDetail.push("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
 				}else{
@@ -99,7 +99,7 @@ Kitchen = function() {
 	var changeState = function() {
 
 		$.ajax({
-			url: "rest/changeOrderDetailState",
+			url: "changeKitchenOrderDetailState",
 			crossDomain: true,
 			type: "GET",
 			data: {

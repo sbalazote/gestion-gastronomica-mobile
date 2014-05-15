@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.gcm.GCMServer;
+import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ProductService;
@@ -47,6 +50,16 @@ public class KitchenController {
 		Product product = this.productService.get(productId);
 		product.setStock(stock);
 		this.productService.save(product);
+	}
+
+	@RequestMapping(value = "/changeKitchenOrderDetailState", method = RequestMethod.GET)
+	@ResponseBody
+	public OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
+		OrderDetail orderDetail = this.orderService.changeOrderDetailState(orderDetailId);
+		if (orderDetail.getState().getId().equals(State.PREPARADO.getId())) {
+			GCMServer.sendNotification("Se encuentra para retirar el pedido: " + orderDetail.getProduct().getDescription());
+		}
+		return orderDetail;
 	}
 
 }
