@@ -73,7 +73,7 @@ TableAdministration = function() {
 			}
 		});
 		$('#totalInput').val(total);
-		$('#modalPaymentTitle').html("Mozo: " + waiterName + " - Mesa Nº" + tableId);
+		$('#modalPaymentTitle').html("Mozo: " + waiterName + " - Mesa Nro: " + tableId);
 		$('#paymentMediaModal').modal('show');
 	});
 	
@@ -107,7 +107,7 @@ TableAdministration = function() {
 	})
 	
 	var printOrder = function(){
-		$('#tableModal').empty();
+		$("#tableModal tbody").empty();
 		$.ajax({
 			url: "getOrderById",
 			data: {
@@ -116,21 +116,48 @@ TableAdministration = function() {
 			type: "GET",
 			async: false,
 			success: function(response) {
-				var total = 0;
-				$('#modalTitle').html("Mozo: " + waiterName + " - Mesa Nº" + tableId);
+				var subtotal = 0;
+				$('#modalTableDetail').html("Mozo: " + waiterName + " - Mesa Nro: " + tableId);
 				$('#modalDate').html("Fecha:" + new Date().format("dd-mm-yyyy HH:MM:ss"));
-				$("#tableModal").append('<tr><td><b>Id</b></td><td><b>Producto</b></td><td><b>Cantidad</b></td><td><b>Precio</b></td></tr>');
 				for (var i = 0, l = response.details.length; i < l; ++i) {
-					$("#tableModal").append('<tr><td>'+ response.details[i].product.id + '</td><td>' +  response.details[i].product.description + '</td><td>' +  response.details[i].amount + '</td><td>' +  response.details[i].product.price + '</td></tr>');
-					total += response.details[i].amount*response.details[i].product.price;
+					subtotal += response.details[i].amount * response.details[i].product.price;
+
+					$("#tableModal tbody").append("<tr>"
+							+ "<td>" + response.details[i].product.id + "</td>"
+							+ "<td>" + response.details[i].product.description + "</td>"
+							+ "<td>" + response.details[i].amount + "</td>"
+							+ "<td>" + response.details[i].product.price + "</td>"
+							+ "</tr>");
 				}
 				
-				if(servicePriceActive==true){
-					$("#tableModal").append('<tr><td><b>Servicio de Mesa ('+  response.customerAmount +')</b></td><td></td><td><b></b></td><td><b>' +  response.customerAmount*servicePrice + '</b></td></tr>');
-					total += response.customerAmount*servicePrice;
+				// inserto subtotal
+				$("#tableModal tbody").append("<tr>"
+						+ "<td>" + "-" + "</td>"
+						+ "<td>" + "SUBTOTAL" + "</td>"
+						+ "<td>" + "-" + "</td>"
+						+ "<td>" + subtotal + "</td>"
+						+ "</tr>");
+
+				// inserto servicio de mesa
+				var totalServicePrice = 0;
+				if(servicePriceActive==true) {
+					totalServicePrice = servicePrice * response.customerAmount;
 				}
-				
-				$("#tableModal").append('<tr><td><b>Total</b></td><td></td><td></td><td><b>' +  total + '</b></td></tr>');
+				$("#tableModal tbody").append("<tr>"
+						+ "<td>" + "-" + "</td>"
+						+ "<td>" + "Servicio de Mesa" + "</td>"
+						+ "<td>" + response.customerAmount + "</td>"
+						+ "<td>" + totalServicePrice + "</td>"
+						+ "</tr>");
+
+				// inserto total
+				var totalAmount = response.total + totalServicePrice;
+				$("#tableModal tbody").append("<tr>"
+						+ "<td>" + "-" + "</td>"
+						+ "<td>" + "TOTAL" + "</td>"
+						+ "<td>" + "-" + "</td>"
+						+ "<td>" + totalAmount + "</td>"
+						+ "</tr>");
 			},
 			error: function(response) {
 			}
@@ -159,5 +186,4 @@ TableAdministration = function() {
 			}
 		});
 	});
-	
 }

@@ -36,26 +36,30 @@
 			</table>
 		</div>
 
+</div>
+</div>
+
 		<%-- Impresión de Comprobante--%>
-		<div class="modal fade" data-backdrop="static" id="printOrderModal"
-			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-			aria-hidden="true">
+		<div class="modal fade" data-backdrop="static" id="printOrderModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
-				<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div>
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><spring:message code="administration.printOrderModal.title" /></h4>
+				</div>
 					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-9">
-								<h3 id="modalTitle"></h3>
-							</div>
-						</div>
 						<div class="row">
 							<div style="text-align: center;">
 								<h3>${restaurantName}</h3>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-9">
+							<div style="text-align: center;">
+								<h5 id="modalTableDetail"></h5>
+							</div>
+						</div>
+						<div class="row">
+							<div style="text-align: center;">
 								<h5 id="modalDate"></h5>
 							</div>
 						</div>
@@ -64,18 +68,21 @@
 								<h5>Detalle del Pedido</h5>
 							</div>
 						</div>
-						<table class="table table-striped" id="tableModal">
+						<div>
+						<table class="table" id="tableModal">
 							<thead>
 								<tr>
 									<th><spring:message code="common.id" /></th>
 									<th><spring:message code="common.product" /></th>
 									<th><spring:message code="common.amount" /></th>
 									<th><spring:message code="common.price" /></th>
+									<th></th>
 								</tr>
 							</thead>
-							<tbody id="orderBody">
+							<tbody>
 							</tbody>
 						</table>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal"
@@ -89,16 +96,17 @@
 		</div>
 
 		<%-- Confirmación de Medio de Pago --%>
-		<div class="modal fade" data-backdrop="static" id="paymentMediaModal"
-			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-			aria-hidden="true">
+		<div class="modal fade" data-backdrop="static" id="paymentMediaModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title"><spring:message code="administration.paymentMediaModal.title" /></h4>
+					</div>
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-9">
-								<h3 id="modalPaymentTitle"></h3>
+							<div style="text-align: center;">
+								<h5 id="modalPaymentTitle"></h5>
 							</div>
 						</div>
 						<div class="row">
@@ -143,5 +151,3 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
