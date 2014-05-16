@@ -69,6 +69,8 @@
 								<tr>
 									<th><spring:message code="common.id" /></th>
 									<th><spring:message code="common.product" /></th>
+									<th><spring:message code="common.amount" /></th>
+									<th><spring:message code="common.price" /></th>
 								</tr>
 							</thead>
 							<tbody id="orderBody">

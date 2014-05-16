@@ -2,6 +2,20 @@ TableAdministration = function() {
 	var tableId = null;
 	var waiterName;
 	var change = null;
+	var servicePrice = 0;
+	var servicePriceActive = false;
+	
+	$.ajax({
+		url: "getParameters",
+		type: "GET",
+		async: false,
+		success: function(response) {
+			if(response.dinnerServiceActive == true){
+				servicePrice = response.dinnerServicePrice;
+				servicePriceActive = true;
+			}
+		}
+	});
 	
 	$.ajax({
 		url: "getTablesWithClosedOrder",
@@ -102,12 +116,21 @@ TableAdministration = function() {
 			type: "GET",
 			async: false,
 			success: function(response) {
-				
+				var total = 0;
 				$('#modalTitle').html("Mozo: " + waiterName + " - Mesa Nº" + tableId);
 				$('#modalDate').html("Fecha:" + new Date().format("dd-mm-yyyy HH:MM:ss"));
+				$("#tableModal").append('<tr><td><b>Id</b></td><td><b>Producto</b></td><td><b>Cantidad</b></td><td><b>Precio</b></td></tr>');
 				for (var i = 0, l = response.details.length; i < l; ++i) {
-					$('#tableModal').append('<tr><td>'+ response.details[i].product.id + '</td><td>' +  response.details[i].product.description + '</td></tr>');
+					$("#tableModal").append('<tr><td>'+ response.details[i].product.id + '</td><td>' +  response.details[i].product.description + '</td><td>' +  response.details[i].amount + '</td><td>' +  response.details[i].product.price + '</td></tr>');
+					total += response.details[i].amount*response.details[i].product.price;
 				}
+				
+				if(servicePriceActive==true){
+					$("#tableModal").append('<tr><td><b>Servicio de Mesa ('+  response.customerAmount +')</b></td><td></td><td><b></b></td><td><b>' +  response.customerAmount*servicePrice + '</b></td></tr>');
+					total += response.customerAmount*servicePrice;
+				}
+				
+				$("#tableModal").append('<tr><td><b>Total</b></td><td></td><td></td><td><b>' +  total + '</b></td></tr>');
 			},
 			error: function(response) {
 			}
@@ -136,4 +159,5 @@ TableAdministration = function() {
 			}
 		});
 	});
+	
 }
