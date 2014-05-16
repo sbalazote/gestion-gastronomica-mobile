@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.helper.PaymentMediaStateHelper;
 import com.fiuba.diner.model.Order;
+import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
@@ -95,5 +96,12 @@ public class AdministrationController {
 		order.setState(OrderStateHelper.FACTURADA.getState());
 		this.orderService.save(order);
 		return order;
+	}
+
+	@RequestMapping(value = "/getPaparameters", method = RequestMethod.GET)
+	@ResponseBody
+	public Parameter getParameter(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+		Integer id = 1; // Integer.valueOf(parameters.get("id"));
+		return this.parameterService.get(id);
 	}
 }
