@@ -10,6 +10,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -106,7 +108,7 @@ public class OrderActivity extends Activity {
 
 	private void openConfirmDialog(final View view, final OrderDetail orderDetail, final Adapter adapter) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("¿Esta seguro que desea confirmar la entrega?");
+		alertDialogBuilder.setMessage("ï¿½Esta seguro que desea confirmar la entrega?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -261,7 +263,7 @@ public class OrderActivity extends Activity {
 
 	private void openConfirmExit() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("Existen cambios sin guardar, ¿desea continuar?");
+		alertDialogBuilder.setMessage("Existen cambios sin guardar, ï¿½desea continuar?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -279,6 +281,30 @@ public class OrderActivity extends Activity {
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_logout:
+			this.logout();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		this.getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	private void logout() {
+		// TODO desloguear
 	}
 
 }
