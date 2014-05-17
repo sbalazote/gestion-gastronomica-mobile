@@ -1,4 +1,5 @@
 TableAdministration = function() {
+	var orderId = null;
 	var tableId = null;
 	var waiterName;
 	var change = null;
@@ -64,7 +65,6 @@ TableAdministration = function() {
 			type: "GET",
 			async: false,
 			success: function(response) {
-				
 				for (var i = 0, l = response.details.length; i < l; ++i) {
 					total += response.details[i].product.price*response.details[i].amount;
 				}
@@ -108,6 +108,7 @@ TableAdministration = function() {
 	
 	var printOrder = function(){
 		$("#tableModal tbody").empty();
+		$('#modalDate').html("");
 		$.ajax({
 			url: "getOrderById",
 			data: {
@@ -165,8 +166,33 @@ TableAdministration = function() {
 		$('#printOrderModal').modal('show');
 	}
 	
-	$("#printButton").click(function(){
-	    window.print();
+	$("#printButton").click(function() {
+		$.ajax({
+			url: "getOrderById",
+			data: {
+				id: tableId,
+			},
+			type: "GET",
+			async: false,
+			success: function(response) {
+				orderId = response.id;
+				$.ajax({
+					url: "printOrder",
+					crossDomain: true,
+					type: "GET",
+					data: {
+						orderId: orderId,
+					},
+					async: false,
+					success: function(response) {
+					},
+					error: function(response) {
+					}
+				});
+			},
+			error: function(response) {
+			}
+		});
 	});
 	
 	$("#confirmPaymentMediaButton").click(function() {
