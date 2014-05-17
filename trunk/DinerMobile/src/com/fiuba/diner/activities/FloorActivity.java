@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,6 +37,7 @@ public class FloorActivity extends Activity {
 		gridview.setAdapter(this.adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
+
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				TableLayout tableLayout = DataHolder.getCurrentTableLayout()[position];
@@ -57,7 +60,7 @@ public class FloorActivity extends Activity {
 
 			private void openDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
-				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getId() + "?");
+				alertDialogBuilder.setMessage("ï¿½Confirma la apertura de la mesa " + table.getId() + "?");
 				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 					@Override
@@ -80,8 +83,9 @@ public class FloorActivity extends Activity {
 
 			private void notAvailableDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
-				alertDialogBuilder.setMessage("La mesa no está disponible");
+				alertDialogBuilder.setMessage("La mesa no estï¿½ disponible");
 				alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 					}
@@ -91,5 +95,29 @@ public class FloorActivity extends Activity {
 			}
 
 		});
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_logout:
+			this.logout();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		this.getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	private void logout() {
+		// TODO desloguear
 	}
 }
