@@ -1,6 +1,7 @@
 package com.fiuba.diner.controllers;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.constant.State;
 import com.fiuba.diner.gcm.GCMServer;
+import com.fiuba.diner.helper.EncryptionHelper;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Parameter;
+import com.fiuba.diner.model.Role;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.model.User;
 import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.service.CategoryService;
 import com.fiuba.diner.service.DeviceService;
@@ -30,6 +34,7 @@ import com.fiuba.diner.service.FloorService;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
 import com.fiuba.diner.service.TableService;
+import com.fiuba.diner.service.UserService;
 import com.fiuba.diner.service.WaiterService;
 
 @Controller
@@ -50,6 +55,8 @@ public class RestController {
 	private ParameterService parameterService;
 	@Autowired
 	private DeviceService deviceService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	@ResponseBody
@@ -124,5 +131,36 @@ public class RestController {
 			GCMServer.sendNotification("Se encuentra para retirar el pedido: " + orderDetail.getProduct().getDescription());
 		}
 		return orderDetail;
+	}
+
+	@RequestMapping(value = "/waiterLogin", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean waiterLogin(@RequestBody User userToValidate) throws Exception {
+		String password = userToValidate.getPassword();
+		User user = this.userService.getByName(userToValidate.getName());
+		if (user != null && password != null) {
+
+			String hashedPassword = EncryptionHelper.generateHash(password);
+
+			if (hashedPassword.equals(user.getPassword())) {
+				if (user.isActive()) {
+					Iterator<Role> it = user.getRoles().iterator();
+					while (it.hasNext()) {
+						Role role = it.next();
+						if (role.getCode().equals("WAITER")) {
+							return true;
+						}
+					}
+					return false;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+
+		} else {
+			return false;
+		}
 	}
 }
