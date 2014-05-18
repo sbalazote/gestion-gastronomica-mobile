@@ -8,6 +8,10 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
+    <!-- TO get the MAC ADDRESS. -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    
     <uses-permission android:name="android.permission.INTERNET" />
  	<!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
