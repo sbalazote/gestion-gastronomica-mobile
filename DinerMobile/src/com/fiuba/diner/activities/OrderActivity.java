@@ -51,8 +51,9 @@ public class OrderActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_order);
 		this.session = new SessionManager(this.getApplicationContext());
+		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
+		this.setContentView(R.layout.activity_order);
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 

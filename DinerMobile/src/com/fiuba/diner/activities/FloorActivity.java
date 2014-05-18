@@ -36,8 +36,9 @@ public class FloorActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.floor);
 		this.session = new SessionManager(this.getApplicationContext());
+		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
+		this.setContentView(R.layout.floor);
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 

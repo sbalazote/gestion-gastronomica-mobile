@@ -34,8 +34,9 @@ public class TableListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_table_list);
 		this.session = new SessionManager(this.getApplicationContext());
+		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
+		this.setContentView(R.layout.activity_table_list);
 		this.populateList();
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));

@@ -29,8 +29,9 @@ public class FloorListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.floor_list);
 		this.session = new SessionManager(this.getApplicationContext());
+		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
+		this.setContentView(R.layout.floor_list);
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 		this.populateList();
