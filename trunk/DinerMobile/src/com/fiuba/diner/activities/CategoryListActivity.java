@@ -1,8 +1,12 @@
 package com.fiuba.diner.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,19 +16,36 @@ import android.widget.ListView;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.CategoryListAdapter;
 import com.fiuba.diner.helper.DataHolder;
+import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Product;
 
 public class CategoryListActivity extends Activity {
 
 	public static final String EXTRA_CATEGORY = "com.fiuba.diner.activities.CATEGORY";
+	public final String LOG_OUT = "event_logout";
+
+	private SessionManager session;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_category_list);
+		this.session = new SessionManager(this.getApplicationContext());
+		// Register mMessageReceiver to receive messages.
+		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 		this.populateList();
 	}
+
+	// handler for received Intents for logout event
+	private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// do your code snippet here.
+			CategoryListActivity.this.finish();
+		}
+	};
 
 	private void populateList() {
 		ListView listview = (ListView) this.findViewById(R.id.categoryListView);
@@ -78,7 +99,10 @@ public class CategoryListActivity extends Activity {
 	}
 
 	private void logout() {
-		// TODO desloguear
+		this.session.logoutUser();
+		Intent intent = new Intent(this.LOG_OUT);
+		// send the broadcast to all activities who are listening
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
 }

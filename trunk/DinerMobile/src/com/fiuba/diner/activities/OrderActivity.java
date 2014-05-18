@@ -7,9 +7,13 @@ import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.OrderDetailStateHelper;
+import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
@@ -35,15 +40,21 @@ import com.fiuba.diner.util.Formatter;
 
 public class OrderActivity extends Activity {
 
+	public final String LOG_OUT = "event_logout";
+
 	private OrderListAdapter adapter;
 	private ListView listView;
 	private Order order;
 	private boolean hasChanged;
+	private SessionManager session;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_order);
+		this.session = new SessionManager(this.getApplicationContext());
+		// Register mMessageReceiver to receive messages.
+		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 
 		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
 		tableTextView.setText("Mesa: " + DataHolder.getCurrentTable().getId());
@@ -77,6 +88,16 @@ public class OrderActivity extends Activity {
 		this.populateCustomerSpinner(customerAmount);
 
 	}
+
+	// handler for received Intents for logout event
+	private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// do your code snippet here.
+			OrderActivity.this.finish();
+		}
+	};
 
 	public void addProduct(View view) {
 		Intent intent = new Intent(this, CategoryListActivity.class);
@@ -304,7 +325,10 @@ public class OrderActivity extends Activity {
 	}
 
 	private void logout() {
-		// TODO desloguear
+		this.session.logoutUser();
+		Intent intent = new Intent(this.LOG_OUT);
+		// send the broadcast to all activities who are listening
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
 }
