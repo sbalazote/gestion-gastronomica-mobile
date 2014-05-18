@@ -25,12 +25,12 @@ public class HomeActivity extends Activity implements Caller<Void> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setTitle(R.string.hardcodedWaiter);
 		this.session = new SessionManager(this.getApplicationContext());
+		this.session.checkLogin();
+		super.onCreate(savedInstanceState);
+		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
 		new SetUpTask(this).execute();
 		new RegisterGcmTask(this).execute();
-		this.session.checkLogin();
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 	}
