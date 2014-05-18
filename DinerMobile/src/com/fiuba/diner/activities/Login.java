@@ -3,6 +3,7 @@ package com.fiuba.diner.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,11 +20,15 @@ public class Login extends Activity implements Caller<Boolean> {
 	private EditText passwordEditText;
 	private Button loginButton;
 
+	private String mobileId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setTitle(R.string.app_name);
 		this.setContentView(R.layout.login);
+
+		this.mobileId = com.fiuba.diner.util.MacAddress.get(this);
 
 		this.usernameEditText = (EditText) this.findViewById(R.id.usernameEditText);
 		this.passwordEditText = (EditText) this.findViewById(R.id.passwordEditText);
@@ -33,15 +38,7 @@ public class Login extends Activity implements Caller<Boolean> {
 
 			@Override
 			public void onClick(View view) {
-				String username = Login.this.usernameEditText.getText().toString();
-				String password = Login.this.passwordEditText.getText().toString();
-
-				User user = new User();
-				user.setName(username);
-				user.setPassword(password);
-
-				new LoginTask(Login.this).execute(user);
-
+				Login.this.attemptLogin();
 			}
 		});
 	}
@@ -62,7 +59,40 @@ public class Login extends Activity implements Caller<Boolean> {
 		}
 	}
 
+	private void attemptLogin() {
+		Boolean cancel = false;
+		String username = Login.this.usernameEditText.getText().toString();
+		String password = Login.this.passwordEditText.getText().toString();
+		View focusView = null;
+
+		// Se validan los campos obligatorios
+		if (TextUtils.isEmpty(password)) {
+			Login.this.passwordEditText.setError("El campo contraseña es obligatorio");
+			focusView = Login.this.passwordEditText;
+			cancel = true;
+		}
+		if (TextUtils.isEmpty(username)) {
+			Login.this.usernameEditText.setError("El campo usuario es obligatorio");
+			focusView = Login.this.usernameEditText;
+			cancel = true;
+		}
+
+		if (!cancel) {
+			User user = new User();
+			user.setName(username);
+			user.setPassword(password);
+			// user.setMobileId(this.mobileId);
+
+			new LoginTask(Login.this).execute(user);
+
+		} else {
+			// Se devuelve el foco al campo que no fue completado
+			focusView.requestFocus();
+		}
+	}
+
 	private void setView() {
 		this.setContentView(R.layout.home);
 	}
+
 }
