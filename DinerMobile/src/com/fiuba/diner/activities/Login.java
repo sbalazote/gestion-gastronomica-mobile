@@ -11,15 +11,17 @@ import android.widget.Toast;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.helper.Caller;
+import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.User;
 import com.fiuba.diner.tasks.LoginTask;
+import com.fiuba.diner.util.MacAddress;
 
 public class Login extends Activity implements Caller<Boolean> {
 
 	private EditText usernameEditText;
 	private EditText passwordEditText;
 	private Button loginButton;
-
+	private SessionManager session;
 	private String mobileId;
 
 	@Override
@@ -27,8 +29,8 @@ public class Login extends Activity implements Caller<Boolean> {
 		super.onCreate(savedInstanceState);
 		this.setTitle(R.string.app_name);
 		this.setContentView(R.layout.login);
-
-		this.mobileId = com.fiuba.diner.util.MacAddress.get(this);
+		this.session = new SessionManager(this.getApplicationContext());
+		this.mobileId = MacAddress.get(this);
 
 		this.usernameEditText = (EditText) this.findViewById(R.id.usernameEditText);
 		this.passwordEditText = (EditText) this.findViewById(R.id.passwordEditText);
@@ -46,6 +48,7 @@ public class Login extends Activity implements Caller<Boolean> {
 	@Override
 	public void afterCall(Boolean result) {
 		if (result) {
+			Login.this.session.createLoginSession(Login.this.usernameEditText.getText().toString(), Login.this.passwordEditText.getText().toString());
 			Intent intent = new Intent(Login.this.getApplicationContext(), HomeActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			Login.this.startActivity(intent);
@@ -67,7 +70,7 @@ public class Login extends Activity implements Caller<Boolean> {
 
 		// Se validan los campos obligatorios
 		if (TextUtils.isEmpty(password)) {
-			Login.this.passwordEditText.setError("El campo contraseña es obligatorio");
+			Login.this.passwordEditText.setError("El campo contraseï¿½a es obligatorio");
 			focusView = Login.this.passwordEditText;
 			cancel = true;
 		}

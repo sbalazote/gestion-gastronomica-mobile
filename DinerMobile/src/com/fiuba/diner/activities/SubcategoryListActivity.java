@@ -1,8 +1,12 @@
 package com.fiuba.diner.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +15,7 @@ import android.widget.ListView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.SubcategoryListAdapter;
+import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.model.Subcategory;
@@ -18,8 +23,10 @@ import com.fiuba.diner.model.Subcategory;
 public class SubcategoryListActivity extends Activity {
 
 	public static final String EXTRA_SUBCATEGORY = "com.fiuba.diner.activities.SUBCATEGORY";
+	public final String LOG_OUT = "event_logout";
 
 	private Category category;
+	private SessionManager session;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +35,21 @@ public class SubcategoryListActivity extends Activity {
 
 		this.setTitle(this.category.getDescription());
 		this.setContentView(R.layout.activity_subcategory_list);
+		this.session = new SessionManager(this.getApplicationContext());
+		// Register mMessageReceiver to receive messages.
+		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 		this.populateList();
 	}
+
+	// handler for received Intents for logout event
+	private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// do your code snippet here.
+			SubcategoryListActivity.this.finish();
+		}
+	};
 
 	private void populateList() {
 		ListView listview = (ListView) this.findViewById(R.id.subcategoryListView);
@@ -83,7 +103,10 @@ public class SubcategoryListActivity extends Activity {
 	}
 
 	private void logout() {
-		// TODO desloguear
+		this.session.logoutUser();
+		Intent intent = new Intent(this.LOG_OUT);
+		// send the broadcast to all activities who are listening
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
 }
