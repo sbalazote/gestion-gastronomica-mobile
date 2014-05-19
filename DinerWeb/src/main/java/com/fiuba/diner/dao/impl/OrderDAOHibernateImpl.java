@@ -45,7 +45,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	}
 
 	@Override
-	public Order getOrder(Integer tableId) {
+	public Order getOrderByTable(Integer tableId) {
 		try {
 			String sentence = "select o from Order as o inner join o.tables as t inner join o.details as d where t.id = :tableId and o.state.id <> 3";
 			Query query;

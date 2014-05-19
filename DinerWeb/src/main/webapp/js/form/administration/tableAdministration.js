@@ -58,7 +58,7 @@ TableAdministration = function() {
 		waiterName = parent.find("td:eq(1)").html();
 		
 		$.ajax({
-			url: "getOrderById",
+			url: "getOrderByTable",
 			data: {
 				id: tableId,
 			},
@@ -110,7 +110,7 @@ TableAdministration = function() {
 		$("#tableModal tbody").empty();
 		$('#modalDate').html("");
 		$.ajax({
-			url: "getOrderById",
+			url: "getOrderByTable",
 			data: {
 				id: tableId,
 			},
@@ -168,7 +168,7 @@ TableAdministration = function() {
 	
 	$("#printButton").click(function() {
 		$.ajax({
-			url: "getOrderById",
+			url: "getOrderByTable",
 			data: {
 				id: tableId,
 			},

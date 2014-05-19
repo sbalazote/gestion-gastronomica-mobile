@@ -17,7 +17,7 @@ public interface OrderDAO {
 
 	void delete(Integer orderId);
 
-	Order getOrder(Integer tableId);
+	Order getOrderByTable(Integer tableId);
 
 	List<OrderDetailDTO> getRequestedOrders(boolean kitchen);
 

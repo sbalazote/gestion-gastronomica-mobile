@@ -70,18 +70,18 @@ public class AdministrationController {
 		return this.tableService.getTablesWithClosedOrder();
 	}
 
-	@RequestMapping(value = "/getOrderById", method = RequestMethod.GET)
+	@RequestMapping(value = "/getOrderByTable", method = RequestMethod.GET)
 	@ResponseBody
-	public Order getOrderById(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
+	public Order getOrderByTable(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
 		Integer id = Integer.valueOf(parameters.get("id"));
-		Order order = this.orderService.getOrder(id);
+		Order order = this.orderService.getOrderByTable(id);
 		return order;
 	}
 
 	@RequestMapping(value = "/savePaymentMedia", method = RequestMethod.POST)
 	public @ResponseBody
 	Order savePaymentMedia(@RequestParam Integer tableId, Integer paymentMediaId, Double change, Double total) throws Exception {
-		Order order = this.orderService.getOrder(tableId);
+		Order order = this.orderService.getOrderByTable(tableId);
 		order.setTotal(total);
 		if (paymentMediaId.equals(PaymentMediaStateHelper.EFECTIVO.getState().getId())) {
 			order.setPaymentMedia(PaymentMediaStateHelper.EFECTIVO.getState());
