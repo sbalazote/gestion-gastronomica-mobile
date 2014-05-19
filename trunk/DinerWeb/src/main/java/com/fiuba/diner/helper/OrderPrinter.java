@@ -26,6 +26,7 @@ import com.lowagie.text.pdf.PdfWriter;
 public class OrderPrinter {
 
 	private String restaurantName;
+	private String address;
 	private Double dinerServicePrice;
 	private String userName;
 	private String filepath;
@@ -65,8 +66,10 @@ public class OrderPrinter {
 		}
 	}
 
-	public void createPdf(String restaurantName, Double dinerServicePrice, String userName, String filepath, Order order) throws DocumentException, IOException {
+	public void createPdf(String restaurantName, String address, Double dinerServicePrice, String userName, String filepath, Order order)
+			throws DocumentException, IOException {
 		this.restaurantName = restaurantName;
+		this.address = address;
 		this.dinerServicePrice = dinerServicePrice;
 		this.userName = userName;
 		this.filepath = filepath;
@@ -102,6 +105,11 @@ public class OrderPrinter {
 		PdfPCell cell = null;
 
 		cell = new PdfPCell(new Paragraph(this.restaurantName));
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell.setColspan(12);
+		header.addCell(cell);
+
+		cell = new PdfPCell(new Paragraph(this.address));
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setColspan(12);
 		header.addCell(cell);
@@ -189,10 +197,11 @@ public class OrderPrinter {
 		this.printDetail(document, header, cell, "-", "SUBTOTAL", "-", subtotal.toString());
 
 		// imprimo servicio de mesa
-		this.printDetail(document, header, cell, "-", "Servicio de Mesa", "-", this.dinerServicePrice.toString());
+		Double dinerServicePriceTotal = this.dinerServicePrice * order.getCustomerAmount();
+		this.printDetail(document, header, cell, "-", "Servicio de Mesa", order.getCustomerAmount().toString(), dinerServicePriceTotal.toString());
 
 		// imprimo total
-		total = order.getTotal() + this.dinerServicePrice;
+		total = subtotal + this.dinerServicePrice;
 		this.printDetail(document, header, cell, "-", "TOTAL", "-", total.toString());
 	}
 

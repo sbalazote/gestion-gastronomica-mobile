@@ -7,6 +7,7 @@ public class ParameterDTO implements Serializable {
 
 	private Integer id;
 	private String restaurant_name;
+	private String address;
 	private Double dinner_service_price;
 	private Boolean dinner_service_active;
 
@@ -41,4 +42,13 @@ public class ParameterDTO implements Serializable {
 	public void setDinnerServiceActive(Boolean dinner_service_active) {
 		this.dinner_service_active = dinner_service_active;
 	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 }

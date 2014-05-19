@@ -25,6 +25,7 @@ SaveParameter = function() {
 			var jsonCategory = {
 					"id": $("#idInput").val(),
 					"restaurantName": $("#restaurantNameInput").val(),
+					"address": $("#addressInput").val(),
 					"dinnerServicePrice": $("#dinnerServicePriceInput").val(),
 					"dinnerServiceActive": $("#dinnerServiceActiveSelect option:selected").val(),
 			};

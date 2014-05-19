@@ -34,13 +34,17 @@
 </div>
 
 <div class="row">
-	<div class="col-md-6 form-group">
-		<label for="dinnerServicePriceInput"><spring:message code="configuration.dinnerServicePrice"/></label>
-		<input type="text" class="form-control" name="dinnerServicePrice" id="dinnerServicePriceInput" value="${dinnerServicePrice}">
+	<div class="col-md-12 form-group">
+		<label for="addressInput"><spring:message code="configuration.address"/></label> 
+		<input type="text" class="form-control" id="addressInput" name="address" value="${address}">
 	</div>
 </div>
 
 <div class="row">
+	<div class="col-md-6 form-group">
+		<label for="dinnerServicePriceInput"><spring:message code="configuration.dinnerServicePrice"/></label>
+		<input type="text" class="form-control" name="dinnerServicePrice" id="dinnerServicePriceInput" value="${dinnerServicePrice}">
+	</div>
 	<div class="col-md-6 form-group">	
 		<label for="dinnerServiceActiveSelect"><spring:message code="configuration.dinnerServiceActive"/></label>
 		<select class="form-control" id="dinnerServiceActiveSelect">
@@ -49,6 +53,8 @@
 		</select>
 	</div>
 </div>
+
+
 
 <div class="row">
 	<div class="col-md-2 col-md-offset-8">

@@ -55,6 +55,11 @@
 						</div>
 						<div class="row">
 							<div style="text-align: center;">
+								<h3>${restaurantAddress}</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div style="text-align: center;">
 								<h5 id="modalTableDetail"></h5>
 							</div>
 						</div>
