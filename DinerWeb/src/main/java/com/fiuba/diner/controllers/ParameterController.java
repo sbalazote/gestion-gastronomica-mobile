@@ -34,6 +34,7 @@ public class ParameterController {
 		}
 
 		parameter.setRestaurantName(parameterDTO.getRestaurantName());
+		parameter.setAddress(parameterDTO.getAddress());
 		parameter.setDinnerServicePrice(parameterDTO.getDinnerServicePrice());
 		parameter.setDinnerServiceActive(parameterDTO.getDinnerServiceActive());
 		return parameter;
@@ -46,6 +47,7 @@ public class ParameterController {
 
 		modelMap.put("id", parameter.getId());
 		modelMap.put("restaurantName", parameter.getRestaurantName());
+		modelMap.put("address", parameter.getAddress());
 		modelMap.put("dinnerServicePrice", parameter.getDinnerServicePrice());
 		modelMap.put("dinnerServiceActive", parameter.getDinnerServiceActive());
 

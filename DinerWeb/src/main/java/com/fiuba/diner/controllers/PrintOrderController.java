@@ -37,6 +37,6 @@ public class PrintOrderController {
 		String userName = auth.getName();
 
 		OrderPrinter orderPrinter = new OrderPrinter();
-		orderPrinter.createPdf(parameters.getRestaurantName(), parameters.getDinnerServicePrice(), userName, "C:/orders/", order);
+		orderPrinter.createPdf(parameters.getRestaurantName(), parameters.getAddress(), parameters.getDinnerServicePrice(), userName, "C:/orders/", order);
 	}
 }

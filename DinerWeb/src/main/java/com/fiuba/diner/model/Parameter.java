@@ -24,6 +24,9 @@ public class Parameter {
 	@Column(name = "dinner_service_active", nullable = false)
 	private Boolean dinner_service_active;
 
+	@Column(name = "address", nullable = false)
+	private String address;
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -54,6 +57,14 @@ public class Parameter {
 
 	public void setDinnerServiceActive(Boolean dinner_service_active) {
 		this.dinner_service_active = dinner_service_active;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

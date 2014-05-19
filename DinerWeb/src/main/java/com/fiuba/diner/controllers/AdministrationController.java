@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.helper.PaymentMediaStateHelper;
+import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
@@ -61,6 +62,7 @@ public class AdministrationController {
 	@RequestMapping(value = "/tableAdministration", method = RequestMethod.GET)
 	public String tableAdministration(ModelMap modelMap) throws Exception {
 		modelMap.put("restaurantName", this.parameterService.get(1).getRestaurantName());
+		modelMap.put("restaurantAddress", this.parameterService.get(1).getAddress());
 		return "tableAdministration";
 	}
 
@@ -94,6 +96,10 @@ public class AdministrationController {
 			}
 		}
 		order.setState(OrderStateHelper.FACTURADA.getState());
+		Table table = this.tableService.get(order.getTables().get(0).getId());
+		table.setWaiter(null);
+		table.setState(TableStateHelper.AVAILABLE.getState());
+		this.tableService.save(table);
 		this.orderService.save(order);
 		return order;
 	}

@@ -72,7 +72,7 @@ TableAdministration = function() {
 			error: function(response) {
 			}
 		});
-		$('#totalInput').val(total);
+		$('#totalInput').val(total.toFixed(2));
 		$('#modalPaymentTitle').html("Mozo: " + waiterName + " - Mesa Nro: " + tableId);
 		$('#paymentMediaModal').modal('show');
 	});
@@ -83,6 +83,7 @@ TableAdministration = function() {
 			$("#confirmPaymentMediaButton").prop("disabled",true);
 		}else{
 			change = 0;
+			$('#cashDiv').hide();
 		}
 	});
 
@@ -98,9 +99,9 @@ TableAdministration = function() {
 				$('#changeInput').val("Debe Ingresar un monto mayor");
 				$("#confirmPaymentMediaButton").prop("disabled",true);
 			}else{
-				$('#changeInput').val(-($("#totalInput").val() - $('#cashInput').val()));
+				$('#changeInput').val((-($("#totalInput").val() - $('#cashInput').val())).toFixed(2));
 				change = -($("#totalInput").val() - $('#cashInput').val());
-				
+				change.toFixed(2);
 				$("#confirmPaymentMediaButton").prop("disabled",false);
 			}
 	    }
@@ -130,7 +131,7 @@ TableAdministration = function() {
 							+ "<td>" + response.details[i].product.price + "</td>"
 							+ "</tr>");
 				}
-				
+				subtotal.toFixed(2);
 				// inserto subtotal
 				$("#tableModal tbody").append("<tr>"
 						+ "<td>" + "-" + "</td>"
@@ -152,7 +153,8 @@ TableAdministration = function() {
 						+ "</tr>");
 
 				// inserto total
-				var totalAmount = response.total + totalServicePrice;
+				var totalAmount = subtotal + totalServicePrice;
+				totalAmount.toFixed(2);
 				$("#tableModal tbody").append("<tr>"
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "TOTAL" + "</td>"
