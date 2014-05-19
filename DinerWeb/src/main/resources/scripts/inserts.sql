@@ -19,6 +19,7 @@ insert into `diner`.`order_state` (id, description) values (3, 'Facturada');
 
 insert into `diner`.`table_state` (id, description) values (1, 'Disponible');
 insert into `diner`.`table_state` (id, description) values (2, 'Abierta');
+insert into `diner`.`table_state` (id, description) values (3, 'Cerrada');
 
 insert into `diner`.`payment_media` (id, description) values (1, 'Tarjeta de Debito');
 insert into `diner`.`payment_media` (id, description) values (2, 'Tarjeta de Credito');
