@@ -13,8 +13,7 @@ function refreshTable() {
 				orderDetail.push(response[i].detail.product.description);
 				orderDetail.push(response[i].detail.amount);
 				orderDetail.push(response[i].detail.comment);
-				//orderDetail.push(response[i].tables[0].waiter.surname + " " + response[i].tables[0].waiter.name );
-				orderDetail.push("Rodriguez");
+				orderDetail.push(response[i].table.waiter.surname);
 				
 				if (response[i].detail.requestDate) {
 					var requestDate = new Date(response[i].detail.requestDate);
@@ -33,12 +32,7 @@ function refreshTable() {
 					orderDetail.push("<strong><span style='color:green'>" + response[i].detail.state.description + "</span></strong>");
 					orderDetail.push("");
 				}
-				if(response[i].detail.preparationStartDate != undefined ){
-					var newDate = dateFormat(response[i].detail.preparationStartDate, "yyyy-mm-dd HH:MM:ss");
-					orderDetail.push("<abbr class='timeago' title='"+ newDate + "'>" + newDate + "</abbr>");
-				}else{
-					orderDetail.push("");
-				}
+
 				aaData.push(orderDetail);
 			}
 			$('.datatable').dataTable({

@@ -2,8 +2,8 @@ START TRANSACTION;
 
 insert into `diner`.`parameter` (id, restaurant_name, dinner_service_price, dinner_service_active) values (1, 'La Bisteca', 12.00, true);
 
-insert into `diner`.`waiter` (id, name, surname, active) values (1, 'Carlos', 'Rodríguez', true);
-insert into `diner`.`waiter` (id, name, surname, active) values (2, 'Roberto', 'Fernández', true);
+insert into `diner`.`waiter` (id, name, surname, active) values (1, 'Carlos', 'Rodriguez', true);
+insert into `diner`.`waiter` (id, name, surname, active) values (2, 'Roberto', 'Fernandez', true);
 
 insert into `diner`.`device` (id, waiter_id, registration_id) values ('00B0D086BBF7', 1,'66666666666');
 
@@ -315,21 +315,24 @@ insert into `diner`.`role` values (4, 'CASHIER', 'Cajero o Cobrador');
 insert into `diner`.`role` values (5, 'ENTITY_ADMINISTRATION', 'Administración de Entidades');
 insert into `diner`.`role` values (6, 'USER_ADMINISTRATION', 'Administración de Usuarios');
 
-insert into `diner`.`user` values (1, "sbalazote", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (2, "mflongo", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (3, "lpalmieri", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (4, "frago", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (5, "admin", "bba48f6c994c885417a26397ac34aeb59981d0b6", 1);
+insert into `diner`.`user` values (1, "crodriguez", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (2, "rfernandez", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (3, "sbalazote", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (4, "mlongo", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (5, "lpalmieri", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (6, "frago", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (7, "admin", "bba48f6c994c885417a26397ac34aeb59981d0b6", 1);
 
-insert into user_role values (1, 1, 1);
-insert into user_role values (2, 2, 2);
-insert into user_role values (3, 3, 3);
-insert into user_role values (4, 4, 4);
-insert into user_role values (5, 5, 1);
-insert into user_role values (6, 5, 2);
-insert into user_role values (7, 5, 3);
-insert into user_role values (8, 5, 4);
-insert into user_role values (9, 5, 5);
-insert into user_role values (10, 5, 6);
+insert into user_role values (1, 1, 3);
+insert into user_role values (2, 2, 3);
+insert into user_role values (3, 3, 1);
+insert into user_role values (4, 4, 2);
+insert into user_role values (5, 5, 4);
+insert into user_role values (6, 6, 5);
+insert into user_role values (7, 7, 1);
+insert into user_role values (8, 7, 2);
+insert into user_role values (9, 7, 4);
+insert into user_role values (10, 7, 5);
+insert into user_role values (11, 7, 6);
 
 commit;

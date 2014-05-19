@@ -11,9 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.helper.OrderDetailStateHelper;
+import com.fiuba.diner.helper.OrderStateHelper;
+import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.OrderDetailState;
+import com.fiuba.diner.model.Table;
 import com.fiuba.diner.service.OrderService;
 
 @Service
@@ -76,5 +80,18 @@ public class OrderServiceImpl implements OrderService {
 		this.orderDAO.saveOrderDetail(orderDetail);
 
 		return orderDetail;
+	}
+
+	@Override
+	public void closeOrder(Integer orderId) {
+		Order order = this.get(orderId);
+		order.setState(OrderStateHelper.CERRADA.getState());
+		for (OrderDetail detail : order.getDetails()) {
+			detail.setState(OrderDetailStateHelper.DELIVERED.getState());
+		}
+		for (Table table : order.getTables()) {
+			table.setState(TableStateHelper.CLOSED.getState());
+		}
+		this.save(order);
 	}
 }

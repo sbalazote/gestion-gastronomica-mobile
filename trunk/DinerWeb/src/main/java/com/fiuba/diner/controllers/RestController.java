@@ -3,7 +3,6 @@ package com.fiuba.diner.controllers;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,17 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fiuba.diner.constant.State;
-import com.fiuba.diner.gcm.GCMServer;
 import com.fiuba.diner.helper.EncryptionHelper;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Order;
-import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Role;
 import com.fiuba.diner.model.Table;
@@ -108,29 +103,24 @@ public class RestController {
 		return order.getId();
 	}
 
-	@RequestMapping(value = "/order", method = RequestMethod.GET)
+	@RequestMapping(value = "/orders/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Order getOrder(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
-		Integer id = Integer.valueOf(parameters.get("id"));
+	public Order getOrder(@PathVariable Integer id) throws Exception {
 		Order order = this.orderService.getOrderByTable(id);
 		return order;
 	}
 
-	@RequestMapping(value = "/parameters", method = RequestMethod.GET)
+	@RequestMapping(value = "/orders/{id}/close", method = RequestMethod.POST)
 	@ResponseBody
-	public Parameter getParameter(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
-		Integer id = 1; // Integer.valueOf(parameters.get("id"));
-		return this.parameterService.get(id);
+	public void closeTable(@PathVariable Integer id) throws IOException {
+		this.orderService.closeOrder(id);
 	}
 
-	@RequestMapping(value = "/changeOrderDetailState", method = RequestMethod.GET)
+	@RequestMapping(value = "/parameters", method = RequestMethod.GET)
 	@ResponseBody
-	public OrderDetail changeOrderDetailState(@RequestParam Integer orderDetailId) throws Exception {
-		OrderDetail orderDetail = this.orderService.changeOrderDetailState(orderDetailId);
-		if (orderDetail.getState().getId().equals(State.PREPARADO.getId())) {
-			GCMServer.sendNotification("Se encuentra para retirar el pedido: " + orderDetail.getProduct().getDescription());
-		}
-		return orderDetail;
+	public Parameter getParameter(ModelMap modelMap) throws Exception {
+		Integer id = 1;
+		return this.parameterService.get(id);
 	}
 
 	@RequestMapping(value = "/waiterLogin", method = RequestMethod.POST)
