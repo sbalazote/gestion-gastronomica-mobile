@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.helper.Caller;
+import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.SessionManager;
-import com.fiuba.diner.model.User;
+import com.fiuba.diner.model.LoginRequest;
+import com.fiuba.diner.model.LoginResponse;
+import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.tasks.LoginTask;
 import com.fiuba.diner.util.MacAddress;
 
@@ -21,14 +24,17 @@ public class Login extends Activity implements Caller<Boolean> {
 	private EditText usernameEditText;
 	private EditText passwordEditText;
 	private Button loginButton;
+
 	private SessionManager session;
 	private String mobileId;
+	private LoginResponse loginResponse;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setTitle(R.string.app_name);
 		this.setContentView(R.layout.login);
+
 		this.session = new SessionManager(this.getApplicationContext());
 		this.mobileId = MacAddress.get(this);
 
@@ -47,15 +53,33 @@ public class Login extends Activity implements Caller<Boolean> {
 
 	@Override
 	public void afterCall(Boolean result) {
-		if (result) {
+		Boolean valid = false;
+
+		if (this.loginResponse != null) {
+			valid = this.loginResponse.getValid();
+		}
+
+		if (valid) {
+
 			Login.this.session.createLoginSession(Login.this.usernameEditText.getText().toString(), Login.this.passwordEditText.getText().toString());
+
+			// Se carga el waiter -----------------------------
+			Waiter waiter = new Waiter();
+			waiter.setId(this.loginResponse.getUserId());
+			waiter.setName(this.loginResponse.getUserName());
+			waiter.setActive(true);
+			DataHolder.setCurrentWaiter(waiter);
+			// -------------------------------------------------
+
 			Intent intent = new Intent(Login.this.getApplicationContext(), HomeActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			Login.this.startActivity(intent);
 			Login.this.finish();
 			this.setView();
+
 		} else {
-			Toast.makeText(this.getApplicationContext(), "Ingreso incorrecto. Intente nuevamente.", Toast.LENGTH_LONG).show();
+			// Toast.makeText(this.getApplicationContext(), "Ingreso incorrecto. Intente nuevamente.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this.getApplicationContext(), this.loginResponse.getMessage(), Toast.LENGTH_LONG).show();
 			Login.this.usernameEditText.setText("");
 			Login.this.passwordEditText.setText("");
 			Login.this.usernameEditText.requestFocus();
@@ -64,29 +88,29 @@ public class Login extends Activity implements Caller<Boolean> {
 
 	private void attemptLogin() {
 		Boolean cancel = false;
-		String username = Login.this.usernameEditText.getText().toString();
-		String password = Login.this.passwordEditText.getText().toString();
+		String userName = Login.this.usernameEditText.getText().toString();
+		String userPassword = Login.this.passwordEditText.getText().toString();
 		View focusView = null;
 
 		// Se validan los campos obligatorios
-		if (TextUtils.isEmpty(password)) {
+		if (TextUtils.isEmpty(userPassword)) {
 			Login.this.passwordEditText.setError("El campo contraseña es obligatorio");
 			focusView = Login.this.passwordEditText;
 			cancel = true;
 		}
-		if (TextUtils.isEmpty(username)) {
+		if (TextUtils.isEmpty(userName)) {
 			Login.this.usernameEditText.setError("El campo usuario es obligatorio");
 			focusView = Login.this.usernameEditText;
 			cancel = true;
 		}
 
 		if (!cancel) {
-			User user = new User();
-			user.setName(username);
-			user.setPassword(password);
-			// user.setMobileId(this.mobileId);
+			LoginRequest userLogin = new LoginRequest();
+			userLogin.setUserName(userName);
+			userLogin.setUserPassword(userPassword);
+			userLogin.setMobileId(this.mobileId);
 
-			new LoginTask(Login.this).execute(user);
+			new LoginTask(Login.this).execute(userLogin);
 
 		} else {
 			// Se devuelve el foco al campo que no fue completado
@@ -96,6 +120,10 @@ public class Login extends Activity implements Caller<Boolean> {
 
 	private void setView() {
 		this.setContentView(R.layout.home);
+	}
+
+	public void setLoginResponse(LoginResponse loginResponse) {
+		this.loginResponse = loginResponse;
 	}
 
 }
