@@ -201,7 +201,7 @@ public class OrderPrinter {
 		this.printDetail(document, header, cell, "-", "Servicio de Mesa", order.getCustomerAmount().toString(), dinerServicePriceTotal.toString());
 
 		// imprimo total
-		total = subtotal + this.dinerServicePrice;
+		total = subtotal + dinerServicePriceTotal;
 		this.printDetail(document, header, cell, "-", "TOTAL", "-", total.toString());
 	}
 
