@@ -3,12 +3,14 @@ package com.fiuba.diner.model;
 import java.io.Serializable;
 
 public class Parameter implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
 	private String restaurantName;
 	private Double dinnerServicePrice;
 	private Boolean dinnerServiceActive;
+	private String address;
 
 	public Integer getId() {
 		return this.id;
@@ -40,5 +42,13 @@ public class Parameter implements Serializable {
 
 	public void setDinnerServiceActive(Boolean dinner_service_active) {
 		this.dinnerServiceActive = dinner_service_active;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
