@@ -7,13 +7,11 @@ import org.codehaus.jackson.type.TypeReference;
 
 import android.os.AsyncTask;
 
-import com.fiuba.diner.constant.Constants;
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Parameter;
-import com.fiuba.diner.model.Waiter;
 
 public class SetUpTask extends AsyncTask<String, Void, Void> {
 
@@ -39,14 +37,14 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 			List<Floor> floors = this.mapper.readValue(response, new TypeReference<List<Floor>>() {
 			});
 
-			// Me traigo un waiter (por ahora hardcodeado)
-			response = this.connectionHelper.get("waiters/" + Constants.HARDCODED_WAITER_ID);
-			System.out.println(response);
-			Waiter waiter = this.mapper.readValue(response, Waiter.class);
+			// Me traigo un waiter
+			// response = this.connectionHelper.get("waiters/" + DataHolder.getCurrentWaiter().getId());
+			// System.out.println(response);
+			// Waiter waiter = this.mapper.readValue(response, Waiter.class);
 
 			DataHolder.setParameter(parameter);
 			DataHolder.setFloors(floors);
-			DataHolder.setCurrentWaiter(waiter);
+			// DataHolder.setCurrentWaiter(waiter);
 
 		} catch (Exception e) {
 			e.printStackTrace();
