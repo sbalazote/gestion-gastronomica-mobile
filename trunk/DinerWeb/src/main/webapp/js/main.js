@@ -79,7 +79,7 @@ $(document).ready(function() {
             }
         }
         return this.optional(element) || check;
-    }, "Por favor, escribe una fecha mayor a la fecha del día. (Formato: ddmmaa)");
+    }, "Por favor, escribe una fecha mayor a la fecha del dï¿½a. (Formato: ddmmaa)");
     
     jQuery.validator.addMethod("minDate", function(value, element, param) {
     	var partsTo = value.split("/");
@@ -123,7 +123,15 @@ $(document).ready(function() {
 	//a minimum number value on a validate form
 	$.validator.addMethod('minValue', function (value, el, param) {
 	    return value > param;
-	},"Por favor, ingrese un número mayor a cero");
+	},"Por favor, ingrese un nï¿½mero mayor a cero");
+	
+	$.validator.addMethod('usernameRequired', function (value, el, param) {
+		return $.trim(value).length > 0;
+	},"El usuario es un dato obligatorio");
+	
+	$.validator.addMethod('passwordRequired', function (value, el, param) {
+		return $.trim(value).length > 0;
+	},"La contrasenia es un dato obligatorio");
 	
 	jQuery.timeago.settings.strings = {
 			   prefixAgo: "hace",
@@ -135,12 +143,12 @@ $(document).ready(function() {
 			   minutes: "unos %d minutos",
 			   hour: "una hora",
 			   hours: "%d horas",
-			   day: "un día",
-			   days: "%d días",
+			   day: "un dï¿½a",
+			   days: "%d dï¿½as",
 			   month: "un mes",
 			   months: "%d meses",
-			   year: "un año",
-			   years: "%d años"
+			   year: "un aï¿½o",
+			   years: "%d aï¿½os"
 			};
 	
 	jQuery(document).ready(function() {

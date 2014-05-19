@@ -41,6 +41,12 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 
 				if (hashedPassword.equals(user.getPassword())) {
 					if (user.isActive()) {
+						if (user.getRoles().size() == 1) {
+							if (user.getRoles().get(0).getCode().equals("WAITER")) {
+								logger.info("Usuario WAITER");
+								throw new BadCredentialsException("Usuario WAITER. Consulte con el Administrador del Sistema.");
+							}
+						}
 						logger.info("Usuario autenticado");
 						return new UsernamePasswordAuthenticationToken(username, password, this.getAuthorities(user.getRoles()));
 					} else {
@@ -48,13 +54,13 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 						throw new BadCredentialsException("Usuario inhabilitado. Consulte con el Administrador del Sistema.");
 					}
 				} else {
-					logger.info("Usuario o contraseña incorrectos.");
-					throw new BadCredentialsException("Usuario o contraseña incorrectos");
+					logger.info("Usuario o contraseï¿½a incorrectos.");
+					throw new BadCredentialsException("Usuario o contraseï¿½a incorrectos");
 				}
 
 			} else {
-				logger.info("Usuario o contraseña incorrectos.");
-				throw new BadCredentialsException("Usuario o contraseña incorrectos");
+				logger.info("Usuario o contraseï¿½a incorrectos.");
+				throw new BadCredentialsException("Usuario o contraseï¿½a incorrectos");
 			}
 		}
 		return authentication;

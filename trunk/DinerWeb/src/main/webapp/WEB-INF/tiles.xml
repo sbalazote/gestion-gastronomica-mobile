@@ -20,12 +20,6 @@
         <put-attribute name="menu" value="" />
         <put-attribute name="body" value="/WEB-INF/views/login/login.jsp" />
     </definition>
-    
-    <definition name="loginFailed" extends="base.definition">
-        <put-attribute name="header" value="" />
-        <put-attribute name="menu" value="" />
-        <put-attribute name="body" value="/WEB-INF/views/login/loginFailed.jsp" />
-    </definition>
 
     <definition name="home" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
