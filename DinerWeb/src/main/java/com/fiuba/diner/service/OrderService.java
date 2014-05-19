@@ -22,4 +22,6 @@ public interface OrderService {
 
 	OrderDetail changeOrderDetailState(Integer orderDetailId);
 
+	void closeOrder(Integer orderId);
+
 }

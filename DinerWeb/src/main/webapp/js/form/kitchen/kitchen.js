@@ -13,8 +13,7 @@ function refreshTable() {
 				orderDetail.push(response[i].detail.product.description);
 				orderDetail.push(response[i].detail.amount);
 				orderDetail.push(response[i].detail.comment);
-				//orderDetail.push(response[i].tables[0].waiter.surname + " " + response[i].tables[0].waiter.name );
-				orderDetail.push("Rodriguez");
+				orderDetail.push(response[i].table.waiter.surname);
 				
 				if (response[i].detail.requestDate) {
 					var requestDate = new Date(response[i].detail.requestDate);
