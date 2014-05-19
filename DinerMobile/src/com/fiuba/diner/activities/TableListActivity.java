@@ -32,6 +32,7 @@ public class TableListActivity extends Activity {
 	public final String LOG_OUT = "event_logout";
 
 	private SessionManager session;
+	private TableListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,13 @@ public class TableListActivity extends Activity {
 		this.session = new SessionManager(this.getApplicationContext());
 		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
 
+		// Register mMessageReceiver to receive messages.
+		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		// Obtengo las mesas
 		GetTablesTask getTablesTask = new GetTablesTask(null);
 		try {
@@ -48,11 +56,8 @@ public class TableListActivity extends Activity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-
 		this.setContentView(R.layout.activity_table_list);
 		this.populateList();
-		// Register mMessageReceiver to receive messages.
-		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
 	}
 
 	// handler for received Intents for logout event
@@ -68,8 +73,8 @@ public class TableListActivity extends Activity {
 	private void populateList() {
 		ListView listview = (ListView) this.findViewById(R.id.tableListView);
 
-		TableListAdapter adapter = new TableListAdapter(this, DataHolder.getTables());
-		listview.setAdapter(adapter);
+		this.adapter = new TableListAdapter(this, DataHolder.getTables());
+		listview.setAdapter(this.adapter);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
