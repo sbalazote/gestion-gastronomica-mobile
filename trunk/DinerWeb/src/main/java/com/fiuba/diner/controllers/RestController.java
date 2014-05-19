@@ -17,6 +17,8 @@ import com.fiuba.diner.helper.EncryptionHelper;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.Floor;
+import com.fiuba.diner.model.LoginRequest;
+import com.fiuba.diner.model.LoginResponse;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Role;
@@ -125,9 +127,15 @@ public class RestController {
 
 	@RequestMapping(value = "/waiterLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean waiterLogin(@RequestBody User userToValidate) throws Exception {
-		String password = userToValidate.getPassword();
-		User user = this.userService.getByName(userToValidate.getName());
+	public LoginResponse waiterLogin(@RequestBody LoginRequest loginRequest) throws Exception {
+		LoginResponse loginResponse = null;
+		Boolean loginValid = false;
+		Integer userId = -1;
+		String message = "";
+		String userName = "";
+		String password = loginRequest.getUserPassword();
+
+		User user = this.userService.getByName(loginRequest.getUserName());
 		if (user != null && password != null) {
 
 			String hashedPassword = EncryptionHelper.generateHash(password);
@@ -138,19 +146,47 @@ public class RestController {
 					while (it.hasNext()) {
 						Role role = it.next();
 						if (role.getCode().equals("WAITER")) {
-							return true;
+							// Se busca el device
+							Device device = this.deviceService.get(loginRequest.getMobileId());
+							if (device != null) {
+								// El movil ya existe --> se actualiza el usuario
+								// Waiter waiter = this.waiterService.get(user.getId());
+								// device.setWaiter(waiter);
+								// this.deviceService.updateWaiterId(device);
+							} else {
+								// El movil es nuevo --> se crea en la tabla device
+								device = new Device();
+								device.setId(loginRequest.getMobileId());
+								device.setRegistrationId("");
+								Waiter waiter = this.waiterService.get(user.getId());
+								device.setWaiter(waiter);
+								this.deviceService.save(device);
+							}
+							loginValid = true;
+							userId = user.getId();
+							userName = user.getName();
+						} else {
+							message = "El usuario ingresado no es mozo.";
 						}
 					}
-					return false;
 				} else {
-					return false;
+					message = "Usuario inactivo.";
 				}
 			} else {
-				return false;
+				message = "Usuario / contraseña incorrecta.";
 			}
 
 		} else {
-			return false;
+			message = "Usuario / contraseña incorrecta.";
 		}
+
+		loginResponse = new LoginResponse();
+		loginResponse.setValid(loginValid);
+		loginResponse.setMessage(message);
+		loginResponse.setUserId(userId);
+		loginResponse.setUserName(userName);
+
+		return loginResponse;
 	}
+
 }

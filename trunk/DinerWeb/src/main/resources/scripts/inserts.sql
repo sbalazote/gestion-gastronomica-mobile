@@ -323,16 +323,16 @@ insert into `diner`.`user` values (5, "lpalmieri", "3b7f6458be826d8cac7e7510bfae
 insert into `diner`.`user` values (6, "frago", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
 insert into `diner`.`user` values (7, "admin", "bba48f6c994c885417a26397ac34aeb59981d0b6", 1);
 
-insert into user_role values (1, 1, 3);
-insert into user_role values (2, 2, 3);
-insert into user_role values (3, 3, 1);
-insert into user_role values (4, 4, 2);
-insert into user_role values (5, 5, 4);
-insert into user_role values (6, 6, 5);
-insert into user_role values (7, 7, 1);
-insert into user_role values (8, 7, 2);
-insert into user_role values (9, 7, 4);
-insert into user_role values (10, 7, 5);
-insert into user_role values (11, 7, 6);
+insert into `diner`.`user_role` values (1, 1, 3);
+insert into `diner`.`user_role` values (2, 2, 3);
+insert into `diner`.`user_role` values (3, 3, 1);
+insert into `diner`.`user_role` values (4, 4, 2);
+insert into `diner`.`user_role` values (5, 5, 4);
+insert into `diner`.`user_role` values (6, 6, 5);
+insert into `diner`.`user_role` values (7, 7, 1);
+insert into `diner`.`user_role` values (8, 7, 2);
+insert into `diner`.`user_role` values (9, 7, 4);
+insert into `diner`.`user_role` values (10, 7, 5);
+insert into `diner`.`user_role` values (11, 7, 6);
 
 commit;
