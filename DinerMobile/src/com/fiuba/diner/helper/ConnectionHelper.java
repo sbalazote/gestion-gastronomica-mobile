@@ -22,17 +22,19 @@ public class ConnectionHelper {
 		return response;
 	}
 
-	public String post(String url, String params) throws Exception {
+	public String post(String url, String body) throws Exception {
 		URL netUrl = new URL(Constants.WEBAPP_HOST + url);
 		HttpURLConnection connection = (HttpURLConnection) netUrl.openConnection();
 		connection.setRequestMethod("POST");
 		connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 		connection.setUseCaches(false);
 
-		DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-		out.writeBytes(params);
-		out.flush();
-		out.close();
+		if (body != null) {
+			DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+			out.writeBytes(body);
+			out.flush();
+			out.close();
+		}
 
 		String response = this.inputStreamToString(connection.getInputStream());
 		connection.disconnect();

@@ -10,13 +10,13 @@ import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Order;
 
-public class ObtainOrderTask extends AsyncTask<Integer, Void, Void> {
+public class CloseOrderTask extends AsyncTask<Integer, Void, Void> {
 
 	private final ConnectionHelper connectionHelper = new ConnectionHelper();
 	private final ObjectMapper mapper = new ObjectMapper();
 	private final Caller<Void> caller;
 
-	public ObtainOrderTask(Caller<Void> caller) {
+	public CloseOrderTask(Caller<Void> caller) {
 		this.caller = caller;
 	}
 
@@ -25,7 +25,7 @@ public class ObtainOrderTask extends AsyncTask<Integer, Void, Void> {
 		String response;
 		Order order = null;
 		try {
-			response = this.connectionHelper.get("orders/" + params[0]);
+			response = this.connectionHelper.post("orders/" + params[0] + "/close", null);
 			System.out.println(response);
 			order = this.mapper.readValue(response, new TypeReference<Order>() {
 			});

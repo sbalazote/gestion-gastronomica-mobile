@@ -1,6 +1,5 @@
 package com.fiuba.diner.activities;
 
-import static com.fiuba.diner.constant.Constants.HARDCODED_WAITER_ID;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -60,7 +59,10 @@ public class FloorActivity extends Activity {
 					if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 						this.openDialog(view, table);
 
-					} else if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
+					} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
+						this.notAvailableDialog(view, table);
+
+					} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 						Intent intent = new Intent(FloorActivity.this, OrderActivity.class);
 						FloorActivity.this.startActivity(intent);
 
@@ -72,13 +74,13 @@ public class FloorActivity extends Activity {
 
 			private void openDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
-				alertDialogBuilder.setMessage("ï¿½Confirma la apertura de la mesa " + table.getId() + "?");
+				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getId() + "?");
 				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						table.setState(TableStateHelper.OPEN.getState());
-						// table.setWaiter(DataHolder.getCurrentWaiter());
+						table.setWaiter(DataHolder.getCurrentWaiter());
 						FloorActivity.this.adapter.notifyDataSetChanged();
 					}
 				});
@@ -95,7 +97,7 @@ public class FloorActivity extends Activity {
 
 			private void notAvailableDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
-				alertDialogBuilder.setMessage("La mesa no estï¿½ disponible");
+				alertDialogBuilder.setMessage("La mesa no está disponible");
 				alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 
 					@Override

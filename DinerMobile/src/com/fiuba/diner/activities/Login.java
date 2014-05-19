@@ -70,7 +70,7 @@ public class Login extends Activity implements Caller<Boolean> {
 
 		// Se validan los campos obligatorios
 		if (TextUtils.isEmpty(password)) {
-			Login.this.passwordEditText.setError("El campo contraseï¿½a es obligatorio");
+			Login.this.passwordEditText.setError("El campo contraseña es obligatorio");
 			focusView = Login.this.passwordEditText;
 			cancel = true;
 		}
