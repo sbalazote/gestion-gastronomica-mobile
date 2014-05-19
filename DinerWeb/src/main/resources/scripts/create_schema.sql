@@ -131,6 +131,7 @@ CREATE TABLE `diner`.`parameter` (
  	`restaurant_name` VARCHAR(50) NULL,
  	`dinner_service_price` DOUBLE NULL,
   	`dinner_service_active` BIT NULL,
+	`address` VARCHAR(50) NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
