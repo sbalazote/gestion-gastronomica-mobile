@@ -28,7 +28,7 @@ public class PrintOrderController {
 	public @ResponseBody
 	void printOrder(@RequestParam Integer orderId) throws Exception {
 
-		Order order = this.orderService.getOrder(orderId);
+		Order order = this.orderService.get(orderId);
 
 		Parameter parameters = this.parameterService.get(1);
 
