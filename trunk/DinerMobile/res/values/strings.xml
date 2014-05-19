@@ -12,6 +12,7 @@
     
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
+    <string name="closeTable">Cerrar Mesa</string>
 
     <string name="new_order">Nuevo Pedido</string>
     <string name="categories">Rubros</string>

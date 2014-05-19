@@ -1,7 +1,5 @@
 package com.fiuba.diner.adapters;
 
-import static com.fiuba.diner.constant.Constants.HARDCODED_WAITER_ID;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,7 +63,7 @@ public class TableImageAdapter extends BaseAdapter {
 				Table table = tableLayout.getTable();
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					imageView.setImageResource(R.drawable.available_table);
-				} else if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
+				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 					imageView.setImageResource(R.drawable.open_table);
 				} else {
 					imageView.setImageResource(R.drawable.not_available_table);
@@ -88,7 +86,7 @@ public class TableImageAdapter extends BaseAdapter {
 				Table table = tableLayout.getTable();
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					imageView.setImageResource(R.drawable.available_table);
-				} else if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
+				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 					imageView.setImageResource(R.drawable.open_table);
 				} else {
 					imageView.setImageResource(R.drawable.not_available_table);

@@ -1,5 +1,7 @@
 package com.fiuba.diner.activities;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +20,7 @@ import com.fiuba.diner.adapters.FloorListAdapter;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.Floor;
+import com.fiuba.diner.tasks.GetTablesTask;
 import com.fiuba.diner.util.TableLayoutUtils;
 
 public class FloorListActivity extends Activity {
@@ -57,6 +60,17 @@ public class FloorListActivity extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+				// Obtengo las mesas
+				GetTablesTask getTablesTask = new GetTablesTask(null);
+				try {
+					getTablesTask.execute().get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+
 				Floor floor = (Floor) parent.getItemAtPosition(position);
 				DataHolder.setCurrentFloor(floor);
 				DataHolder.setCurrentTableLayout(TableLayoutUtils.convertLayout(floor));

@@ -1,6 +1,7 @@
 package com.fiuba.diner.activities;
 
-import static com.fiuba.diner.constant.Constants.HARDCODED_WAITER_ID;
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -24,6 +25,7 @@ import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.tasks.GetTablesTask;
 
 public class TableListActivity extends Activity {
 
@@ -36,6 +38,17 @@ public class TableListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.session = new SessionManager(this.getApplicationContext());
 		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
+
+		// Obtengo las mesas
+		GetTablesTask getTablesTask = new GetTablesTask(null);
+		try {
+			getTablesTask.execute().get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+
 		this.setContentView(R.layout.activity_table_list);
 		this.populateList();
 		// Register mMessageReceiver to receive messages.
@@ -67,28 +80,31 @@ public class TableListActivity extends Activity {
 
 				// Si la mesa esta disponible la abro
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
-					this.openDialog(view, table);
+					this.showConfirmationDialog(view, table);
+
+				} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
+					this.showDialog(view, table, "La mesa no está disponible");
 
 					// Si ya esta abierta y es mia, sigo
-				} else if (table.getWaiter() == null || HARDCODED_WAITER_ID.equals(table.getWaiter().getId())) {
+				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 					TableListActivity.this.startActivity(intent);
 
 					// Si ya esta abierta pero no es mia, muestro mensaje
 				} else {
-					this.notAvailableDialog(view, table);
+					this.showDialog(view, table, "La mesa no está disponible");
 				}
 			}
 
-			private void openDialog(final View view, final Table table) {
+			private void showConfirmationDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
-				alertDialogBuilder.setMessage("ï¿½Confirma la apertura de la mesa " + table.getId() + "?");
+				alertDialogBuilder.setMessage("¿Confirma la apertura de la mesa " + table.getId() + "?");
 				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						table.setState(TableStateHelper.OPEN.getState());
-						// table.setWaiter(DataHolder.getCurrentWaiter());
+						table.setWaiter(DataHolder.getCurrentWaiter());
 						TextView stateTextView = (TextView) view.findViewById(R.id.stateTextView);
 						stateTextView.setText(table.getState().getDescription());
 						stateTextView.setTextColor(Color.BLUE);
@@ -105,9 +121,9 @@ public class TableListActivity extends Activity {
 				alertDialog.show();
 			}
 
-			private void notAvailableDialog(final View view, final Table table) {
+			private void showDialog(final View view, final Table table, final String message) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
-				alertDialogBuilder.setMessage("La mesa no estï¿½ disponible");
+				alertDialogBuilder.setMessage(message);
 				alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 
 					@Override

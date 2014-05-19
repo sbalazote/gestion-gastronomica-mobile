@@ -11,10 +11,8 @@ import com.fiuba.diner.constant.Constants;
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
-import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Parameter;
-import com.fiuba.diner.model.Table;
 import com.fiuba.diner.model.Waiter;
 
 public class SetUpTask extends AsyncTask<String, Void, Void> {
@@ -30,20 +28,8 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 	@Override
 	protected Void doInBackground(String... params) {
 		try {
-			// Me traigo las categories
-			String response = this.connectionHelper.get("categories");
-			System.out.println(response);
-			List<Category> categories = this.mapper.readValue(response, new TypeReference<List<Category>>() {
-			});
-
-			// Me traigo las mesas
-			response = this.connectionHelper.get("tables");
-			System.out.println(response);
-			List<Table> tables = this.mapper.readValue(response, new TypeReference<List<Table>>() {
-			});
-
 			// Se obtienen los parametros de configuracion
-			response = this.connectionHelper.get("parameters");
+			String response = this.connectionHelper.get("parameters");
 			System.out.println(response);
 			Parameter parameter = this.mapper.readValue(response, Parameter.class);
 
@@ -58,8 +44,6 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 			System.out.println(response);
 			Waiter waiter = this.mapper.readValue(response, Waiter.class);
 
-			DataHolder.setCategories(categories);
-			DataHolder.setTables(tables);
 			DataHolder.setParameter(parameter);
 			DataHolder.setFloors(floors);
 			DataHolder.setCurrentWaiter(waiter);
@@ -73,7 +57,9 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		this.caller.afterCall(result);
+		if (this.caller != null) {
+			this.caller.afterCall(result);
+		}
 	}
 
 }

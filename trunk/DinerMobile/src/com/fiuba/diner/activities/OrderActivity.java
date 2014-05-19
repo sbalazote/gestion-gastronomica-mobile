@@ -34,7 +34,9 @@ import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.tasks.CloseOrderTask;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
+import com.fiuba.diner.tasks.GetCategoriesTask;
 import com.fiuba.diner.tasks.ObtainOrderTask;
 import com.fiuba.diner.util.Formatter;
 
@@ -101,6 +103,17 @@ public class OrderActivity extends Activity {
 	};
 
 	public void addProduct(View view) {
+
+		// Obtengo las mesas
+		GetCategoriesTask getCategoriesTask = new GetCategoriesTask(null);
+		try {
+			getCategoriesTask.execute().get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+
 		Intent intent = new Intent(this, CategoryListActivity.class);
 		this.startActivityForResult(intent, 1);
 	}
@@ -114,7 +127,7 @@ public class OrderActivity extends Activity {
 				this.delete(position, view);
 				this.hasChanged = true;
 			} else {
-				this.openDialog(view);
+				this.openDialog(view, "No puede eliminarse el pedido, ya ha ingresado a la cocina.");
 			}
 		} else {
 			this.delete(position, view);
@@ -130,7 +143,7 @@ public class OrderActivity extends Activity {
 
 	private void openConfirmDialog(final View view, final OrderDetail orderDetail, final Adapter adapter) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("ï¿½Esta seguro que desea confirmar la entrega?");
+		alertDialogBuilder.setMessage("¿Está seguro que desea confirmar la entrega?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -159,9 +172,9 @@ public class OrderActivity extends Activity {
 		this.adapter.notifyDataSetChanged();
 	}
 
-	private void openDialog(final View view) {
+	private void openDialog(final View view, final String message) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("No puede eliminarse el pedido, ya ha ingresado a la cocina.");
+		alertDialogBuilder.setMessage(message);
 		alertDialogBuilder.setNeutralButton("Aceptar", null);
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
@@ -187,12 +200,42 @@ public class OrderActivity extends Activity {
 		new ConfirmOrderTask(null).execute(this.order);
 
 		// Updatear el Registration ID
-		/*
-		 * Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
-		 * UpdateDeviceTask(null).execute(device);
-		 */
+		/* Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
+		 * UpdateDeviceTask(null).execute(device); */
 
 		this.finish();
+	}
+
+	public void closeOrder(View view) throws Throwable {
+		if (this.order.getDetails() == null || this.order.getDetails().isEmpty()) {
+			this.openDialog(view, "La mesa no tiene ningún pedido ingresado.");
+			return;
+		}
+
+		for (OrderDetail orderDetail : this.order.getDetails()) {
+			if (!orderDetail.getState().getId().equals(OrderDetailStateHelper.DELIVERED.getState().getId())) {
+				this.openDialog(view, "Existen pedidos que no han sido entregados.");
+				return;
+			}
+		}
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
+		alertDialogBuilder.setMessage("¿Confirma que desea cerrar la mesa?");
+		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				new CloseOrderTask(null).execute(OrderActivity.this.order.getId());
+				OrderActivity.this.finish();
+			}
+		});
+		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	@Override
@@ -276,7 +319,6 @@ public class OrderActivity extends Activity {
 	public void onBackPressed() {
 		if (this.hasChanged) {
 			this.openConfirmExit();
-			super.onBackPressed();
 		} else {
 			super.onBackPressed();
 		}
@@ -285,16 +327,14 @@ public class OrderActivity extends Activity {
 
 	private void openConfirmExit() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("Existen cambios sin guardar, ï¿½desea continuar?");
+		alertDialogBuilder.setMessage("Existen cambios sin guardar, ¿desea continuar?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				OrderActivity.this.finish();
+				OrderActivity.super.onBackPressed();
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
