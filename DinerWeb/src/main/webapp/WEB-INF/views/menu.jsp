@@ -47,6 +47,9 @@
 						<li>
 							<a href="tableAdministration"><spring:message code="common.tables" /></a>
 						</li>
+						<li>
+							<a href="userAdministration"><spring:message code="common.users" /></a>
+						</li>
 					</ul>
 				</li>
 			</sec:authorize>
