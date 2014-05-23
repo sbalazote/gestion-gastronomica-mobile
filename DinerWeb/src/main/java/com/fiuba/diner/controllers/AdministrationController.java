@@ -18,9 +18,11 @@ import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
 import com.fiuba.diner.service.TableService;
+import com.fiuba.diner.service.WaiterService;
 
 @Controller
 public class AdministrationController {
@@ -33,6 +35,9 @@ public class AdministrationController {
 
 	@Autowired
 	private ParameterService parameterService;
+
+	@Autowired
+	private WaiterService waiterService;
 
 	@RequestMapping(value = "/categoryAdministration", method = RequestMethod.GET)
 	public String categoryAdministration(ModelMap modelMap) throws Exception {
@@ -109,5 +114,25 @@ public class AdministrationController {
 	public Parameter getParameter(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
 		Integer id = 1; // Integer.valueOf(parameters.get("id"));
 		return this.parameterService.get(id);
+	}
+
+	@RequestMapping(value = "/getTables", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Table> getTables() throws IOException {
+		return this.tableService.getAll();
+	}
+
+	@RequestMapping(value = "/getWaiters", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Waiter> getWaiters() throws IOException {
+		return this.waiterService.getAll();
+	}
+
+	@RequestMapping(value = "/changeWaiter", method = RequestMethod.POST)
+	public @ResponseBody
+	void saveProduct(@RequestParam Integer tableId, Integer newWaiterId) throws Exception {
+		Table table = this.tableService.get(tableId);
+		table.setWaiter(this.waiterService.get(newWaiterId));
+		this.tableService.save(table);
 	}
 }

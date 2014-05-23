@@ -2,6 +2,7 @@ TableAdministration = function() {
 	var orderId = null;
 	var tableId = null;
 	var waiterName;
+	var waiterId;
 	var change = null;
 	var servicePrice = 0;
 	var servicePriceActive = false;
@@ -18,31 +19,77 @@ TableAdministration = function() {
 		}
 	});
 	
-	$.ajax({
-		url: "getTablesWithClosedOrder",
-		type: "GET",
-		async: false,
-		success: function(response) {
-			var aaData = [];
-			for (var i = 0, l = response.length; i < l; ++i) {
-				var table = [];
-				table.push(response[i].id);
-				
-				table.push(response[i].waiter.surname + ", " + response[i].waiter.name);	
-				table.push("<a href='javascript:void(0);' class='print-row'>Comprobante</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-					"<a href='javascript:void(0);' class='payment-row'>Medio de Pago</span></a>");	
-				aaData.push(table);
-				
+	var loadTables = function(){
+		$.ajax({
+			url: "getTables",
+			type: "GET",
+			async: false,
+			success: function(response) {
+				var aaData = [];
+				for (var i = 0, l = response.length; i < l; ++i) {
+					var table = [];
+					table.push(response[i].id);
+					table.push(response[i].state.description);
+					
+					if(response[i].waiter != null){
+						table.push(response[i].waiter.surname + ", " + response[i].waiter.name);
+					}else{
+						table.push("");
+					}
+					
+					if(response[i].state.id == 3){
+						table.push("<a href='javascript:void(0);' class='print-row'>Comprobante</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+							"<a href='javascript:void(0);' class='payment-row'>Medio de Pago</span></a>");
+					}else{
+						table.push(" ");
+					}
+					aaData.push(table);
+					
+				}
+				$('.tableDatatable').dataTable({
+					"aaData": aaData,
+					"bDestroy": true
+				});
+			},
+			error: function(response) {
 			}
-			$('.datatable').dataTable({
-				"aaData": aaData,
-				"bDestroy": true
+		});
+	}
+	var loadReassignTables = function(){
+		$.ajax({
+				url: "getTables",
+				type: "GET",
+				async: false,
+				success: function(response) {
+					var aaData = [];
+					for (var i = 0, l = response.length; i < l; ++i) {
+						var table = [];
+						table.push(response[i].id);
+						table.push(response[i].state.description);
+						
+						if(response[i].waiter != null){
+							table.push("<span class='span-waiterId' style='display:none'>" + response[i].waiter.id + "</span>" + response[i].waiter.surname + ", " + response[i].waiter.name);
+						}else{
+							table.push("");
+						}
+						
+						if(response[i].state.id == 2){
+							table.push("<a href='javascript:void(0);' class='reassign-row'>Reasignar</a>");
+						}else{
+							table.push(" ");
+						}
+						aaData.push(table);
+						
+					}
+					$('.reassignTablesdatatable').dataTable({
+						"aaData": aaData,
+						"bDestroy": true
+					});
+				},
+				error: function(response) {
+				}
 			});
-		},
-		error: function(response) {
-		}
-	});
-	
+	}
 	
 	$('#divTable').on("click", ".print-row", function() {
 		var parent = $(this).parent().parent();
@@ -214,4 +261,59 @@ TableAdministration = function() {
 			}
 		});
 	});
+	
+	$(function() {
+	    $('.tabs').bind('click', function (e) {
+	        if(e.target.hash == "#reassignTables"){
+	        	loadReassignTables();
+	        }
+	        if(e.target.hash == "#table"){
+	        	//loadTables();
+	        }
+	    });
+	});
+	
+	var fillWaiterSelect = function(){
+	 	$.ajax({
+    		url: "getWaiters",
+    		type: "GET",
+    		async: false,
+    		success: function(response) {
+    			$('#waitersSelect').empty();
+				for (var i = 0, l = response.length; i < l; ++i) {
+					if(response[i].id != waiterId){
+						$('#waitersSelect').append('<option value="' + response[i].id + '">' + response[i].id + ' - ' + response[i].surname + ' - ' + response[i].name + '</option>');
+					}
+				}
+    		}
+    	});
+	}
+	
+	$("#confirmReasignButton").click(function() {
+		$.ajax({
+			url: "changeWaiter",
+			data: {
+				tableId: tableId,
+				newWaiterId: $("#waitersSelect option:selected").val(),
+			},
+			type: "POST",
+			async: false,
+			success: function(response) {
+				
+			},
+			error: function(response) {
+			}
+		});
+	});
+	
+	$('#divReassingTable').on("click", ".reassign-row", function() {
+		var parent = $(this).parent().parent();
+		tableId = parent.find("td:first-child").html();
+		waiterName = parent.find("td:eq(1)").html();
+		waiterId = parent.find(".span-waiterId").html();
+		fillWaiterSelect();
+		$('#reassignTableModal').modal('show');
+	});
+	
+	loadTables();
 }
