@@ -135,4 +135,5 @@ public class AdministrationController {
 		table.setWaiter(this.waiterService.get(newWaiterId));
 		this.tableService.save(table);
 	}
+
 }
