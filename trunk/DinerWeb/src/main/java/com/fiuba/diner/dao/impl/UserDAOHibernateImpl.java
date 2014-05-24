@@ -1,5 +1,6 @@
 package com.fiuba.diner.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.fiuba.diner.dao.UserDAO;
+import com.fiuba.diner.model.Role;
 import com.fiuba.diner.model.User;
 
 @Repository
@@ -53,6 +55,8 @@ public class UserDAOHibernateImpl implements UserDAO {
 	@Override
 	public void delete(Integer userId) {
 		User user = this.get(userId);
+		user.setRoles(new ArrayList<Role>());
+		this.save(user);
 		this.sessionFactory.getCurrentSession().delete(user);
 	}
 
