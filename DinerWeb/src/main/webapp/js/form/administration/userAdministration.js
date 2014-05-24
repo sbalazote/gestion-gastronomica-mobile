@@ -48,6 +48,11 @@ UserAdministration = function() {
 		var parent = $(this).parent().parent();
 		userId = parent.find(".span-userId").html();
 		
+		$('#deleteConfirmationModal').modal('show');
+	});
+	
+	$("#deleteEntityButton").click(function() {
+
 		$.ajax({
 			url: "deleteUser.do",
 			type: "POST",
@@ -56,6 +61,7 @@ UserAdministration = function() {
 			},
 			async: true,
 			success: function(response) {
+				window.location = "deleteConfirmation";
 			},
 			error: function(response) {
 				console.log(response),
