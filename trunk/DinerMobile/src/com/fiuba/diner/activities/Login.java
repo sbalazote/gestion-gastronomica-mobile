@@ -1,6 +1,7 @@
 package com.fiuba.diner.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +30,8 @@ public class Login extends Activity implements Caller<Boolean> {
 	private String mobileId;
 	private LoginResponse loginResponse;
 
+	private ProgressDialog pdialog;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,6 +58,8 @@ public class Login extends Activity implements Caller<Boolean> {
 	public void afterCall(Boolean result) {
 		Boolean valid = false;
 
+		this.pdialog.dismiss();
+
 		if (this.loginResponse != null) {
 			valid = this.loginResponse.getValid();
 		}
@@ -75,7 +80,7 @@ public class Login extends Activity implements Caller<Boolean> {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			Login.this.startActivity(intent);
 			Login.this.finish();
-			this.setView();
+			// this.setView();
 
 		} else {
 			// Toast.makeText(this.getApplicationContext(), "Ingreso incorrecto. Intente nuevamente.", Toast.LENGTH_LONG).show();
@@ -110,6 +115,11 @@ public class Login extends Activity implements Caller<Boolean> {
 			userLogin.setUserPassword(userPassword);
 			userLogin.setMobileId(this.mobileId);
 
+			this.pdialog = new ProgressDialog(this);
+			this.pdialog.setCancelable(false);
+			this.pdialog.setMessage("Autenticando usuario ....");
+			this.pdialog.show();
+
 			new LoginTask(Login.this).execute(userLogin);
 
 		} else {
@@ -118,9 +128,9 @@ public class Login extends Activity implements Caller<Boolean> {
 		}
 	}
 
-	private void setView() {
-		this.setContentView(R.layout.home);
-	}
+	// private void setView() {
+	// this.setContentView(R.layout.home);
+	// }
 
 	public void setLoginResponse(LoginResponse loginResponse) {
 		this.loginResponse = loginResponse;
