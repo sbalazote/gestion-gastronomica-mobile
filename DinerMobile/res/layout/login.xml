@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 	android:gravity="center"
-    android:background="#EAF5FD">
+    android:background="@drawable/fondo">
 
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/username"
-        android:inputType="text" />
+        android:inputType="text" 
+        android:background="@drawable/edittext_rounded_corners"/>
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dip"
         android:layout_marginTop="15dip"
+        android:background="@drawable/edittext_rounded_corners"
         android:hint="@string/password"
         android:inputType="textPassword" />
 
@@ -30,6 +32,6 @@
         android:paddingLeft="15dip"
         android:paddingRight="15dip"
         android:text="@string/login" 
-        android:onClick="login"/>
+        android:onClick="login" />
 
 </LinearLayout>

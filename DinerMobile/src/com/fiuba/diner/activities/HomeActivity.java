@@ -27,8 +27,11 @@ public class HomeActivity extends Activity implements Caller<Void> {
 	protected void onCreate(Bundle savedInstanceState) {
 		this.session = new SessionManager(this.getApplicationContext());
 		this.session.checkLogin();
+
 		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.home);
 		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
+
 		new SetUpTask(this).execute();
 		new RegisterGcmTask(this).execute();
 		// Register mMessageReceiver to receive messages.
@@ -74,12 +77,12 @@ public class HomeActivity extends Activity implements Caller<Void> {
 
 	@Override
 	public void afterCall(Void result) {
-		this.setView();
+		// this.setView();
 	}
 
-	private void setView() {
-		this.setContentView(R.layout.home);
-	}
+	// private void setView() {
+	// this.setContentView(R.layout.home);
+	// }
 
 	public void showTables(View view) {
 		Intent intent = new Intent(this, FloorListActivity.class);
