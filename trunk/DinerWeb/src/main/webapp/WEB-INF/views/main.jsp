@@ -33,6 +33,7 @@
 		<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
 		<script type="text/javascript" src="js/dateFormatter.js"></script>
 		<script type="text/javascript" src="js/jquery.timeago.js"></script>
+		<script type="text/javascript" src="js/highcharts.js"></script>
 	</head>
 	<body>
 		<div id="wrap">
