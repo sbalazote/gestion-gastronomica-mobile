@@ -91,13 +91,16 @@ public class TableListActivity extends Activity {
 					this.showDialog(view, table, "La mesa no está disponible");
 
 					// Si ya esta abierta y es mia, sigo
-				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+				} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 					TableListActivity.this.startActivity(intent);
-
 					// Si ya esta abierta pero no es mia, muestro mensaje
 				} else {
-					this.showDialog(view, table, "La mesa no está disponible");
+					if (!DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+						this.showOpenOthersTableConfirmationDialog(view, table);
+					} else {
+						this.showDialog(view, table, "La mesa no está disponible");
+					}
 				}
 			}
 
@@ -133,6 +136,28 @@ public class TableListActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+
+			private void showOpenOthersTableConfirmationDialog(final View view, final Table table) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TableListActivity.this);
+				alertDialogBuilder.setMessage("¿Confirma que toma la mesa " + table.getId() + "?");
+				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
+						TableListActivity.this.startActivity(intent);
+					}
+				});
+				alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
 					}
 				});
 				AlertDialog alertDialog = alertDialogBuilder.create();
