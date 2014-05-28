@@ -19,51 +19,21 @@
 				</h2>
 			</div>
 		</div>
-				
-		<div class="tabs">
-			<ul id="myTab" class="nav nav-tabs">
-				<li class="active"><a href="#table" data-toggle="tab"><spring:message code="common.tables"/></a></li>
-				<li><a href="#reassignTables" data-toggle="tab"><spring:message code="administration.table.reassign"/></a></li>
-			</ul>
-			<br>
-			<div id="myTabContent" class="tab-content">
-				<div class="tab-pane fade in active" id="table">
-					<div id=divTable>
-						<table class="table table-striped tableDatatable my-datatable"
-							id="mainTable">
-							<thead>
-								<tr>
-									<th><spring:message code="common.table" /></th>
-									<th><spring:message code="common.state" /></th>
-									<th><spring:message code="common.waiter" /></th>
-									<th><spring:message code="common.action" /></th>
-								</tr>
-							</thead>
-							<tbody id="tableBody">
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="tab-pane fade" id="reassignTables">
-					<div class="tab-pane fade in active" id="reassignTables">
-						<div id=divReassingTable>
-							<table class="table table-striped reassignTablesdatatable my-datatable"
-								id="mainTable">
-								<thead>
-									<tr>
-										<th><spring:message code="common.table" /></th>
-										<th><spring:message code="common.state" /></th>
-										<th><spring:message code="common.waiter" /></th>
-										<th><spring:message code="common.action" /></th>
-									</tr>
-								</thead>
-								<tbody id="tableBody">
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div id=divTable>
+			<table class="table table-striped tableDatatable my-datatable"
+				id="mainTable">
+				<thead>
+					<tr>
+						<th><spring:message code="common.table" /></th>
+						<th><spring:message code="common.state" /></th>
+						<th><spring:message code="common.waiter" /></th>
+						<th><spring:message code="common.action" /></th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+				</tbody>
+			</table>
+		</div>
 		</div>
 	</div>
 </div>
@@ -178,35 +148,6 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmPaymentMediaButton">
-					<spring:message code="common.confirm" />
-				</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<%-- Confirmación de Medio de Pago --%>
-<div class="modal fade" data-backdrop="static" id="reassignTableModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4 class="modal-title"><spring:message code="administration.table.reassign.title" /></h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12 form-group">
-						<label for="waiter"><spring:message
-								code="common.waiter" /></label> 
-						<select class="form-control" id="waitersSelect" name="waitersSelect">
-							<option value=""></option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmReasignButton">
 					<spring:message code="common.confirm" />
 				</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
