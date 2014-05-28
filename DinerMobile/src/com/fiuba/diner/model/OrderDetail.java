@@ -16,7 +16,6 @@ public class OrderDetail implements Serializable {
 	private Date preparationStartDate;
 	private Date preparationEndDate;
 	private Date deliveryDate;
-	private Date billingDate;
 
 	public Integer getId() {
 		return this.id;
@@ -88,14 +87,6 @@ public class OrderDetail implements Serializable {
 
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
-	}
-
-	public Date getBillingDate() {
-		return this.billingDate;
-	}
-
-	public void setBillingDate(Date billingDate) {
-		this.billingDate = billingDate;
 	}
 
 }

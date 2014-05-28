@@ -34,6 +34,7 @@ import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.model.Table;
+import com.fiuba.diner.tasks.ChangeLockStateTableTask;
 import com.fiuba.diner.tasks.CloseOrderTask;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
 import com.fiuba.diner.tasks.GetCategoriesTask;
@@ -64,9 +65,14 @@ public class OrderActivity extends Activity {
 
 		// aca obtengo la orden si existe.
 		ObtainOrderTask obtainOrderTask = new ObtainOrderTask(null);
+		ChangeLockStateTableTask changeLockStateTableTask = new ChangeLockStateTableTask(null);
 
 		try {
 			obtainOrderTask.execute(DataHolder.getCurrentTable().getId()).get();
+			DataHolder.getCurrentTable().setLocked(true);
+
+			changeLockStateTableTask.execute(DataHolder.getCurrentTable());
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -199,9 +205,13 @@ public class OrderActivity extends Activity {
 
 		new ConfirmOrderTask(null).execute(this.order);
 
+		DataHolder.getCurrentTable().setLocked(false);
+		new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
 		// Updatear el Registration ID
-		/* Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
-		 * UpdateDeviceTask(null).execute(device); */
+		/*
+		 * Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
+		 * UpdateDeviceTask(null).execute(device);
+		 */
 
 		this.finish();
 	}
@@ -222,6 +232,7 @@ public class OrderActivity extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
 		alertDialogBuilder.setMessage("¿Confirma que desea cerrar la mesa?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				new CloseOrderTask(null).execute(OrderActivity.this.order.getId());
@@ -229,6 +240,7 @@ public class OrderActivity extends Activity {
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
@@ -320,6 +332,8 @@ public class OrderActivity extends Activity {
 		if (this.hasChanged) {
 			this.openConfirmExit();
 		} else {
+			DataHolder.getCurrentTable().setLocked(false);
+			new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
 			super.onBackPressed();
 		}
 
@@ -329,12 +343,16 @@ public class OrderActivity extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
 		alertDialogBuilder.setMessage("Existen cambios sin guardar, ¿desea continuar?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
+				DataHolder.getCurrentTable().setLocked(false);
+				new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
 				OrderActivity.super.onBackPressed();
 			}
 		});
 		alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();

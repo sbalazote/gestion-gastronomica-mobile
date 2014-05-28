@@ -10,6 +10,7 @@ public class Table implements Serializable {
 	private TableState state;
 	private Waiter waiter;
 	private Boolean active;
+	private Boolean locked;
 
 	public Integer getId() {
 		return this.id;
@@ -53,6 +54,14 @@ public class Table implements Serializable {
 			return false;
 		}
 		return this.id.equals(that.id);
+	}
+
+	public Boolean getLocked() {
+		return this.locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
 }

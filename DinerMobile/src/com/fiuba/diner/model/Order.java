@@ -2,6 +2,7 @@ package com.fiuba.diner.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fiuba.diner.helper.OrderStateHelper;
@@ -18,6 +19,7 @@ public class Order implements Serializable {
 	private PaymentMedia paymentMedia;
 	private Float total;
 	private Float change;
+	private Date billingDate;
 
 	public Order() {
 		this.state = OrderStateHelper.OPEN.getState();
@@ -92,6 +94,14 @@ public class Order implements Serializable {
 
 	public void setChange(Float change) {
 		this.change = change;
+	}
+
+	public Date getBillingDate() {
+		return this.billingDate;
+	}
+
+	public void setBillingDate(Date billingDate) {
+		this.billingDate = billingDate;
 	}
 
 }
