@@ -62,12 +62,16 @@ public class FloorActivity extends Activity {
 					} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
 						this.notAvailableDialog(view, table);
 
-					} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+					} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 						Intent intent = new Intent(FloorActivity.this, OrderActivity.class);
 						FloorActivity.this.startActivity(intent);
 
 					} else {
-						this.notAvailableDialog(view, table);
+						if (!DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+							this.showOpenOthersTableConfirmationDialog(view, table);
+						} else {
+							this.notAvailableDialog(view, table);
+						}
 					}
 				}
 			}
@@ -102,6 +106,28 @@ public class FloorActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+
+			private void showOpenOthersTableConfirmationDialog(final View view, final Table table) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
+				alertDialogBuilder.setMessage("¿Confirma que toma la mesa " + table.getId() + "?");
+				alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						Intent intent = new Intent(FloorActivity.this, OrderActivity.class);
+						FloorActivity.this.startActivity(intent);
+					}
+				});
+				alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
 					}
 				});
 				AlertDialog alertDialog = alertDialogBuilder.create();
