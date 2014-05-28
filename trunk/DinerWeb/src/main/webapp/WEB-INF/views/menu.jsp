@@ -50,6 +50,9 @@
 						<li>
 							<a href="userAdministration"><spring:message code="common.users" /></a>
 						</li>
+						<li>
+							<a href="reportsAdministration"><spring:message code="common.reports" /></a>
+						</li>
 					</ul>
 				</li>
 			</sec:authorize>

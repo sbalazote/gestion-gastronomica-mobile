@@ -97,6 +97,10 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/userAdministration.jsp" />
     </definition>
     
+     <definition name="reportsAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/reportsAdministration.jsp" />
+    </definition>
+    
     <definition name="addUser" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/administration/addUser.jsp" />
     </definition>

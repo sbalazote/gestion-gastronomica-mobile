@@ -1,6 +1,7 @@
 package com.fiuba.diner.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fiuba.diner.dto.SalesReportDTO;
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.helper.PaymentMediaStateHelper;
 import com.fiuba.diner.helper.TableStateHelper;
@@ -71,6 +73,11 @@ public class AdministrationController {
 		return "tableAdministration";
 	}
 
+	@RequestMapping(value = "/reportsAdministration", method = RequestMethod.GET)
+	public String reportsAdministration(ModelMap modelMap) throws Exception {
+		return "reportsAdministration";
+	}
+
 	@RequestMapping(value = "/getTablesWithClosedOrder", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Table> getTablesWithClosedOrder() throws IOException {
@@ -83,6 +90,12 @@ public class AdministrationController {
 		Integer id = Integer.valueOf(parameters.get("id"));
 		Order order = this.orderService.getOrderByTable(id);
 		return order;
+	}
+
+	@RequestMapping(value = "/getBilledOrdersBetweenDates", method = RequestMethod.POST)
+	public @ResponseBody
+	List<SalesReportDTO> getBilledOrdersBetweenDates(@RequestParam Date from, @RequestParam Date to) throws Exception {
+		return this.orderService.getBilledOrdersBetweenDates(from, to);
 	}
 
 	@RequestMapping(value = "/savePaymentMedia", method = RequestMethod.POST)
@@ -101,6 +114,7 @@ public class AdministrationController {
 			}
 		}
 		order.setState(OrderStateHelper.FACTURADA.getState());
+		order.setBillingDate(new Date());
 		Table table = this.tableService.get(order.getTables().get(0).getId());
 		table.setWaiter(null);
 		table.setState(TableStateHelper.AVAILABLE.getState());

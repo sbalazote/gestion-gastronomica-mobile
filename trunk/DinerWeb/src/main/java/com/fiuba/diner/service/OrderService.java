@@ -1,8 +1,10 @@
 package com.fiuba.diner.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.dto.SalesReportDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 
@@ -23,5 +25,7 @@ public interface OrderService {
 	OrderDetail changeOrderDetailState(Integer orderDetailId);
 
 	void closeOrder(Integer orderId);
+
+	List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to);
 
 }

@@ -1,8 +1,10 @@
 package com.fiuba.diner.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.dto.SalesReportDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.OrderDetailState;
@@ -26,4 +28,6 @@ public interface OrderDAO {
 	OrderDetail getOrderDetail(Integer orderDetailId);
 
 	OrderDetailState getOrderDetailState(Integer stateId);
+
+	List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to);
 }
