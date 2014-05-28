@@ -23,6 +23,7 @@ CREATE TABLE `diner`.`table` (
   `length` int(11) NOT NULL,
   `width` int(11) NOT NULL,
   `active` bit(1) NOT NULL,
+  `locked` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_table_table_state_idx` (`state_id`),
   KEY `fk_table_waiter_idx` (`waiter_id`),

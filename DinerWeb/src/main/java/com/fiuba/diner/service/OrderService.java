@@ -1,6 +1,5 @@
 package com.fiuba.diner.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.fiuba.diner.dto.OrderDetailDTO;
@@ -26,6 +25,6 @@ public interface OrderService {
 
 	void closeOrder(Integer orderId);
 
-	List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to);
+	List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to);
 
 }

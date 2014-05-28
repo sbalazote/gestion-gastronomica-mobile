@@ -1,5 +1,7 @@
 package com.fiuba.diner.dao.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -106,16 +108,30 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to) {
+	public List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateFromFormated = null;
+		Date dateToFormated = null;
+		try {
+			dateFromFormated = dateFormatter.parse(from.toString());
+			dateToFormated = dateFormatter.parse(to.toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		Query query = this.sessionFactory
 				.getCurrentSession()
 				.createQuery(
 						"select billingDate as billingDate, sum(total) as dayTotal from Order where billingDate >= :from and billingDate <= :to and state.id = 3 group by billingDate order by billingDate asc");
-		query.setParameter("from", from);
-		query.setParameter("to", to);
+		query.setParameter("from", dateFromFormated);
+		query.setParameter("to", dateToFormated);
 
 		List<Object> list = query.list();
 		List<SalesReportDTO> orders = new ArrayList<SalesReportDTO>();
+		System.out.println("cantidad de ordenes:" + list.size());
+		System.out.println("fecha desde:" + from);
+		System.out.println("fecha hasta:" + to);
 		for (Object object : list) {
 			Object[] array = (Object[]) object;
 			SalesReportDTO dto = new SalesReportDTO();

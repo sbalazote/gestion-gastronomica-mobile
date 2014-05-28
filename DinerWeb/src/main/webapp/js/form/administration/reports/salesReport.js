@@ -63,6 +63,8 @@ SalesReport = function() {
 	
 	$("#salesSearchButton").click(function() {
 		if(validateForm()){
+			var datefrom = new Date($("#salesDateFromInput").val());
+			var dto= new Date($("#salesDateToInput").val());
 			$.ajax({
 				url: "getBilledOrdersBetweenDates",
 				type: "POST",

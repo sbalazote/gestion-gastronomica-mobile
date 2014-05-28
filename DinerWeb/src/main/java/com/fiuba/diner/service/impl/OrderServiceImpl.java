@@ -91,13 +91,14 @@ public class OrderServiceImpl implements OrderService {
 			detail.setState(OrderDetailStateHelper.DELIVERED.getState());
 		}
 		for (Table table : order.getTables()) {
+			table.setLocked(false);
 			table.setState(TableStateHelper.CLOSED.getState());
 		}
 		this.save(order);
 	}
 
 	@Override
-	public List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to) {
+	public List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to) {
 		return this.orderDAO.getBilledOrdersBetweenDates(from, to);
 	}
 }

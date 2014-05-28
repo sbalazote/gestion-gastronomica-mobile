@@ -3,11 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript" src="js/form/administration/reports/salesReport.js"></script>
-<script type="text/javascript" src="js/form/administration/reports/productRankingReport.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		new SalesReport();
-		new ProductRankingReport();
 	});
 </script>
 

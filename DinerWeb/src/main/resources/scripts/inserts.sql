@@ -25,20 +25,20 @@ insert into `diner`.`payment_media` (id, description) values (1, 'Tarjeta de Deb
 insert into `diner`.`payment_media` (id, description) values (2, 'Tarjeta de Credito');
 insert into `diner`.`payment_media` (id, description) values (3, 'Efectivo');
 
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (1, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (2, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (3, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (4, 2, 2, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (5, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (6, 2, 2, 1, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (7, 1, null, 1, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (8, 1, null, 1, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (9, 1, null, 1, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (10, 1, null, 1, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (11, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (12, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (13, 1, null, 2, 1, true);
-insert into `diner`.`table` (id, state_id, waiter_id, length, width, active) values (14, 1, null, 1, 1, true);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (1, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (2, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (3, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (4, 2, 2, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (5, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (6, 2, 2, 1, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (7, 1, null, 1, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (8, 1, null, 1, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (9, 1, null, 1, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (10, 1, null, 1, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (11, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (12, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (13, 1, null, 2, 1, true, false);
+insert into `diner`.`table` (id, state_id, waiter_id, length, width, active, locked) values (14, 1, null, 1, 1, true, false);
 
 insert into `diner`.`floor` (id, floor, length, width, active) values (1, 1, 15, 10, true);
 
