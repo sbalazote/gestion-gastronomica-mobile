@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.dto.SalesReportDTO;
 import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.helper.TableStateHelper;
@@ -93,5 +94,10 @@ public class OrderServiceImpl implements OrderService {
 			table.setState(TableStateHelper.CLOSED.getState());
 		}
 		this.save(order);
+	}
+
+	@Override
+	public List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to) {
+		return this.orderDAO.getBilledOrdersBetweenDates(from, to);
 	}
 }

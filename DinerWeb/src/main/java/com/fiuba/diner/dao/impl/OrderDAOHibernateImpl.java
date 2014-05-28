@@ -1,6 +1,7 @@
 package com.fiuba.diner.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
+import com.fiuba.diner.dto.SalesReportDTO;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.OrderDetailState;
@@ -100,5 +102,27 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	public OrderDetailState getOrderDetailState(Integer stateId) {
 		Query query = this.sessionFactory.getCurrentSession().createQuery("select o from OrderDetailState as o where o.id =" + stateId);
 		return (OrderDetailState) query.list().get(0);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SalesReportDTO> getBilledOrdersBetweenDates(Date from, Date to) {
+		Query query = this.sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"select billingDate as billingDate, sum(total) as dayTotal from Order where billingDate >= :from and billingDate <= :to and state.id = 3 group by billingDate order by billingDate asc");
+		query.setParameter("from", from);
+		query.setParameter("to", to);
+
+		List<Object> list = query.list();
+		List<SalesReportDTO> orders = new ArrayList<SalesReportDTO>();
+		for (Object object : list) {
+			Object[] array = (Object[]) object;
+			SalesReportDTO dto = new SalesReportDTO();
+			dto.setBillingDate((Date) array[0]);
+			dto.setDayTotal((Double) array[1]);
+			orders.add(dto);
+		}
+		return orders;
 	}
 }

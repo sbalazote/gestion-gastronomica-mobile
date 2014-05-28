@@ -1,5 +1,6 @@
 package com.fiuba.diner.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -46,6 +47,9 @@ public class Order {
 
 	@Column(name = "`change`")
 	private Double change;
+
+	@Column(name = "billing_date")
+	private Date billingDate;
 
 	public Integer getId() {
 		return this.id;
@@ -105,6 +109,14 @@ public class Order {
 
 	public void setChange(Double change) {
 		this.change = change;
+	}
+
+	public Date getBillingDate() {
+		return this.billingDate;
+	}
+
+	public void setBillingDate(Date billingDate) {
+		this.billingDate = billingDate;
 	}
 
 }

@@ -44,9 +44,6 @@ public class OrderDetail {
 	@Column(name = "delivery_date")
 	private Date deliveryDate;
 
-	@Column(name = "billing_date")
-	private Date billingDate;
-
 	public Integer getId() {
 		return this.id;
 	}
@@ -117,14 +114,6 @@ public class OrderDetail {
 
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
-	}
-
-	public Date getBillingDate() {
-		return this.billingDate;
-	}
-
-	public void setBillingDate(Date billingDate) {
-		this.billingDate = billingDate;
 	}
 
 }
