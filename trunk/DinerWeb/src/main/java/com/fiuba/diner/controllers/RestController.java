@@ -189,4 +189,10 @@ public class RestController {
 		return loginResponse;
 	}
 
+	@RequestMapping(value = "/changeLockStateTable", method = RequestMethod.POST)
+	@ResponseBody
+	public void changeLockTable(@RequestBody Table table) throws IOException {
+		this.tableService.save(table);
+	}
+
 }

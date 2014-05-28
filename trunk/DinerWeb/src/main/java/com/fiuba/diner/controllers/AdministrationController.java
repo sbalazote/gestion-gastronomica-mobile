@@ -94,7 +94,7 @@ public class AdministrationController {
 
 	@RequestMapping(value = "/getBilledOrdersBetweenDates", method = RequestMethod.POST)
 	public @ResponseBody
-	List<SalesReportDTO> getBilledOrdersBetweenDates(@RequestParam Date from, @RequestParam Date to) throws Exception {
+	List<SalesReportDTO> getBilledOrdersBetweenDates(@RequestParam String from, @RequestParam String to) throws Exception {
 		return this.orderService.getBilledOrdersBetweenDates(from, to);
 	}
 

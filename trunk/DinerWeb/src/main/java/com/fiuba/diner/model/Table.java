@@ -27,6 +27,9 @@ public class Table {
 	@Column(name = "active", nullable = false)
 	private Boolean active;
 
+	@Column(name = "locked", nullable = false)
+	private Boolean locked;
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -57,6 +60,14 @@ public class Table {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public Boolean getLocked() {
+		return this.locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
 }
