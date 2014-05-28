@@ -128,12 +128,4 @@ public class AdministrationController {
 		return this.waiterService.getAll();
 	}
 
-	@RequestMapping(value = "/changeWaiter", method = RequestMethod.POST)
-	public @ResponseBody
-	void saveProduct(@RequestParam Integer tableId, Integer newWaiterId) throws Exception {
-		Table table = this.tableService.get(tableId);
-		table.setWaiter(this.waiterService.get(newWaiterId));
-		this.tableService.save(table);
-	}
-
 }
