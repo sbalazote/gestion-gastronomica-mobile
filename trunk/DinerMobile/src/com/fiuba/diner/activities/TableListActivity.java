@@ -92,12 +92,21 @@ public class TableListActivity extends Activity {
 
 					// Si ya esta abierta y es mia, sigo
 				} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
-					Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
-					TableListActivity.this.startActivity(intent);
+					if (table.getLocked() == false) {
+						Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
+						TableListActivity.this.startActivity(intent);
+					} else {
+						this.showDialog(view, table, "La mesa no está disponible");
+					}
+
 					// Si ya esta abierta pero no es mia, muestro mensaje
 				} else {
 					if (!DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
-						this.showOpenOthersTableConfirmationDialog(view, table);
+						if (table.getLocked() == false) {
+							this.showOpenOthersTableConfirmationDialog(view, table);
+						} else {
+							this.showDialog(view, table, "La mesa no está disponible");
+						}
 					} else {
 						this.showDialog(view, table, "La mesa no está disponible");
 					}
