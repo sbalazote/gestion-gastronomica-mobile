@@ -107,9 +107,8 @@ TableAdministration = function() {
 
 	
 	$("#cashInput").on("change keyup paste click", function(){
-		var value = $('#cashInput').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-	    var intRegex = /^\d+$/;
-	    if(!intRegex.test(value)) {
+		var value = $('#cashInput').val();
+	    if(isNaN(value)) {
 	    	$('#changeInput').val("El campo de Efectivo debe ser numerico");
 			$("#confirmPaymentMediaButton").prop("disabled",true);
 	    }else{
@@ -146,7 +145,7 @@ TableAdministration = function() {
 							+ "<td>" + response.details[i].product.id + "</td>"
 							+ "<td>" + response.details[i].product.description + "</td>"
 							+ "<td>" + response.details[i].amount + "</td>"
-							+ "<td>" + response.details[i].product.price + "</td>"
+							+ "<td>" + response.details[i].product.price.toFixed(2) + "</td>"
 							+ "</tr>");
 				}
 				subtotal.toFixed(2);
