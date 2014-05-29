@@ -85,10 +85,37 @@ SalesReport = function() {
 						yAxis.push(response[i].dayTotal);
 						aaData.push(saleResult);
 					}
-					$('#salesTable').dataTable({
+					var oTable = $('#salesTable').dataTable({
 						"aaData": aaData,
-						"bDestroy": true
+						"bDestroy": true,
+						//"dom": 'lTfrtip',
+						//"dom": 'lfrtip<"#salesHighchartDiv"T>',
+						//"oTableTools": {
+						//	"aButtons": [ "csv" ],
+						//	"sSwfPath": "swf/copy_csv_xls.swf",
+						//	//"sExtends":     "csv",
+		                //    "sButtonText": "Generar Reporte"
+				        //},
 					});
+					
+					 var tableTools = new $.fn.dataTable.TableTools( oTable, {
+//					        "buttons": [
+//					            "copy",
+//					            "csv",
+//					            "xls",
+//					            "pdf",
+//					            { "type": "print", "buttonText": "Print me!" }
+//					        ],
+						 "aButtons": [
+						                {
+						                    "sExtends":     "csv",
+						                    "sButtonText": "Generar Reporte"
+						                }
+						            ],
+					        "sSwfPath": "swf/copy_csv_xls.swf"
+					    } );
+					      
+					    $( tableTools.fnContainer() ).insertAfter('#salesHighchartDiv');
 					
 					$('#salesHighchartDiv').highcharts({
 			            chart: {
