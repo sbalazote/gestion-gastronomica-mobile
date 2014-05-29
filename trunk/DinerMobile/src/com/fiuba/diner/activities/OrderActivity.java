@@ -70,6 +70,7 @@ public class OrderActivity extends Activity {
 		try {
 			obtainOrderTask.execute(DataHolder.getCurrentTable().getId()).get();
 			DataHolder.getCurrentTable().setLocked(true);
+			DataHolder.getCurrentTable().setWaiter(DataHolder.getCurrentWaiter());
 
 			changeLockStateTableTask.execute(DataHolder.getCurrentTable());
 
