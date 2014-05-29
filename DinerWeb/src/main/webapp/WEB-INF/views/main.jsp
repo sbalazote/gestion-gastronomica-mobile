@@ -15,6 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
 		<link rel="stylesheet" type="text/css" href="css/multi-select.css">
 		<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/dataTables.tableTools.css">
 		<link rel="stylesheet" type="text/css" href="css/chosen.css">
 		<link rel="stylesheet" type="text/css" href="css/chosen-bootstrap.css">		
 		
@@ -29,6 +30,7 @@
 		<script type="text/javascript" src="js/jquery.multi-select.js"></script>
 		<script type="text/javascript" src="js/jquery.dataTables-10beta.min.js"></script>
 		<script type="text/javascript" src="js/datatables.esp.js"></script>
+		<script type="text/javascript" src="js/dataTables.tableTools.js"></script>
 		<script type="text/javascript" src="js/dataTables.bootstrap.js"></script>
 		<script type="text/javascript" src="js/chosen.jquery.min.js"></script>
 		<script type="text/javascript" src="js/dateFormatter.js"></script>
