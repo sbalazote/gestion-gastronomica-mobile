@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#EAF5FD">
+    android:background="@drawable/fondo">
+    <!-- android:background="#EAF5FD">  -->
 
     <Button
         android:id="@+id/showTablesButton"
