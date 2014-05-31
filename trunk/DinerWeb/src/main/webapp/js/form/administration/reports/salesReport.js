@@ -1,37 +1,46 @@
 SalesReport = function() {
 	
 	var daysToAdd = 365;
+	
+	$("#salesDateFromInput").attr('readOnly', 'true');
+	$("#salesDateToInput").attr('readOnly', 'true');
+	
+	$("#salesDateFromInput").datepicker({
+	      onClose: function( selectedDate ) {
+	        $( "#salesDateToInput" ).datepicker( "option", "minDate", selectedDate );
+	        var splittedDate = selectedDate.split("/");
+	        var maxDate = new Date(splittedDate[2], splittedDate[1] - 1, splittedDate[0]);
+	        maxDate.setDate(maxDate.getDate() + daysToAdd);
+	        var dd = maxDate.getDate();
+	        var mm = maxDate.getMonth() + 1;
+	        var y = maxDate.getFullYear();
+	        var maxDateFormatted = dd + '/'+ mm + '/'+ y;
+	        $( "#salesDateToInput" ).datepicker( "option", "maxDate", maxDateFormatted );
+	      }
+	});
+	
+	$("#salesDateToInput").datepicker({
+	      onClose: function( selectedDate ) {
+	        $( "#salesDateFromInput" ).datepicker( "option", "maxDate", selectedDate );
+	        var splittedDate = selectedDate.split("/");
+	        var minDate = new Date(splittedDate[2], splittedDate[1] - 1, splittedDate[0]);
+	        minDate.setDate(minDate.getDate() - daysToAdd);
+	        var dd = minDate.getDate();
+	        var mm = minDate.getMonth() + 1;
+	        var y = minDate.getFullYear();
+	        var minDateFormatted = dd + '/'+ mm + '/'+ y;
+	        $( "#salesDateFromInput" ).datepicker( "option", "minDate", minDateFormatted );
+	      }
+	});
+	
+	
 	$('#salesDateFromButton').click(function() {
-		var maxDate = $( "#salesDateToInput" ).datepicker( "getDate" );
-		
-		var dtMax = new Date(maxDate);
-        dtMax.setDate(dtMax.getDate() - daysToAdd); 
-        var dd = dtMax.getDate();
-        var mm = dtMax.getMonth() + 1;
-        var y = dtMax.getFullYear();
-        var dtFormatted = dd + '/'+ mm + '/'+ y;
-        $("#salesDateFromInput").datepicker("option", "minDate", dtFormatted);
-		
-		$("#salesDateFromInput").datepicker("option", "maxDate", maxDate);
 		$("#salesDateFromInput").datepicker().focus();
 	});
 	
 	$('#salesDateToButton').click(function() {
-		var minDate = $( "#salesDateFromInput" ).datepicker( "getDate" );
-		$("#salesDateToInput").datepicker("option", "minDate", minDate);
-		
-		var dtMax = new Date(minDate);
-        dtMax.setDate(dtMax.getDate() + daysToAdd); 
-        var dd = dtMax.getDate();
-        var mm = dtMax.getMonth() + 1;
-        var y = dtMax.getFullYear();
-        var dtFormatted = dd + '/'+ mm + '/'+ y;
-        $("#salesDateToInput").datepicker("option", "maxDate", dtFormatted)
 		$("#salesDateToInput").datepicker().focus();
 	});
-
-	$("#salesDateFromInput").datepicker();
-	$("#salesDateToInput").datepicker();
 	
 	var validateForm = function() {
 		var form = $("#salesReportForm");
@@ -53,12 +62,9 @@ SalesReport = function() {
 	};
 	
 	$("#salesCleanButton").click(function() {
-		if($("#salesDateFromInput").val()!= ""){
-			$.datepicker._clearDate('#salesDateFromInput');
-		}
-		if($("#salesDateToInput").val()!= ""){
-			$.datepicker._clearDate('#salesDateToInput');
-		}
+		$.datepicker._clearDate('#salesDateFromInput');
+		$.datepicker._clearDate('#salesDateToInput');
+		
 	});
 	
 	$("#salesSearchButton").click(function() {
@@ -87,35 +93,18 @@ SalesReport = function() {
 					}
 					var oTable = $('#salesTable').dataTable({
 						"aaData": aaData,
-						"bDestroy": true,
-						//"dom": 'lTfrtip',
-						//"dom": 'lfrtip<"#salesHighchartDiv"T>',
-						//"oTableTools": {
-						//	"aButtons": [ "csv" ],
-						//	"sSwfPath": "swf/copy_csv_xls.swf",
-						//	//"sExtends":     "csv",
-		                //    "sButtonText": "Generar Reporte"
-				        //},
+						"bDestroy": true
 					});
 					
-					 var tableTools = new $.fn.dataTable.TableTools( oTable, {
-//					        "buttons": [
-//					            "copy",
-//					            "csv",
-//					            "xls",
-//					            "pdf",
-//					            { "type": "print", "buttonText": "Print me!" }
-//					        ],
-						 "aButtons": [
-						                {
-						                    "sExtends":     "csv",
-						                    "sButtonText": "Generar Reporte"
-						                }
-						            ],
-					        "sSwfPath": "swf/copy_csv_xls.swf"
-					    } );
+					var tableTools = new $.fn.dataTable.TableTools( oTable, {
+						"aButtons": [{
+						            	 "sExtends":     "xls",
+						            	 "sButtonText": "Generar Reporte"
+						}],
+						"sSwfPath": "swf/copy_csv_xls.swf"
+					    });
 					      
-					    $( tableTools.fnContainer() ).insertAfter('#salesHighchartDiv');
+					$( tableTools.fnContainer() ).insertAfter('#salesHighchartDiv');
 					
 					$('#salesHighchartDiv').highcharts({
 			            chart: {
