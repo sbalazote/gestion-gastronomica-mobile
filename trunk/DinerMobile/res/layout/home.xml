@@ -9,17 +9,20 @@
 
     <Button
         android:id="@+id/showTablesButton"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="@string/showTables"
+        android:layout_marginTop="50dp"
+        android:drawableLeft="@drawable/table_distribution"
         android:onClick="showTables"/>
 
     <Button
         android:id="@+id/listTablesButton"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="@string/listTables"
         android:layout_marginTop="50dp"
+        android:drawableLeft="@drawable/table_list"
         android:onClick="listTables"/>
-
+ 
 </LinearLayout>

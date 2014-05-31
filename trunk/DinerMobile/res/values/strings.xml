@@ -27,8 +27,8 @@
     
     <string name="dinnerServiceTotal">Servicio de Mesa:</string>
     
-    <string name="showTables">Ver Mesas</string>
-    <string name="listTables">Listar Mesas</string>
+    <string name="showTables">Distribución Mesas</string>
+    <string name="listTables">Lista Mesas</string>
     
     <string name="floor">Piso</string>
     
