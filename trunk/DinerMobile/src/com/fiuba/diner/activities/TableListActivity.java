@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -123,8 +124,10 @@ public class TableListActivity extends Activity {
 						table.setState(TableStateHelper.OPEN.getState());
 						table.setWaiter(DataHolder.getCurrentWaiter());
 						TextView stateTextView = (TextView) view.findViewById(R.id.stateTextView);
+						ImageView tableimageView = (ImageView) view.findViewById(R.id.imageView1);
 						stateTextView.setText(table.getState().getDescription());
 						stateTextView.setTextColor(Color.BLUE);
+						tableimageView.setImageResource(R.drawable.blue_table);
 					}
 				});
 				alertDialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

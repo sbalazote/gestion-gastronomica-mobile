@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fiuba.diner.R;
@@ -33,6 +34,7 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 
 		TextView descriptionTextView = (TextView) rowView.findViewById(R.id.descriptionTextView);
 		TextView stateTextView = (TextView) rowView.findViewById(R.id.stateTextView);
+		ImageView tableimageView = (ImageView) rowView.findViewById(R.id.imageView1);
 
 		Table table = this.tables.get(position);
 		descriptionTextView.setText(String.valueOf(table.getId()));
@@ -41,13 +43,16 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 		if (table.getState().getId().equals(TableStateHelper.OPEN.getState().getId())) {
 			if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 				stateTextView.setTextColor(Color.BLUE);
+				tableimageView.setImageResource(R.drawable.blue_table);
 			} else {
 				stateTextView.setTextColor(Color.RED);
 				stateTextView.setText("No disponible");
+				tableimageView.setImageResource(R.drawable.red_table);
 			}
 		} else if (table.getState().getId().equals(TableStateHelper.CLOSED.getState().getId())) {
 			stateTextView.setTextColor(Color.RED);
 			stateTextView.setText("No disponible");
+			tableimageView.setImageResource(R.drawable.red_table);
 		}
 
 		return rowView;
