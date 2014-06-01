@@ -37,7 +37,7 @@ SaveSubcategory = function() {
 				data: JSON.stringify(jsonSubcategory),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved";
+					window.location = "subcategoryAdministration?change=true";
 				}
 			});
 		}

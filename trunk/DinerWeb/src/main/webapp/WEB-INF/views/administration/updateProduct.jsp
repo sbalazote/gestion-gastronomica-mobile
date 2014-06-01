@@ -54,25 +54,28 @@
 </div>
 
 <div class="row">
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="priceInput"><spring:message code="common.price"/></label>
 		<input type="text" class="form-control" name="price" id="priceInput" value="${price}">
 	</div>
 	
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="estimatedTimeInput"><spring:message code="common.estimatedTime"/></label>
 		<input type="text" class="form-control" name="estimatedTime" id="estimatedTimeInput" value="${estimatedTime}">
 	</div>
 
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="activeSelect"><spring:message code="common.active"/></label>
 		<select class="form-control" id="activeSelect">
 			<option value="true" ${active == 'true' ? 'selected' : ''}>Si</option>
 			<option value="false" ${active == 'false' ? 'selected' : ''}>No</option>
 		</select>
 	</div>
-	
-	<div class="col-md-2 form-group">
+</div>
+
+
+<div class="row">
+	<div class="col-md-4 form-group">
 		<label for="celiacAllowedSelect"><spring:message code="common.celiacAllowed"/></label>
 		<select class="form-control" id="celiacAllowedSelect">
 			<option value="true" ${celiacAllowed == 'true' ? 'selected' : ''}>Si</option>
@@ -80,7 +83,7 @@
 		</select>
 	</div>
 	
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="kitchenSelect"><spring:message code="common.kitchen"/></label>
 				<select class="form-control" id="kitchenSelect" name="kitchen">
 			<option value="true" ${kitchen == 'true' ? 'selected' : ''}>Si</option>
@@ -88,13 +91,14 @@
 		</select>
 	</div>
 	
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="stockSelect"><spring:message code="common.stockAvailable"/></label>
 				<select class="form-control" id="stockSelect" name="stock">
 			<option value="true" ${stock == 'true' ? 'selected' : ''}>Si</option>
 			<option value="false" ${stock == 'false' ? 'selected' : ''}>No</option>
 		</select>
 	</div>
+	
 </div>
 
 <div class="row">

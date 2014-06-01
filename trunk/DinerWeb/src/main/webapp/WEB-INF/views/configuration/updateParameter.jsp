@@ -20,6 +20,8 @@
 	</div>
 </div>
 
+<div id="successMessageDiv" style="display: none;" class="alert alert-success"><strong><spring:message code="administration.success.message"/></strong></div>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		new SaveParameter();

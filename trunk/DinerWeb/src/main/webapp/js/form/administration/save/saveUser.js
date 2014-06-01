@@ -71,7 +71,7 @@ SaveUser = function() {
 					data: JSON.stringify(jsonUser),
 					async: true,
 					success: function(response) {
-						window.location = "entitySaved.do";
+						window.location = "userAdministration?change=true";
 					}
 				});
 			}

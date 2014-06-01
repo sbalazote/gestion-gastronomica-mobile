@@ -17,6 +17,7 @@
 	</div>
 
 </div>
+<div id="successMessageDiv" style="display: none;" class="alert alert-success"><strong><spring:message code="administration.success.message"/></strong></div>
 
 <div class="bs-example bs-example-tabs">
 	<div class="row">
@@ -25,6 +26,7 @@
 		</div>
 	</div>
 </div>
+
 
 <div id=divTable>
 	<table class="table table-striped datatable my-datatable" id="mainTable">
@@ -69,8 +71,6 @@
 		</div>
 	</div>
 </div>
-
-<div id="container" style="width:100%; height:400px;"></div>
 
 </div>
 </div>

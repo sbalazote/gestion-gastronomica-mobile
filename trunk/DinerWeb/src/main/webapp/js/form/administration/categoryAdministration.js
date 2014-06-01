@@ -1,5 +1,11 @@
 CategoryAdministration = function() {
 	var categoryId = null;
+	var url = $.url(document.location);
+	var hasBeenChanged = url.param("change");
+	
+	if(hasBeenChanged == "true"){
+		$('#successMessageDiv').show();
+	}
 	
 	$.ajax({
 		url: "getCategories",
@@ -52,7 +58,7 @@ CategoryAdministration = function() {
 			},
 			async: true,
 			success: function(response) {
-				window.location = "deleteConfirmation";
+				window.location = "categoryAdministration?change=true";
 			},
 			error: function(response) {
 				console.log(response),

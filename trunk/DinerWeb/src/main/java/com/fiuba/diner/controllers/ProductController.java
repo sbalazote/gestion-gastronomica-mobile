@@ -65,6 +65,8 @@ public class ProductController {
 					prod.setPrice(productDTO.getPrice());
 					prod.setEstimatedTime(productDTO.getEstimatedTime());
 					prod.setCeliacAllowed(productDTO.isCeliacAllowed());
+					prod.setKitchen(productDTO.isKitchen());
+					prod.setStock(productDTO.isStock());
 				}
 			}
 		} else {
@@ -104,6 +106,8 @@ public class ProductController {
 		modelMap.put("estimatedTime", product.getEstimatedTime());
 		modelMap.put("active", product.getActive());
 		modelMap.put("celiacAllowed", product.getCeliacAllowed());
+		modelMap.put("kitchen", product.getKitchen());
+		modelMap.put("stock", product.getStock());
 
 		return "updateProduct";
 	}

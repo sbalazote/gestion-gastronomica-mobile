@@ -32,7 +32,7 @@ SaveCategory = function() {
 				data: JSON.stringify(jsonCategory),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved";
+					window.location = "categoryAdministration?change=true";
 				}
 			});
 		}

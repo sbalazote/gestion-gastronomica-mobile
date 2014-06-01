@@ -1,4 +1,11 @@
 SaveParameter = function() {
+	var url = $.url(document.location);
+	var hasBeenChanged = url.param("change");
+	
+	if(hasBeenChanged == "true"){
+		$('#successMessageDiv').show();
+	}
+	
 	
 	var validateForm = function() {
 		var form = $("#parameterAdministrationForm");
@@ -37,7 +44,7 @@ SaveParameter = function() {
 				data: JSON.stringify(jsonCategory),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved";
+					window.location = "updateParameter?change=true";
 				}
 			});
 		}
