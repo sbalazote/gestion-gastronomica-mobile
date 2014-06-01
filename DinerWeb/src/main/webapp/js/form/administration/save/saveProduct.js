@@ -58,7 +58,7 @@ SaveProduct = function() {
 				data: JSON.stringify(jsonProduct),
 				async: true,
 				success: function(response) {
-					window.location = "entitySaved";
+					window.location = "productAdministration?change=true";
 				}
 			});
 		}

@@ -17,7 +17,7 @@
 	</div>
 
 </div>
-
+<div id="successMessageDiv" style="display: none;" class="alert alert-success"><strong><spring:message code="administration.success.message"/></strong></div>
 <div class="bs-example bs-example-tabs">
 	<div class="row">
 		<div class="col-md-4 form-group">

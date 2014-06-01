@@ -1,6 +1,12 @@
 UserAdministration = function() {
 	var userId = null;
 	var users = [];
+	var url = $.url(document.location);
+	var hasBeenChanged = url.param("change");
+	
+	if(hasBeenChanged == "true"){
+		$('#successMessageDiv').show();
+	}
 	
 	$.ajax({
 		url: "getUsers",
@@ -61,7 +67,7 @@ UserAdministration = function() {
 			},
 			async: true,
 			success: function(response) {
-				window.location = "deleteConfirmation";
+				window.location = "userAdministration?change=true";
 			},
 			error: function(response) {
 				console.log(response),

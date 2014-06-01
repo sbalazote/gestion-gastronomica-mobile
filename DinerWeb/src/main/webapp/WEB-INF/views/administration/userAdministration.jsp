@@ -15,6 +15,7 @@
 				<h2><spring:message code="administration.user.menu"/></h2>
 			</div>
 		</div>
+		<div id="successMessageDiv" style="display: none;" class="alert alert-success"><strong><spring:message code="administration.success.message"/></strong></div>
 		
 		<div class="bs-example bs-example-tabs">
 			<div class="row">
