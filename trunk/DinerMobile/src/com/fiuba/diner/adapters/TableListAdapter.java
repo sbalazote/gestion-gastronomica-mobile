@@ -37,7 +37,15 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 		ImageView tableimageView = (ImageView) rowView.findViewById(R.id.imageView1);
 
 		Table table = this.tables.get(position);
-		descriptionTextView.setText(String.valueOf(table.getId()));
+
+		String text = String.valueOf(table.getId());
+		if (table.getAttachedTables() != null) {
+			for (Table attachedTable : table.getAttachedTables()) {
+				text += ", " + attachedTable.getId();
+			}
+		}
+		descriptionTextView.setText(text);
+
 		stateTextView.setText(table.getState().getDescription());
 
 		if (table.getState().getId().equals(TableStateHelper.OPEN.getState().getId())) {
