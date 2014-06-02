@@ -271,6 +271,12 @@ ProductRankingReport = function() {
 				            }).add();
 				        
 				    });
+					
+					if (response.length === 0) {
+						$('.DTTT_button_xls').attr('disabled', true);
+					} else {
+						$('.DTTT_button_xls').attr('disabled', false);
+					}
 				}
 			});
 		}
