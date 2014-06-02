@@ -153,6 +153,26 @@ $(document).ready(function() {
         return check;
     }, "Por favor, seleccione al menos un criterio de busqueda con Categoria y/o subcategoria");
     
+    jQuery.validator.addMethod("checkDateFrom", function(value, element, param) {
+    	var partsFrom = value.split("/");
+    	var partsTo = param.val().split("/");
+    	if (partsTo == "" || partsTo == "")
+    		return true;
+    	var dateF = new Date(partsFrom[1], partsFrom[0] - 1, 1);
+    	var dateT = new Date(partsTo[1], partsTo[0] - 1, 1);
+    	return (dateT >= dateF);
+    }, jQuery.format("Fecha desde debe ser menor o igual a Fecha hasta."));
+    
+    jQuery.validator.addMethod("checkDateTo", function(value, element, param) {
+    	var partsTo = value.split("/");
+    	var partsFrom = param.val().split("/");
+    	if (partsTo == "" || partsTo == "")
+    		return true;
+    	var dateF = new Date(partsFrom[1], partsFrom[0] - 1, 1);
+    	var dateT = new Date(partsTo[1], partsTo[0] - 1, 1);
+    	return (dateT >= dateF);
+    }, jQuery.format("Fecha hasta debe ser mayor o igual a Fecha desde."));
+    
     jQuery.validator.addMethod("minDate", function(value, element, param) {
     	var partsTo = value.split("/");
     	var partsFrom = param.val().split("/");
