@@ -31,7 +31,7 @@
 					<form id="salesReportForm" action="" onsubmit="return false;">
 						<div class="row">
 							<div class="col-md-4 form-group">
-								<label for="salesDateFromInput"><spring:message code="common.dateFrom"/></label>
+								<label for="salesDateFromInput"><spring:message code="common.dateFromMMYYYY"/></label>
 								<div class="input-group">
 									<input type="text" class="form-control monthYearCalendar" name="salesDateFrom" id="salesDateFromInput">
 									<span class="input-group-addon" id="salesDateFromButton" style="cursor:pointer;">
@@ -40,7 +40,7 @@
 								</div>
 							</div>
 							<div class="col-md-4 form-group">
-								<label for="salesDateToInput"><spring:message code="common.dateTo"/></label>
+								<label for="salesDateToInput"><spring:message code="common.dateToMMYYYY"/></label>
 								<div class="input-group">
 									<input type="text" class="form-control monthYearCalendar" name="salesDateTo" id="salesDateToInput">
 									<span class="input-group-addon" id="salesDateToButton" style="cursor:pointer;">

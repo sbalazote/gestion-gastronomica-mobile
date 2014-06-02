@@ -42,8 +42,8 @@ SalesReport = function() {
 					var yAxis = [];
 					for (var i = 0, l = response.length; i < l; ++i) {
 						var saleResult = [];
-						saleResult.push(myParseDate(response[i].billingDate));
-						xAxis.push(myParseDate(response[i].billingDate));
+						saleResult.push(myParseDateMMYYYY(response[i].billingDate));
+						xAxis.push(myParseDateMMYYYY(response[i].billingDate));
 						saleResult.push(response[i].dayTotal);
 						yAxis.push(response[i].dayTotal);
 						aaData.push(saleResult);

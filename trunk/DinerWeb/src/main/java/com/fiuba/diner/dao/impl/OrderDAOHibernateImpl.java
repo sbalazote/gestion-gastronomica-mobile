@@ -3,6 +3,7 @@ package com.fiuba.diner.dao.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -124,8 +125,8 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 				.getCurrentSession()
 				.createQuery(
 						"select billingDate as billingDate, sum(total) as dayTotal from Order where billingDate >= :from and billingDate <= :to and state.id = 3 group by billingDate order by billingDate asc");
-		query.setParameter("from", dateFromFormated);
-		query.setParameter("to", dateToFormated);
+		query.setParameter("from", this.formatDateFrom(dateFromFormated));
+		query.setParameter("to", this.formatDateTo(dateToFormated));
 
 		List<Object> list = query.list();
 		List<SalesReportDTO> orders = new ArrayList<SalesReportDTO>();
@@ -161,5 +162,45 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 		query.setParameter("to", dateToFormated);
 
 		return query.list();
+	}
+
+	private Date formatDateFrom(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.clear();
+		calendar.setTime(date);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+
+	private Date formatDateTo(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.clear();
+		calendar.setTime(date);
+		calendar.set(Calendar.DAY_OF_MONTH, this.getMaxDayOfMonth(calendar));
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
+		return calendar.getTime();
+	}
+
+	private int getMaxDayOfMonth(Calendar calendar) {
+		int month = calendar.get(Calendar.MONTH);
+		month++;
+		switch (month) {
+		case 2:
+			// si es bisiesto a comerla toda
+			return 28;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return 30;
+		}
+		return 31;
 	}
 }
