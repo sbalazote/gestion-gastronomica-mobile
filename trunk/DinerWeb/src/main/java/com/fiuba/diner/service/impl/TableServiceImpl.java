@@ -37,7 +37,7 @@ public class TableServiceImpl implements TableService {
 	}
 
 	@Override
-	public List<Table> getTablesWithClosedOrder() {
-		return this.tableDAO.getTablesWithClosedOrder();
+	public List<Table> getAvailableTables() {
+		return this.tableDAO.getAvailableTables();
 	}
 }

@@ -1,10 +1,15 @@
 package com.fiuba.diner.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -29,6 +34,10 @@ public class Table {
 
 	@Column(name = "locked", nullable = false)
 	private Boolean locked;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "table_union", joinColumns = @JoinColumn(name = "original_table_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "attached_table_id", nullable = false))
+	private List<Table> attachedTables;
 
 	public Integer getId() {
 		return this.id;
@@ -68,6 +77,14 @@ public class Table {
 
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
+	}
+
+	public List<Table> getAttachedTables() {
+		return this.attachedTables;
+	}
+
+	public void setAttachedTables(List<Table> attachedTables) {
+		this.attachedTables = attachedTables;
 	}
 
 }

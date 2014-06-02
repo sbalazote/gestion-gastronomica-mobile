@@ -31,6 +31,13 @@ CREATE TABLE `diner`.`table` (
   CONSTRAINT `fk_table_waiter` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner`.`table_union` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `original_table_id` int(11) NOT NULL,
+  `attached_table_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `diner`.`category` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(100) NOT NULL,

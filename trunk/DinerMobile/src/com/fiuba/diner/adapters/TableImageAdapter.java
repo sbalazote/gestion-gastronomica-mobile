@@ -15,7 +15,6 @@ import com.fiuba.diner.R;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.model.TableLayout;
 
 public class TableImageAdapter extends BaseAdapter {
 
@@ -29,7 +28,11 @@ public class TableImageAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return DataHolder.getCurrentFloor().getLength() * DataHolder.getCurrentFloor().getWidth();
+		Integer count = (DataHolder.getTables().size() / 3) * 27;
+		if (DataHolder.getTables().size() % 3 != 0) {
+			count += 27;
+		}
+		return count;
 	}
 
 	@Override
@@ -57,12 +60,14 @@ public class TableImageAdapter extends BaseAdapter {
 
 			TextView textView = (TextView) tableView.findViewById(R.id.floorGridTextView);
 
-			TableLayout tableLayout = DataHolder.getCurrentTableLayout()[position];
-
-			if (tableLayout != null) {
-				Table table = tableLayout.getTable();
+			System.out.print(position);
+			if (this.isTable(position)) {
+				System.out.println(" is table");
+				Table table = DataHolder.getTables().get(this.getTablePosition(position));
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					imageView.setImageResource(R.drawable.available_table);
+				} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
+					imageView.setImageResource(R.drawable.closed_table);
 				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 					imageView.setImageResource(R.drawable.open_table);
 				} else {
@@ -73,27 +78,56 @@ public class TableImageAdapter extends BaseAdapter {
 					this.tableIds.add(table.getId());
 				}
 			} else {
+				System.out.println("");
 				imageView.setImageResource(R.drawable.blank_space);
 			}
 
 		} else {
 
 			// Actualizo estados de las mesas (colores)
+			System.out.print("P: " + position);
 			tableView = convertView;
 			ImageView imageView = (ImageView) tableView.findViewById(R.id.floorGridImageView);
-			TableLayout tableLayout = DataHolder.getCurrentTableLayout()[position];
-			if (tableLayout != null) {
-				Table table = tableLayout.getTable();
-				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
-					imageView.setImageResource(R.drawable.available_table);
-				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
-					imageView.setImageResource(R.drawable.open_table);
-				} else {
-					imageView.setImageResource(R.drawable.not_available_table);
+			if (this.isTable(position)) {
+				System.out.println(" is table");
+				Table table = DataHolder.getTables().get(this.getTablePosition(position));
+				if (table != null) {
+					if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
+						imageView.setImageResource(R.drawable.available_table);
+					} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
+						imageView.setImageResource(R.drawable.closed_table);
+					} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+						imageView.setImageResource(R.drawable.open_table);
+					} else {
+						imageView.setImageResource(R.drawable.not_available_table);
+					}
 				}
+			} else {
+				System.out.println("");
 			}
 		}
 
 		return tableView;
+	}
+
+	private Boolean isTable(Integer position) {
+		Integer row = position / 9;
+		Integer column = position % 9;
+
+		Boolean isRow = (row - 1) % 3 == 0;
+		Boolean isColumn = (column - 1) % 3 == 0;
+
+		Integer tablePosition = this.getTablePosition(position);
+		return position > 0 && isRow && isColumn && tablePosition < DataHolder.getTables().size();
+	}
+
+	private Integer getTablePosition(Integer position) {
+		Integer row = position / 9;
+		Integer column = position % 9;
+
+		Integer rowCount = row / 3;
+		Integer columnCount = column / 3;
+
+		return 3 * rowCount + columnCount;
 	}
 }

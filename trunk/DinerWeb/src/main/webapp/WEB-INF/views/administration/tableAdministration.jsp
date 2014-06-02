@@ -10,7 +10,7 @@
 	});
 </script>
 
-<div id="body">
+<div id="large-body">
 	<div class="content">
 		<div class="row">
 			<div class="col-md-9 form-group">
@@ -25,6 +25,7 @@
 				<thead>
 					<tr>
 						<th><spring:message code="common.table" /></th>
+						<th><spring:message code="common.attached" /></th>
 						<th><spring:message code="common.state" /></th>
 						<th><spring:message code="common.waiter" /></th>
 						<th><spring:message code="common.action" /></th>
@@ -33,7 +34,6 @@
 				<tbody id="tableBody">
 				</tbody>
 			</table>
-		</div>
 		</div>
 	</div>
 </div>
@@ -89,11 +89,10 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal"
-					id="printButton">
+				<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="printButton">
 					<spring:message code="administration.printReceipt" />
 				</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
 			</div>
 		</div>
 	</div>
@@ -147,10 +146,37 @@
 				</div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmPaymentMediaButton">
 					<spring:message code="common.confirm" />
 				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%-- Modal Union de Mesas --%>
+<div class="modal fade" data-backdrop="static" id="tableAttachmentModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title"><spring:message code="administration.tableAttachmentModal.title" /></h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-md- form-group">	
+					<div class="ms-container">
+						<select multiple="multiple" id="my-select" name="my-select[]" >
+
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="common.abort" /></button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmTableAttachmentButton">
+					<spring:message code="common.confirm" />
+				</button>
 			</div>
 		</div>
 	</div>

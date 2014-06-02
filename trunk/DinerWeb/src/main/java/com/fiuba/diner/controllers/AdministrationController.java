@@ -1,6 +1,7 @@
 package com.fiuba.diner.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.dto.SalesReportDTO;
+import com.fiuba.diner.dto.TableAttachmentDTO;
+import com.fiuba.diner.dto.TableDTO;
 import com.fiuba.diner.helper.OrderStateHelper;
 import com.fiuba.diner.helper.PaymentMediaStateHelper;
 import com.fiuba.diner.helper.TableStateHelper;
@@ -78,12 +82,6 @@ public class AdministrationController {
 		return "reportsAdministration";
 	}
 
-	@RequestMapping(value = "/getTablesWithClosedOrder", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Table> getTablesWithClosedOrder() throws IOException {
-		return this.tableService.getTablesWithClosedOrder();
-	}
-
 	@RequestMapping(value = "/getOrderByTable", method = RequestMethod.GET)
 	@ResponseBody
 	public Order getOrderByTable(ModelMap modelMap, @RequestParam Map<String, String> parameters) throws Exception {
@@ -133,13 +131,77 @@ public class AdministrationController {
 	@RequestMapping(value = "/getTables", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Table> getTables() throws IOException {
-		return this.tableService.getAll();
+		List<Table> tables = this.tableService.getAll();
+		return tables;
 	}
 
 	@RequestMapping(value = "/getWaiters", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Waiter> getWaiters() throws IOException {
 		return this.waiterService.getAll();
+	}
+
+	@RequestMapping(value = "/getAttachedTables", method = RequestMethod.GET)
+	@ResponseBody
+	public List<TableDTO> getAttachedTables(@RequestParam Map<String, String> parameters) throws Exception {
+
+		Integer tableId = Integer.valueOf(parameters.get("tableId"));
+		Table table = this.tableService.get(tableId);
+
+		return this.getSelectedTables(table);
+	}
+
+	@RequestMapping(value = "/saveAttachedTables", method = RequestMethod.POST)
+	@ResponseBody
+	public void saveAttachedTables(@RequestBody TableAttachmentDTO requestBody) throws Exception {
+
+		Table table = this.tableService.get(requestBody.getTableId());
+		if (requestBody.getAttachedTables() == null && requestBody.getAttachedTables().isEmpty()) {
+			table.setAttachedTables(null);
+		} else {
+			List<Table> attachedTables = new ArrayList<Table>();
+			for (Integer tableId : requestBody.getAttachedTables()) {
+				attachedTables.add(this.tableService.get(tableId));
+			}
+			table.setAttachedTables(attachedTables);
+		}
+		this.tableService.save(table);
+	}
+
+	@RequestMapping(value = "/splitAttachedTables", method = RequestMethod.POST)
+	@ResponseBody
+	public void splitAttachedTables(@RequestParam Map<String, String> parameters) throws Exception {
+
+		Integer tableId = Integer.valueOf(parameters.get("tableId"));
+		Table table = this.tableService.get(tableId);
+		table.setAttachedTables(null);
+		this.tableService.save(table);
+	}
+
+	private List<TableDTO> getSelectedTables(Table table) {
+		List<Table> attachedTables = table.getAttachedTables();
+		List<Table> availableTables = this.tableService.getAvailableTables();
+		availableTables.remove(table);
+
+		List<TableDTO> tablesDTO = new ArrayList<TableDTO>();
+
+		for (Table aTable : availableTables) {
+			if (attachedTables.contains(aTable)) {
+				tablesDTO.add(this.newTableDTO(aTable, true));
+			} else {
+				tablesDTO.add(this.newTableDTO(aTable, false));
+			}
+		}
+		return tablesDTO;
+	}
+
+	private TableDTO newTableDTO(Table table, boolean selected) {
+		TableDTO tableDTO = new TableDTO();
+
+		tableDTO.setId(table.getId());
+		tableDTO.setSelected(selected);
+
+		return tableDTO;
 	}
 
 }

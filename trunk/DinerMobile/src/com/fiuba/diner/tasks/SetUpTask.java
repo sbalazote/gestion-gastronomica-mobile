@@ -1,16 +1,12 @@
 package com.fiuba.diner.tasks;
 
-import java.util.List;
-
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 import android.os.AsyncTask;
 
 import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
-import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Parameter;
 
 public class SetUpTask extends AsyncTask<String, Void, Void> {
@@ -31,19 +27,12 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 			System.out.println(response);
 			Parameter parameter = this.mapper.readValue(response, Parameter.class);
 
-			// Me traigo los floors
-			response = this.connectionHelper.get("floors");
-			System.out.println(response);
-			List<Floor> floors = this.mapper.readValue(response, new TypeReference<List<Floor>>() {
-			});
-
 			// Me traigo un waiter
 			// response = this.connectionHelper.get("waiters/" + DataHolder.getCurrentWaiter().getId());
 			// System.out.println(response);
 			// Waiter waiter = this.mapper.readValue(response, Waiter.class);
 
 			DataHolder.setParameter(parameter);
-			DataHolder.setFloors(floors);
 			// DataHolder.setCurrentWaiter(waiter);
 
 		} catch (Exception e) {

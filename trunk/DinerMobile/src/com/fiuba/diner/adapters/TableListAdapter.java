@@ -50,9 +50,9 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 				tableimageView.setImageResource(R.drawable.red_table);
 			}
 		} else if (table.getState().getId().equals(TableStateHelper.CLOSED.getState().getId())) {
-			stateTextView.setTextColor(Color.RED);
-			stateTextView.setText("No disponible");
-			tableimageView.setImageResource(R.drawable.red_table);
+			stateTextView.setTextColor(Color.rgb(255, 140, 0));
+			stateTextView.setText("Cerrada");
+			tableimageView.setImageResource(R.drawable.orange_table);
 		}
 
 		return rowView;
