@@ -101,4 +101,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to) {
 		return this.orderDAO.getBilledOrdersBetweenDates(from, to);
 	}
+
+	@Override
+	public List<Order> getOrdersBetweenDates(String from, String to) {
+		return this.orderDAO.getOrdersBetweenDates(from, to);
+	}
 }

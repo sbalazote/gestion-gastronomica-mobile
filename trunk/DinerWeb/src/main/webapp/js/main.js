@@ -18,6 +18,12 @@ $(document).ready(function() {
 			} else {
 				$(element).data("title", "").removeClass("has-error").tooltip("destroy");
 			}
+			
+			if ($(element).hasClass("multipleSelector")) {
+				$("div.ms-selection").data("title", "").removeClass("has-error").tooltip("destroy");
+			} else {
+				$("div.ms-selection").data("title", "").removeClass("has-error").tooltip("destroy");
+			}
 		});
 		// 	Creo nuevos tooltips para elementos invalidos.
 		$.each(errorList, function (index, error) {
@@ -27,6 +33,12 @@ $(document).ready(function() {
 				chosenElement.tooltip("destroy").data("title", error.message).addClass("has-error").tooltip();
 			} else {
 				$(error.element).tooltip("destroy").data("title", error.message).addClass("has-error").tooltip();
+			}
+			
+			if ($(error.element).hasClass("multipleSelector")) {
+				$("div.ms-selection").tooltip("destroy").data("title", error.message).addClass("has-error").tooltip();
+			} else {
+				$("div.ms-selection").tooltip("destroy").data("title", error.message).addClass("has-error").tooltip();
 			}
 		});
 	};
@@ -48,6 +60,25 @@ $(document).ready(function() {
 		var year = myDate.getFullYear();
 		return day + "/" + month + "/" + year;
 	};
+	
+	jQuery.validator.addMethod("monthYearDateOnly", function(value, element) {
+		var check = false;
+		var re = /^\d{1,2}\/\d{4}$/;
+		if( re.test(value)) {
+			var adata = value.split('/');
+			var mm = parseInt(adata[0],10);
+			var aaaa = parseInt(adata[1],10);
+			var xdata = new Date(aaaa,mm-1,1);
+			if ( ( xdata.getFullYear() === aaaa ) && ( xdata.getMonth() === mm - 1 ) ){
+				check = true;
+			} else {
+				check = false;
+			}
+		} else {
+			check = false;
+		}
+		return this.optional(element) || check;
+	}, "Por favor, escriba una fecha que solo contenga mes y año.  (Formato: mm/aaaa)");
 	
 	validateExpirationDate = function(dd, mm, aaaa) {
 		var valid = false;
@@ -79,27 +110,58 @@ $(document).ready(function() {
             }
         }
         return this.optional(element) || check;
-    }, "Por favor, escribe una fecha mayor a la fecha del dï¿½a. (Formato: ddmmaa)");
+    }, "Por favor, escribe una fecha mayor a la fecha del día. (Formato: ddmmaa)");
+    
+    jQuery.validator.addMethod("categoriesRepeated", function(value, element) {
+    	var check = true;
+    	if (value != null) {
+    		if (value.length > 1) {
+    			var onlyCategories = [];
+    			$.each(value, function (index, element) {
+    				var parts = element.split("-");
+    				if (parts[1] === undefined) {
+    					onlyCategories.push(parts[0]);
+    				}
+    				else {
+    					if (jQuery.inArray(parts[1], onlyCategories) != -1) {
+    						check = false;
+    					}
+    				}
+    			});
+    		}
+    	}
+        return check;
+    }, "Ha indicado un Rubro que abarca todos sus Subrubros y ademas ha indicado Rubro/Subrubro. Este ultimo es innecesario ya que esta contenido en el primero, retirelo por favor");
+    
+    jQuery.validator.addMethod("emptyCategoriesSubcategories", function(value, element) {
+        var check = true;
+        if (value == null) {
+            check = false;
+        }
+        return check;
+    }, "Por favor, seleccione al menos un criterio de busqueda con Categoria y/o subcategoria");
     
     jQuery.validator.addMethod("minDate", function(value, element, param) {
     	var partsTo = value.split("/");
     	var partsFrom = param.val().split("/");
     	if (partsTo == "" || partsTo == "")
     		return true;
-    	var dateF = new Date(partsFrom[2], partsFrom[1] - 1, partsFrom[0]);
-    	var dateT = new Date(partsTo[2], partsTo[1] - 1, partsTo[0]);
-    	return (dateT >= dateF);
-    }, jQuery.format("La Fecha Hasta debe ser mayor o igual a la Fecha Desde."));
+    	var dateF = new Date(partsFrom[1], partsFrom[0] - 1, 1);
+    	var dateT = new Date(partsTo[1], partsTo[0] - 1, 1);
+    	dateT.setDate(dateT.getDate() - 365);
+    	return (dateT <= dateF);
+    }, jQuery.format("El rango de fechas no puede ser superior a un año."));
     
     jQuery.validator.addMethod("maxDate", function(value, element, param) {
     	var partsFrom = value.split("/");
     	var partsTo = param.val().split("/");
     	if (partsTo == "" || partsTo == "")
     		return true;
-    	var dateF = new Date(partsFrom[2], partsFrom[1] - 1, partsFrom[0]);
-    	var dateT = new Date(partsTo[2], partsTo[1] - 1, partsTo[0]);
-    	return (dateF <= dateT);
-    }, jQuery.format("La Fecha Desde debe ser menor o igual a la Fecha Hasta."));
+    	var dateF = new Date(partsFrom[1], partsFrom[0] - 1, 1);
+    	var dateT = new Date(partsTo[1], partsTo[0] - 1, 1);
+    	dateF.setDate(dateF.getDate() + 365);
+    	return (dateF >= dateT);
+    }, jQuery.format("El rango de fechas no puede ser superior a un año."));
     
     jQuery.validator.addMethod("exactLength", function(value, element, param) {
    	 return this.optional(element) || value.length == param;

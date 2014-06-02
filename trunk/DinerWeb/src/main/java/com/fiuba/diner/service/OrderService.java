@@ -27,4 +27,5 @@ public interface OrderService {
 
 	List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to);
 
+	List<Order> getOrdersBetweenDates(String from, String to);
 }

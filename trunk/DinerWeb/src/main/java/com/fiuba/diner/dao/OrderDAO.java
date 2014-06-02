@@ -29,4 +29,6 @@ public interface OrderDAO {
 	OrderDetailState getOrderDetailState(Integer stateId);
 
 	List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to);
+
+	List<Order> getOrdersBetweenDates(String from, String to);
 }

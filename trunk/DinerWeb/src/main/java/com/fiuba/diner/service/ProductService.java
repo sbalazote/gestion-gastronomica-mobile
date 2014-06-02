@@ -1,5 +1,6 @@
 package com.fiuba.diner.service;
 
+import com.fiuba.diner.dto.ProductRankingReportDTO;
 import com.fiuba.diner.model.Product;
 
 public interface ProductService {
@@ -9,4 +10,6 @@ public interface ProductService {
 	void save(Product product);
 
 	void delete(Integer productId);
+
+	ProductRankingReportDTO getCategorySubcategoryFromProduct(String productDescription);
 }
