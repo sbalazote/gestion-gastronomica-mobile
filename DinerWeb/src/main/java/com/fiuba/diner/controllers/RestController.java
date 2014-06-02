@@ -85,8 +85,25 @@ public class RestController {
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer postOrder(@RequestBody Order order) throws IOException {
+		Waiter waiter = order.getTables().get(0).getWaiter();
+		User user = this.userService.get(waiter.getId());
+		if (user == null || !user.isActive() || !this.isWaiter(user)) {
+			return 0;
+		}
 		this.orderService.save(order);
 		return order.getId();
+	}
+
+	private boolean isWaiter(User user) {
+		if (user.getRoles() == null) {
+			return false;
+		}
+		for (Role role : user.getRoles()) {
+			if (role.getId() == 3) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@RequestMapping(value = "/orders/{id}", method = RequestMethod.GET)
