@@ -61,6 +61,14 @@ $(document).ready(function() {
 		return day + "/" + month + "/" + year;
 	};
 	
+	myParseDateMMYYYY = function(date) {
+		var myDate = new Date(date);
+		var day = ("0" + myDate.getDate()).slice(-2);
+		var month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+		var year = myDate.getFullYear();
+		return month + "/" + year;
+	};
+	
 	jQuery.validator.addMethod("maxAmount", function(value, element, param) {
     	return (value.length <= param);
     }, jQuery.format("Se han ingresado más de diez Rubros-Subrubros."));
