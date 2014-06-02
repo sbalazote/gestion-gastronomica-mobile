@@ -1,57 +1,17 @@
 SalesReport = function() {
 	
-	var daysToAdd = 365;
-	
-	$("#salesDateFromInput").attr('readOnly', 'true');
-	$("#salesDateToInput").attr('readOnly', 'true');
-	
-	$("#salesDateFromInput").datepicker({
-	      onClose: function( selectedDate ) {
-	        $( "#salesDateToInput" ).datepicker( "option", "minDate", selectedDate );
-	        var splittedDate = selectedDate.split("/");
-	        var maxDate = new Date(splittedDate[2], splittedDate[1] - 1, splittedDate[0]);
-	        maxDate.setDate(maxDate.getDate() + daysToAdd);
-	        var dd = maxDate.getDate();
-	        var mm = maxDate.getMonth() + 1;
-	        var y = maxDate.getFullYear();
-	        var maxDateFormatted = dd + '/'+ mm + '/'+ y;
-	        $( "#salesDateToInput" ).datepicker( "option", "maxDate", maxDateFormatted );
-	      }
-	});
-	
-	$("#salesDateToInput").datepicker({
-	      onClose: function( selectedDate ) {
-	        $( "#salesDateFromInput" ).datepicker( "option", "maxDate", selectedDate );
-	        var splittedDate = selectedDate.split("/");
-	        var minDate = new Date(splittedDate[2], splittedDate[1] - 1, splittedDate[0]);
-	        minDate.setDate(minDate.getDate() - daysToAdd);
-	        var dd = minDate.getDate();
-	        var mm = minDate.getMonth() + 1;
-	        var y = minDate.getFullYear();
-	        var minDateFormatted = dd + '/'+ mm + '/'+ y;
-	        $( "#salesDateFromInput" ).datepicker( "option", "minDate", minDateFormatted );
-	      }
-	});
-	
-	
-	$('#salesDateFromButton').click(function() {
-		$("#salesDateFromInput").datepicker().focus();
-	});
-	
-	$('#salesDateToButton').click(function() {
-		$("#salesDateToInput").datepicker().focus();
-	});
-	
 	var validateForm = function() {
 		var form = $("#salesReportForm");
 		form.validate({
 			rules: {
 				salesDateFrom: {
-					dateITA: true,
+					required: true,
+					monthYearDateOnly: true,
 					maxDate: $("#salesDateToInput")
 				},
 				salesDateTo: {
-					dateITA: true,
+					required: true,
+					monthYearDateOnly: true,
 					minDate: $("#salesDateFromInput")
 				}
 			},
@@ -62,15 +22,12 @@ SalesReport = function() {
 	};
 	
 	$("#salesCleanButton").click(function() {
-		$.datepicker._clearDate('#salesDateFromInput');
-		$.datepicker._clearDate('#salesDateToInput');
-		
+		$("#salesDateFromInput").val("");
+		$("#salesDateToInput").val("");
 	});
 	
 	$("#salesSearchButton").click(function() {
 		if(validateForm()){
-			var datefrom = new Date($("#salesDateFromInput").val());
-			var dto= new Date($("#salesDateToInput").val());
 			$.ajax({
 				url: "getBilledOrdersBetweenDates",
 				type: "POST",

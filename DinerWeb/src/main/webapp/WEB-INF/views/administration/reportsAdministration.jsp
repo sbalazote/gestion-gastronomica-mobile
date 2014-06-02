@@ -3,9 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript" src="js/form/administration/reports/salesReport.js"></script>
+<script type="text/javascript" src="js/form/administration/reports/productRankingReport.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		new SalesReport();
+		new ProductRankingReport();
 	});
 </script>
 
@@ -31,7 +33,7 @@
 							<div class="col-md-4 form-group">
 								<label for="salesDateFromInput"><spring:message code="common.dateFrom"/></label>
 								<div class="input-group">
-									<input type="text" class="form-control" name="salesDateFrom" id="salesDateFromInput">
+									<input type="text" class="form-control monthYearCalendar" name="salesDateFrom" id="salesDateFromInput">
 									<span class="input-group-addon" id="salesDateFromButton" style="cursor:pointer;">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -40,7 +42,7 @@
 							<div class="col-md-4 form-group">
 								<label for="salesDateToInput"><spring:message code="common.dateTo"/></label>
 								<div class="input-group">
-									<input type="text" class="form-control" name="salesDateTo" id="salesDateToInput">
+									<input type="text" class="form-control monthYearCalendar" name="salesDateTo" id="salesDateToInput">
 									<span class="input-group-addon" id="salesDateToButton" style="cursor:pointer;">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -110,6 +112,26 @@
 									</button>
 								</div>
 							</div>
+						
+						<div class="row">
+							<div class="col-md-4 form-group">	
+								<label for="role"><spring:message code="common.categorySubcategory"/></label>
+							</div>
+						</div>
+						<div>
+							<div class="col-md- form-group">	
+								<div class="ms-container">
+									<select class="multipleSelector" multiple="multiple" id="categoriesSubcategoriesSelect" name="categoriesSubcategories">
+										<c:forEach items="${categories}" var="category" varStatus="status">
+											<option value="${category.id}"><c:out value="${category.description} "></c:out></option>
+										</c:forEach>
+										<c:forEach items="${categoriesSubcategories}" var="categoriesSubcategories" varStatus="status">
+											<option value="${categoriesSubcategories.categoryId}-${categoriesSubcategories.subcategoryId}"><c:out value="${categoriesSubcategories.categoryDescription} / ${categoriesSubcategories.subcategoryDescription}"></c:out></option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+						</div>
 						</form>
 						<div id=productRankingTableDiv>
 							<table class="table table-striped reassignTablesdatatable my-datatable" id="productRankingTable">

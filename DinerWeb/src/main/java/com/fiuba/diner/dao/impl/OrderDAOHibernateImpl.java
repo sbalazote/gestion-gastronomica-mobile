@@ -109,7 +109,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SalesReportDTO> getBilledOrdersBetweenDates(String from, String to) {
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/yyyy");
 		Date dateFromFormated = null;
 		Date dateToFormated = null;
 		try {
@@ -140,5 +140,26 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 			orders.add(dto);
 		}
 		return orders;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Order> getOrdersBetweenDates(String from, String to) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateFromFormated = null;
+		Date dateToFormated = null;
+		try {
+			dateFromFormated = dateFormatter.parse(from.toString());
+			dateToFormated = dateFormatter.parse(to.toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Query query = this.sessionFactory.getCurrentSession().createQuery("from Order where billingDate >= :from and billingDate <= :to and state.id = 3");
+		query.setParameter("from", dateFromFormated);
+		query.setParameter("to", dateToFormated);
+
+		return query.list();
 	}
 }

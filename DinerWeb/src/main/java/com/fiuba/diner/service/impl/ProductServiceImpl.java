@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fiuba.diner.dao.ProductDAO;
+import com.fiuba.diner.dto.ProductRankingReportDTO;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.service.ProductService;
 
@@ -32,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void delete(Integer productId) {
 		this.productDAO.delete(productId);
+	}
+
+	@Override
+	public ProductRankingReportDTO getCategorySubcategoryFromProduct(String productDescription) {
+		return this.productDAO.getCategorySubcategoryFromProduct(productDescription);
 	}
 
 }
