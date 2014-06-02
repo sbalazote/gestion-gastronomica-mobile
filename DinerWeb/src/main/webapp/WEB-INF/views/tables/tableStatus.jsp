@@ -19,6 +19,7 @@
 				</h2>
 			</div>
 		</div>
+		<div id="successMessageDiv" style="display: none;" class="alert alert-success"><strong><spring:message code="administration.success.message"/></strong></div>
 		<div id=divTable>
 			<table class="table table-striped tableDatatable my-datatable"
 				id="mainTable">
