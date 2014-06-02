@@ -20,7 +20,10 @@
 	</div>
 </div>
 
-<div id="successMessageDiv" style="display: none;" class="alert alert-success"><strong><spring:message code="administration.success.message"/></strong></div>
+<div id="successMessageDiv" style="display: none;" class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong><spring:message code="administration.success.message"/></strong>
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function() {

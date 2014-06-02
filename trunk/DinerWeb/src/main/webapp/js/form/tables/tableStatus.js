@@ -307,9 +307,10 @@ TableStatus = function() {
 			data: JSON.stringify(jsonUser),
 			async: true,
 			success: function(response) {
+				$('#successMessageDiv').show();
 			}
 		});
-		$('#successMessageDiv').show();
+
 	});
 	
 	$('#divTable').on("click", ".split-tables", function() {
@@ -327,6 +328,7 @@ TableStatus = function() {
 			type: "POST",
 			async: false,
 			success: function(response) {
+				$('#successMessageDiv').show();
 				me.hide();
 			},
 			error: function(response) {
