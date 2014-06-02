@@ -1,6 +1,8 @@
 package com.fiuba.diner.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -152,6 +154,18 @@ public class AdministrationController {
 				}
 			}
 		}
+		Collections.sort(productRankingReportDTOList, new Comparator<ProductRankingReportDTO>() {
+			@Override
+			public int compare(ProductRankingReportDTO r1, ProductRankingReportDTO r2) {
+				if (r1.getNumberOfTimesServed() == null) {
+					return 1;
+				}
+				if (r2.getNumberOfTimesServed() == null) {
+					return -1;
+				}
+				return -(r1.getNumberOfTimesServed().compareTo(r2.getNumberOfTimesServed()));
+			}
+		});
 		return productRankingReportDTOList;
 	}
 

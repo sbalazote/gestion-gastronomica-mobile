@@ -105,7 +105,11 @@ ProductRankingReport = function() {
 					var aaData = [];
 					var xAxis = [];
 					var yAxis = [];
-					var paretoMap = [];
+					var paretoMapXAxis = [];
+					var paretoMapYAxis = [];
+					var paretoAcum = [];
+					var acumTotal = 0;
+					var total = 0;
 					for (var i = 0, l = response.length; i < l; ++i) {
 						var productRankingResult = [];
 						productRankingResult.push(response[i].category);
@@ -116,12 +120,22 @@ ProductRankingReport = function() {
 						yAxis.push(response[i].numberOfTimesServed);
 						
 						//	Ordenar en forma DESCENDENTE (los primeros 10) y utilizarlo en el grafico Pareto.
-						paretoMap[response[i].productDescription] = response[i].numberOfTimesServed;
+						paretoMapXAxis.push(response[i].productDescription);
+						paretoMapYAxis.push(response[i].numberOfTimesServed);
 						
 						//var a = keysbyValue(paretoMap);
 						
 						aaData.push(productRankingResult);
 					}
+					
+					for (var i = 0; i < paretoMapYAxis.length; i++) {
+					    total += paretoMapYAxis[i] << 0;
+					}
+					for (var i = 0; i < paretoMapYAxis.length; i++) {
+					    paretoAcum.push((paretoMapYAxis[i] / total * 100)+acumTotal);
+					    acumTotal += (paretoMapYAxis[i] / total * 100);
+					}
+					
 					var oTable = $('#productRankingTable').dataTable({
 						"aaData": aaData,
 						"bDestroy": true
@@ -199,7 +213,7 @@ ProductRankingReport = function() {
 				        },
 				        xAxis: {
 				        	// Aca va la descripcion de paretoMap
-				            categories: ['E', 'D', 'B', 'A']
+				            categories: paretoMapXAxis
 				        },
 				        yAxis: [{
 				            title: {
@@ -227,12 +241,12 @@ ProductRankingReport = function() {
 				        }],
 				        series: [{
 				        	// Aca va los valores en de paretoMap en forma descendente
-				            data: [5.6000000000, 5.1000000000, 2.8000000000, 1.3000000000],
+				            data: paretoMapYAxis,
 				            name: 'Veces Servido',
 				            type: 'column'
 				        }, {
 				        	// Aca va el acumulado de paretoMap
-				            data: [38, 72, 91, 100],
+				            data: paretoAcum,
 				            name: 'Acumulado',
 				            type: 'spline',
 				            yAxis: 1,
