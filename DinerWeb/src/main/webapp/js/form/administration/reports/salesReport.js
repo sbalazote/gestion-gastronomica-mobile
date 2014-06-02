@@ -7,11 +7,13 @@ SalesReport = function() {
 				salesDateFrom: {
 					required: true,
 					monthYearDateOnly: true,
+					checkDateFrom: $("#salesDateToInput"),
 					maxDate: $("#salesDateToInput")
 				},
 				salesDateTo: {
 					required: true,
 					monthYearDateOnly: true,
+					checkDateTo: $("#salesDateFromInput"),
 					minDate: $("#salesDateFromInput")
 				}
 			},
