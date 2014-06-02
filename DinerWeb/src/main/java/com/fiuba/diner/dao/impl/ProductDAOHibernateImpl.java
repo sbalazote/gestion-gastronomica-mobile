@@ -33,7 +33,6 @@ public class ProductDAOHibernateImpl implements ProductDAO {
 		this.sessionFactory.getCurrentSession().delete(product);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ProductRankingReportDTO getCategorySubcategoryFromProduct(String productDescription) {
 		String sentence = "select c, s from Category as c inner join c.subcategories as s inner join s.products as p where p.description = :productDescription";
