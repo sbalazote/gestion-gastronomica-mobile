@@ -185,7 +185,7 @@ $(document).ready(function() {
 	//a minimum number value on a validate form
 	$.validator.addMethod('minValue', function (value, el, param) {
 	    return value > param;
-	},"Por favor, ingrese un nï¿½mero mayor a cero");
+	},"Por favor, ingrese un número mayor a cero");
 	
 	$.validator.addMethod('usernameRequired', function (value, el, param) {
 		return $.trim(value).length > 0;
@@ -205,17 +205,20 @@ $(document).ready(function() {
 			   minutes: "unos %d minutos",
 			   hour: "una hora",
 			   hours: "%d horas",
-			   day: "un dï¿½a",
-			   days: "%d dï¿½as",
+			   day: "un día",
+			   days: "%d días",
 			   month: "un mes",
 			   months: "%d meses",
-			   year: "un aï¿½o",
-			   years: "%d aï¿½os"
+			   year: "un año",
+			   years: "%d años"
 			};
 	
 	jQuery(document).ready(function() {
 		  jQuery("abbr.timeago").timeago();
 	});
 	
-
+	jQuery.validator.addMethod("userOrPassInput", function(value, element) {
+		return this.optional(element) || /^[\w\-.@]+$/i.test(value);
+	}, 'Por favor ingrese únicamente letras, números, "-", "_", "." o "@"');
+	
 });

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -115,8 +116,14 @@ public class UserController {
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public @ResponseBody
-	void deleteUser(@RequestParam Integer userId) throws Exception {
-		this.userService.delete(userId);
+	void deleteUser(@RequestParam Integer userId, Authentication authentication) throws Exception {
+		String username = authentication.getPrincipal().toString();
+		User user = this.userService.get(userId);
+		if (user.getName().equals(username)) {
+			throw new RuntimeException("Can't delete logged user");
+		} else {
+			this.userService.delete(userId);
+		}
 	}
 
 	private List<RoleDTO> getSelectedRoles(User user) {
