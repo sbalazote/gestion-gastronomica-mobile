@@ -89,6 +89,12 @@
 				</ul>
 			</sec:authorize>
 		
+			<sec:authorize access="hasRole('ENTITY_ADMINISTRATION')">
+				<li class="activable dropdown">
+					<a href="tableStatus"><spring:message code="common.tables" /></a>
+				</li>
+			</sec:authorize>
+		
 		</ul>
 
 		<strong><a class="logout-button" href="j_spring_security_logout">Salir</a></strong>

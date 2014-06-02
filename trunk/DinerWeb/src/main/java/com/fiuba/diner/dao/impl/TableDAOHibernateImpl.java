@@ -37,9 +37,16 @@ public class TableDAOHibernateImpl implements TableDAO {
 		return tables;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Table> getAllTables() {
+		List<Table> tables = this.sessionFactory.getCurrentSession().createQuery("from Table order by id").list();
+		return tables;
+	}
+
 	@Override
 	public void save(Table table) {
-		this.sessionFactory.getCurrentSession().saveOrUpdate(table);
+		this.sessionFactory.getCurrentSession().merge(table);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,4 +64,11 @@ public class TableDAOHibernateImpl implements TableDAO {
 		tables.removeAll(excludedTables);
 		return tables;
 	}
+
+	@Override
+	public void delete(Integer tableId) {
+		Table table = this.get(tableId);
+		this.sessionFactory.getCurrentSession().delete(table);
+	}
+
 }

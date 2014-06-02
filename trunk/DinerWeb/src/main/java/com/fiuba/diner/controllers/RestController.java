@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fiuba.diner.helper.EncryptionHelper;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Device;
-import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.LoginRequest;
 import com.fiuba.diner.model.LoginResponse;
 import com.fiuba.diner.model.Order;
@@ -27,7 +26,6 @@ import com.fiuba.diner.model.User;
 import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.service.CategoryService;
 import com.fiuba.diner.service.DeviceService;
-import com.fiuba.diner.service.FloorService;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
 import com.fiuba.diner.service.TableService;
@@ -42,8 +40,6 @@ public class RestController {
 	private CategoryService categoryService;
 	@Autowired
 	private TableService tableService;
-	@Autowired
-	private FloorService floorService;
 	@Autowired
 	private WaiterService waiterService;
 	@Autowired
@@ -71,18 +67,6 @@ public class RestController {
 	@ResponseBody
 	public Waiter getWaiter(@PathVariable Integer id) throws IOException {
 		return this.waiterService.get(id);
-	}
-
-	@RequestMapping(value = "/floors", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Floor> getFloors() throws IOException {
-		return this.floorService.getAll();
-	}
-
-	@RequestMapping(value = "/floors/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Floor getFloor(@PathVariable Integer id) throws IOException {
-		return this.floorService.get(id);
 	}
 
 	@RequestMapping(value = "/tables", method = RequestMethod.GET)

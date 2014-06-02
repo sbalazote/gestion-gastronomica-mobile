@@ -31,6 +31,11 @@ public class TableServiceImpl implements TableService {
 	}
 
 	@Override
+	public List<Table> getAllTables() {
+		return this.tableDAO.getAllTables();
+	}
+
+	@Override
 	public void save(Table table) {
 		this.tableDAO.save(table);
 		logger.info("Se han guardado los cambios exitosamente. Id de Mesa: " + table.getId());
@@ -39,5 +44,10 @@ public class TableServiceImpl implements TableService {
 	@Override
 	public List<Table> getAvailableTables() {
 		return this.tableDAO.getAvailableTables();
+	}
+
+	@Override
+	public void delete(Integer tableId) {
+		this.tableDAO.delete(tableId);
 	}
 }

@@ -7,6 +7,7 @@ public class TableDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	private boolean active;
 	private boolean selected;
 
 	public Integer getId() {
@@ -15,6 +16,14 @@ public class TableDTO implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean isActive() {
+		return this.active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public boolean isSelected() {
