@@ -33,6 +33,10 @@
         <put-attribute name="body" value="/WEB-INF/views/administration/addCategory.jsp" />
     </definition>
     
+    <definition name="addTable" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addTable.jsp" />
+    </definition>
+    
     <definition name="entitySaved" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/administration/entitySaved.jsp" />
     </definition>
@@ -43,6 +47,10 @@
     
     <definition name="updateCategory" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/administration/updateCategory.jsp" />
+    </definition>
+
+    <definition name="updateTable" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateTable.jsp" />
     </definition>
     
     <definition name="subcategoryAdministration" extends="base.definition">
@@ -83,6 +91,10 @@
     
    	<definition name="kitchenProductAdministration" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/kitchen/kitchenProductAdministration.jsp" />
+    </definition>
+    
+    <definition name="tableStatus" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/tables/tableStatus.jsp" />
     </definition>
     
     <definition name="barProductAdministration" extends="base.definition">

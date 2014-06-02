@@ -49,17 +49,17 @@
 </div>
 
 <div class="row">
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="priceInput"><spring:message code="common.price"/></label>
 		<input type="text" class="form-control" name="price" id="priceInput">
 	</div>
 	
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="estimatedTimeInput"><spring:message code="common.estimatedTime"/></label>
 		<input type="text" class="form-control" name="estimatedTime" id="estimatedTimeInput">
 	</div>
 
-	<div class="col-md-2 form-group">
+	<div class="col-md-4 form-group">
 		<label for="activeSelect"><spring:message code="common.active"/></label>
 		<select class="form-control" id="activeSelect" name="active">
 			<option value="true">Si</option>

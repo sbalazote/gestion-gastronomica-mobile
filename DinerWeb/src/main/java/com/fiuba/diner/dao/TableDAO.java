@@ -10,7 +10,11 @@ public interface TableDAO {
 
 	List<Table> getAll();
 
+	List<Table> getAllTables();
+
 	void save(Table table);
 
 	List<Table> getAvailableTables();
+
+	void delete(Integer tableId);
 }

@@ -60,9 +60,7 @@ public class TableImageAdapter extends BaseAdapter {
 
 			TextView textView = (TextView) tableView.findViewById(R.id.floorGridTextView);
 
-			System.out.print(position);
 			if (this.isTable(position)) {
-				System.out.println(" is table");
 				Table table = DataHolder.getTables().get(this.getTablePosition(position));
 				if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 					imageView.setImageResource(R.drawable.available_table);
@@ -77,19 +75,14 @@ public class TableImageAdapter extends BaseAdapter {
 					textView.setText(String.valueOf(table.getId()));
 					this.tableIds.add(table.getId());
 				}
-			} else {
-				System.out.println("");
-				imageView.setImageResource(R.drawable.blank_space);
 			}
 
 		} else {
 
 			// Actualizo estados de las mesas (colores)
-			System.out.print("P: " + position);
 			tableView = convertView;
 			ImageView imageView = (ImageView) tableView.findViewById(R.id.floorGridImageView);
 			if (this.isTable(position)) {
-				System.out.println(" is table");
 				Table table = DataHolder.getTables().get(this.getTablePosition(position));
 				if (table != null) {
 					if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
@@ -102,8 +95,6 @@ public class TableImageAdapter extends BaseAdapter {
 						imageView.setImageResource(R.drawable.not_available_table);
 					}
 				}
-			} else {
-				System.out.println("");
 			}
 		}
 

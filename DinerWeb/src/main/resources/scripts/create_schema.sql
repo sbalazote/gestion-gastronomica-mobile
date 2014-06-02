@@ -17,11 +17,9 @@ CREATE TABLE `diner`.`table_state` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`table` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `id` int(8) NOT NULL,
   `state_id` int(8) NOT NULL,
   `waiter_id` int(8) DEFAULT NULL,
-  `length` int(11) NOT NULL,
-  `width` int(11) NOT NULL,
   `active` bit(1) NOT NULL,
   `locked` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
@@ -35,8 +33,12 @@ CREATE TABLE `diner`.`table_union` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `original_table_id` int(11) NOT NULL,
   `attached_table_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `fk_table_union_table1_idx` (`original_table_id`),
+  KEY `fk_table_union_table2_idx` (`attached_table_id`),
+  CONSTRAINT `fk_table_union_table1` FOREIGN KEY (`original_table_id`) REFERENCES `table` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_table_union_table2` FOREIGN KEY (`attached_table_id`) REFERENCES `table` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`category` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
@@ -141,40 +143,6 @@ CREATE TABLE `diner`.`parameter` (
   	`dinner_service_active` BIT NULL,
 	`address` VARCHAR(50) NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `diner`.`floor` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `floor` int(11) NOT NULL,
-  `length` int(11) NOT NULL,
-  `width` int(11) NOT NULL,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `floor_UNIQUE` (`floor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `diner`.`floor_table` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `floor_id` int(11) NOT NULL,
-  `table_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_floor_table_floor_idx` (`floor_id`),
-  KEY `fk_floor_table_table_idx` (`table_id`),
-  CONSTRAINT `fk_floor_table_floor` FOREIGN KEY (`floor_id`) REFERENCES `floor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_floor_table_table` FOREIGN KEY (`table_id`) REFERENCES `table` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `diner`.`table_layout` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `floor_id` int(11) NOT NULL,
-  `row` int(11) NOT NULL,
-  `column` int(11) NOT NULL,
-  `table_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_table_layout_floor_idx` (`floor_id`),
-  KEY `fk_tabke_layout_table_idx` (`table_id`),
-  CONSTRAINT `fk_table_layout_floor` FOREIGN KEY (`floor_id`) REFERENCES `floor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_table_layout_table` FOREIGN KEY (`table_id`) REFERENCES `table` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`device` (
