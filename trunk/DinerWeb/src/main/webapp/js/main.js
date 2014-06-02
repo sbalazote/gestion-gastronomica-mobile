@@ -61,6 +61,10 @@ $(document).ready(function() {
 		return day + "/" + month + "/" + year;
 	};
 	
+	jQuery.validator.addMethod("maxAmount", function(value, element, param) {
+    	return (value.length <= param);
+    }, jQuery.format("Se han ingresado más de diez Rubros-Subrubros."));
+	
 	jQuery.validator.addMethod("monthYearDateOnly", function(value, element) {
 		var check = false;
 		var re = /^\d{1,2}\/\d{4}$/;
