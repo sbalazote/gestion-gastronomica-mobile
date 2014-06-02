@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
+import com.fiuba.diner.helper.Caller;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.helper.SessionManager;
@@ -41,7 +42,7 @@ import com.fiuba.diner.tasks.GetCategoriesTask;
 import com.fiuba.diner.tasks.ObtainOrderTask;
 import com.fiuba.diner.util.Formatter;
 
-public class OrderActivity extends Activity {
+public class OrderActivity extends Activity implements Caller<Integer> {
 
 	public final String LOG_OUT = "event_logout";
 
@@ -134,7 +135,7 @@ public class OrderActivity extends Activity {
 				this.delete(position, view);
 				this.hasChanged = true;
 			} else {
-				this.openDialog(view, "No puede eliminarse el pedido, ya ha ingresado a la cocina.");
+				this.openDialog("No puede eliminarse el pedido, ya ha ingresado a la cocina.");
 			}
 		} else {
 			this.delete(position, view);
@@ -179,7 +180,7 @@ public class OrderActivity extends Activity {
 		this.adapter.notifyDataSetChanged();
 	}
 
-	private void openDialog(final View view, final String message) {
+	private void openDialog(final String message) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
 		alertDialogBuilder.setMessage(message);
 		alertDialogBuilder.setNeutralButton("Aceptar", null);
@@ -204,7 +205,7 @@ public class OrderActivity extends Activity {
 		tables.add(DataHolder.getCurrentTable());
 		this.order.setTables(tables);
 
-		new ConfirmOrderTask(null).execute(this.order);
+		new ConfirmOrderTask(this).execute(this.order);
 
 		DataHolder.getCurrentTable().setLocked(false);
 		new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
@@ -213,19 +214,17 @@ public class OrderActivity extends Activity {
 		 * Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
 		 * UpdateDeviceTask(null).execute(device);
 		 */
-
-		this.finish();
 	}
 
 	public void closeOrder(View view) throws Throwable {
 		if (this.order.getDetails() == null || this.order.getDetails().isEmpty()) {
-			this.openDialog(view, "La mesa no tiene ningún pedido ingresado.");
+			this.openDialog("La mesa no tiene ningún pedido ingresado.");
 			return;
 		}
 
 		for (OrderDetail orderDetail : this.order.getDetails()) {
 			if (!orderDetail.getState().getId().equals(OrderDetailStateHelper.DELIVERED.getState().getId())) {
-				this.openDialog(view, "Existen pedidos que no han sido entregados.");
+				this.openDialog("Existen pedidos que no han sido entregados.");
 				return;
 			}
 		}
@@ -389,6 +388,16 @@ public class OrderActivity extends Activity {
 		Intent intent = new Intent(this.LOG_OUT);
 		// send the broadcast to all activities who are listening
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+	}
+
+	@Override
+	public void afterCall(Integer result) {
+		if (result > 0) {
+			this.finish();
+		} else {
+			this.openDialog("Acceso no autorizado");
+			this.logout();
+		}
 	}
 
 }
