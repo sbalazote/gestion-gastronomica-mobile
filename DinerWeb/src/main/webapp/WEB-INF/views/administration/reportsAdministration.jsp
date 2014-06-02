@@ -78,7 +78,6 @@
 				</div>
 					
 				<div class="tab-pane fade" id="productRanking">
-					<div class="tab-pane fade in active" id="productRanking">
 						<form id="productRankingReportForm" action="" onsubmit="return false;">
 							<div class="row">
 								<div class="col-md-4 form-group">
@@ -147,10 +146,23 @@
 								</tbody>
 							</table>
 						</div>
-						<div id="productRankingHighchartDiv" style="width:100%; height:400px;"></div>
+						<div id="chartTabs" class="tabs">
+							<ul id="productRankingTab" class="nav nav-tabs">
+								<li class="active"><a href="#productRankingChart" data-toggle="tab"><spring:message code="administration.reports.productRankingChart"/></a></li>
+								<li><a href="#productRankingParetoChart" data-toggle="tab"><spring:message code="administration.reports.productRankingParetoChart"/></a></li>
+							</ul>
+							<br>
+							<div id="myTabContent2" class="tab-content">
+								<div class="tab-pane fade in active" id="productRankingChart">
+									<div id="productRankingChartDiv" style="width:100%; height:400px;"></div>
+								</div>
+								<div class="tab-pane fade" id="productRankingParetoChart">
+									<div id="productRankingParetoChartDiv" style="width:100%; height:400px;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
 </div>

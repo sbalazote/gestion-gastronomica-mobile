@@ -1,5 +1,20 @@
 ProductRankingReport = function() {
 	
+//	function keysbyValue(O){
+//	    var A= [];
+//	    for(var p in O){
+//	        if(O.hasOwnProperty(p)) A.push([p, O[p]]);
+//	    }
+//	    A.sort(function(a, b){
+//	        var a1= a[1], b1= b[1];
+//	        return a1-b1;
+//	    });
+//	    for(var i= 0, L= A.length; i<L; i++){
+//	        A[i]= A[i][0];
+//	    }
+//	    return A;
+//	}
+	
 	$('#categoriesSubcategoriesSelect').multiSelect();
 	
 	var daysToAdd = 365;
@@ -56,7 +71,8 @@ ProductRankingReport = function() {
 				},
 				categoriesSubcategories: {
 					emptyCategoriesSubcategories: true,
-					categoriesRepeated: true
+					categoriesRepeated: true,
+					maxAmount: 10
 				}
 			},
 			ignore: ':hidden:not("#categoriesSubcategoriesSelect")',
@@ -89,6 +105,7 @@ ProductRankingReport = function() {
 					var aaData = [];
 					var xAxis = [];
 					var yAxis = [];
+					var paretoMap = [];
 					for (var i = 0, l = response.length; i < l; ++i) {
 						var productRankingResult = [];
 						productRankingResult.push(response[i].category);
@@ -97,6 +114,12 @@ ProductRankingReport = function() {
 						xAxis.push(response[i].productDescription);
 						productRankingResult.push(response[i].numberOfTimesServed);
 						yAxis.push(response[i].numberOfTimesServed);
+						
+						//	Ordenar en forma DESCENDENTE (los primeros 10) y utilizarlo en el grafico Pareto.
+						paretoMap[response[i].productDescription] = response[i].numberOfTimesServed;
+						
+						//var a = keysbyValue(paretoMap);
+						
 						aaData.push(productRankingResult);
 					}
 					var oTable = $('#productRankingTable').dataTable({
@@ -112,9 +135,9 @@ ProductRankingReport = function() {
 						"sSwfPath": "swf/copy_csv_xls.swf"
 					    });
 					      
-					$( tableTools.fnContainer() ).insertAfter('#productRankingHighchartDiv');
+					$( tableTools.fnContainer() ).insertAfter('#chartTabs');
 					
-					$('#productRankingHighchartDiv').highcharts({
+					$('#productRankingChartDiv').highcharts({
 			            chart: {
 			                type: 'column'
 			            },
@@ -150,6 +173,90 @@ ProductRankingReport = function() {
 			    
 			            }]
 			        });
+					//	Grafico Pareto
+					var chart;
+					chart = new Highcharts.Chart({
+				        chart: {
+				            renderTo: 'productRankingParetoChartDiv'
+				        },
+				        credits: {
+				            enabled: false
+				        },
+				        legend: {
+				            layout: 'horizontal',
+				            verticalAlign: 'bottom'
+				        },
+				        title: {
+				            text: ''
+				        },
+				        tooltip: {
+				            formatter: function () {
+				                if (this.series.name == 'Acumulado') {
+				                    return this.y + '%';
+				                }
+				                return this.x + '<br/>' + '<b> ' + this.y.toString().replace('.', ',') + ' </b>';
+				            }
+				        },
+				        xAxis: {
+				        	// Aca va la descripcion de paretoMap
+				            categories: ['E', 'D', 'B', 'A']
+				        },
+				        yAxis: [{
+				            title: {
+				                text: ''
+				            }
+				        }, {
+				            labels: {
+				                formatter: function () {
+				                    return this.value + '%';
+				                }
+				            },
+				            max: 100,
+				            min: 0,
+				            opposite: true,
+				            plotLines: [{
+				                color: '#89A54E',
+				                dashStyle: 'shortdash',
+				                value: 80,
+				                width: 3,
+				                zIndex: 10
+				            }],
+				            title: {
+				                text: ''
+				            }
+				        }],
+				        series: [{
+				        	// Aca va los valores en de paretoMap en forma descendente
+				            data: [5.6000000000, 5.1000000000, 2.8000000000, 1.3000000000],
+				            name: 'Veces Servido',
+				            type: 'column'
+				        }, {
+				        	// Aca va el acumulado de paretoMap
+				            data: [38, 72, 91, 100],
+				            name: 'Acumulado',
+				            type: 'spline',
+				            yAxis: 1,
+				            id: 'acumulado'
+				        }]
+				    },function(chart){
+				    
+				        
+				        var x = 0.8 * chart.plotWidth;
+				        
+				        chart.renderer.path([
+				                 'M',
+				                 x, chart.plotTop,
+				                 'L',
+				                 x, chart.plotTop + chart.plotHeight
+				            ]).attr({
+				                'stroke-width': 2,
+				                stroke: 'red',
+				                id: 'vert',
+				               'stroke-dasharray':"5,5",
+				                zIndex: 2000
+				            }).add();
+				        
+				    });
 				}
 			});
 		}
