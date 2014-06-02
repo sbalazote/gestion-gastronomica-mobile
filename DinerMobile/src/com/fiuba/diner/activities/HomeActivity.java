@@ -85,7 +85,7 @@ public class HomeActivity extends Activity implements Caller<Void> {
 	// }
 
 	public void showTables(View view) {
-		Intent intent = new Intent(this, FloorListActivity.class);
+		Intent intent = new Intent(this, FloorActivity.class);
 		this.startActivity(intent);
 	}
 

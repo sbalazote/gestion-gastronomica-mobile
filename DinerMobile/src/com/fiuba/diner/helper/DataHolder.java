@@ -3,22 +3,17 @@ package com.fiuba.diner.helper;
 import java.util.List;
 
 import com.fiuba.diner.model.Category;
-import com.fiuba.diner.model.Floor;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.model.TableLayout;
 import com.fiuba.diner.model.Waiter;
 
 public class DataHolder {
 
 	private static List<Category> categories;
 	private static List<Table> tables;
-	private static List<Floor> floors;
 	private static Order currentOrder;
 	private static Table currentTable;
-	private static Floor currentFloor;
-	private static TableLayout[] currentTableLayout;
 	private static Waiter currentWaiter;
 	private static Parameter parameter;
 
@@ -38,14 +33,6 @@ public class DataHolder {
 		DataHolder.tables = tables;
 	}
 
-	public static List<Floor> getFloors() {
-		return floors;
-	}
-
-	public static void setFloors(List<Floor> floors) {
-		DataHolder.floors = floors;
-	}
-
 	public static Order getCurrentOrder() {
 		return currentOrder;
 	}
@@ -60,22 +47,6 @@ public class DataHolder {
 
 	public static void setCurrentTable(Table currentTable) {
 		DataHolder.currentTable = currentTable;
-	}
-
-	public static Floor getCurrentFloor() {
-		return currentFloor;
-	}
-
-	public static void setCurrentFloor(Floor currentFloor) {
-		DataHolder.currentFloor = currentFloor;
-	}
-
-	public static TableLayout[] getCurrentTableLayout() {
-		return currentTableLayout;
-	}
-
-	public static void setCurrentTableLayout(TableLayout[] currentTableLayout) {
-		DataHolder.currentTableLayout = currentTableLayout;
 	}
 
 	public static Waiter getCurrentWaiter() {

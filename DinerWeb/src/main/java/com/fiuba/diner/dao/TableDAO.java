@@ -12,5 +12,5 @@ public interface TableDAO {
 
 	void save(Table table);
 
-	List<Table> getTablesWithClosedOrder();
+	List<Table> getAvailableTables();
 }

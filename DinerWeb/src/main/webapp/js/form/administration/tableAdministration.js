@@ -8,7 +8,23 @@ function loadTables (){
 			for (var i = 0, l = response.length; i < l; ++i) {
 				var table = [];
 				table.push(response[i].id);
-				table.push(response[i].state.description);
+				
+				var attachedTables = "";
+				for (var j = 0, m = response[i].attachedTables.length; j < m; ++j) {
+					attachedTables += response[i].attachedTables[j].id;
+					if (j < (m-1)) {
+						attachedTables += ", ";
+					}
+				}
+				table.push(attachedTables);
+				
+				if (response[i].state.id == 1) {
+					table.push("<strong><span style='color:green'>" + response[i].state.description + "</span></strong>");
+				} else if (response[i].state.id == 2) {
+					table.push("<strong><span style='color:blue'>" + response[i].state.description + "</span></strong>");
+				} else {
+					table.push("<strong><span style='color:orange'>" + response[i].state.description + "</span></strong>");
+				}
 				
 				if(response[i].waiter != null){
 					table.push(response[i].waiter.surname + ", " + response[i].waiter.name);
@@ -16,10 +32,16 @@ function loadTables (){
 					table.push("");
 				}
 				
-				if(response[i].state.id == 3){
+				if (response[i].state.id == 3) {
 					table.push("<a href='javascript:void(0);' class='print-row'>Comprobante</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
 						"<a href='javascript:void(0);' class='payment-row'>Medio de Pago</span></a>");
-				}else{
+				} else if(response[i].state.id == 1) {
+					if (attachedTables) {
+						table.push("<a href='javascript:void(0);' class='split-tables'>Separar</a>");
+					} else {
+						table.push("<a href='javascript:void(0);' class='join-tables'>Adjuntar</a>");
+					}
+				} else {
 					table.push(" ");
 				}
 				aaData.push(table);
@@ -27,6 +49,7 @@ function loadTables (){
 			}
 			$('.tableDatatable').dataTable({
 				"aaData": aaData,
+				"iDisplayLength": 50,
 				"bDestroy": true
 			});
 		},
@@ -228,6 +251,76 @@ TableAdministration = function() {
 			},
 			success: function(response) {
 				window.location = "entitySaved";
+			}
+		});
+	});
+	
+	$('#divTable').on("click", ".join-tables", function() {
+		var parent = $(this).parent().parent();
+		tableId = parent.find("td:first-child").html();
+		
+		$("#my-select").html("");
+		
+		$.ajax({
+			url: "getAttachedTables",
+			data: {
+				tableId: tableId,
+			},
+			type: "GET",
+			async: false,
+			success: function(response) {
+				for (var i = 0, l = response.length; i < l; ++i) {
+					var id = response[i].id;
+					var selected = response[i].selected;
+					if (selected == 'true') {
+						$("#my-select").append("<option value="+id+" selected>"+id+"</option>)");
+					} else {
+						$("#my-select").append("<option value="+id+">"+id+"</option>)");
+					}
+				}
+				$("#my-select").multiSelect('refresh');
+			},
+			error: function(response) {
+			}
+		});
+		$('#tableAttachmentModal').modal('show');
+	});
+	
+	$("#confirmTableAttachmentButton").click(function() {
+		var jsonUser = {
+			"tableId": tableId,
+			"attachedTables": $("#my-select").val() || new Array()
+		};
+
+		$.ajax({
+			url: "saveAttachedTables",
+			type: "POST",
+			contentType:"application/json",
+			data: JSON.stringify(jsonUser),
+			async: true,
+			success: function(response) {
+			}
+		});
+	});
+	
+	$('#divTable').on("click", ".split-tables", function() {
+		var me = $(this);
+		var parent = $(this).parent().parent();
+		tableId = parent.find("td:first-child").html();
+		
+		$("#my-select").html("");
+		
+		$.ajax({
+			url: "splitAttachedTables",
+			data: {
+				tableId: tableId,
+			},
+			type: "POST",
+			async: false,
+			success: function(response) {
+				me.hide();
+			},
+			error: function(response) {
 			}
 		});
 	});

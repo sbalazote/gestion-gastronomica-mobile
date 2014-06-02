@@ -1,13 +1,15 @@
 package com.fiuba.diner.dao.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.fiuba.diner.dao.TableDAO;
+import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
 
 @Repository
@@ -24,7 +26,15 @@ public class TableDAOHibernateImpl implements TableDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Table> getAll() {
-		return this.sessionFactory.getCurrentSession().createQuery("from Table where active = true order by id").list();
+		List<Table> tables = this.sessionFactory.getCurrentSession().createQuery("from Table where active = true order by id").list();
+		Set<Table> excludedTables = new HashSet<Table>();
+		for (Table table : tables) {
+			if (table.getAttachedTables() != null) {
+				excludedTables.addAll(table.getAttachedTables());
+			}
+		}
+		tables.removeAll(excludedTables);
+		return tables;
 	}
 
 	@Override
@@ -34,10 +44,17 @@ public class TableDAOHibernateImpl implements TableDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Table> getTablesWithClosedOrder() {
-		String sentence = "select t from Order as o inner join o.tables as t where o.state.id = 2";
-		Query query;
-		query = this.sessionFactory.getCurrentSession().createQuery(sentence);
-		return query.list();
+	public List<Table> getAvailableTables() {
+		List<Table> tables = this.sessionFactory.getCurrentSession()
+				.createQuery("from Table where active = true and state.id = " + TableStateHelper.AVAILABLE.getState().getId() + " order by id").list();
+		Set<Table> excludedTables = new HashSet<Table>();
+		for (Table table : tables) {
+			if (table.getAttachedTables() != null && !table.getAttachedTables().isEmpty()) {
+				excludedTables.addAll(table.getAttachedTables());
+				excludedTables.add(table);
+			}
+		}
+		tables.removeAll(excludedTables);
+		return tables;
 	}
 }

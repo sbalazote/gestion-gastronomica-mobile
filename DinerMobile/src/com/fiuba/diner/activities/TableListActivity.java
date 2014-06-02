@@ -89,7 +89,7 @@ public class TableListActivity extends Activity {
 					this.showConfirmationDialog(view, table);
 
 				} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
-					this.showDialog(view, table, "La mesa no está disponible");
+					this.showDialog(view, table, "La mesa está deshabilitada hasta que se procese el pago.");
 
 					// Si ya esta abierta y es mia, sigo
 				} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {

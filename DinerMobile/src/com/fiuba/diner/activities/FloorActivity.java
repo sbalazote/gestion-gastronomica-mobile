@@ -1,5 +1,7 @@
 package com.fiuba.diner.activities;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -23,7 +25,7 @@ import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.helper.TableStateHelper;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.model.TableLayout;
+import com.fiuba.diner.tasks.GetTablesTask;
 
 public class FloorActivity extends Activity {
 
@@ -37,12 +39,29 @@ public class FloorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.session = new SessionManager(this.getApplicationContext());
 		this.setTitle("Mozo: " + this.session.getUserDetails().get("name"));
-		this.setContentView(R.layout.floor);
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
+	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		// Obtengo las mesas
+		GetTablesTask getTablesTask = new GetTablesTask(null);
+		try {
+			getTablesTask.execute().get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		this.setContentView(R.layout.floor);
+		this.populateFloor();
+	}
+
+	private void populateFloor() {
 		GridView gridview = (GridView) this.findViewById(R.id.floorGridView);
-		gridview.setNumColumns(DataHolder.getCurrentFloor().getWidth());
+		gridview.setNumColumns(9);
 
 		this.adapter = new TableImageAdapter(this);
 		gridview.setAdapter(this.adapter);
@@ -51,16 +70,15 @@ public class FloorActivity extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				TableLayout tableLayout = DataHolder.getCurrentTableLayout()[position];
-				if (tableLayout != null) {
-					Table table = tableLayout.getTable();
+				if (this.isTable(position)) {
+					Table table = DataHolder.getTables().get(this.getTablePosition(position));
 					DataHolder.setCurrentTable(table);
 
 					if (TableStateHelper.AVAILABLE.getState().getId().equals(table.getState().getId())) {
 						this.openDialog(view, table);
 
 					} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
-						this.notAvailableDialog(view, table);
+						this.closedDialog(view, table);
 
 					} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
 						Intent intent = new Intent(FloorActivity.this, OrderActivity.class);
@@ -74,6 +92,27 @@ public class FloorActivity extends Activity {
 						}
 					}
 				}
+			}
+
+			private Boolean isTable(Integer position) {
+				Integer row = position / 9;
+				Integer column = position % 9;
+
+				Boolean isRow = (row - 1) % 3 == 0;
+				Boolean isColumn = (column - 1) % 3 == 0;
+
+				Integer tablePosition = this.getTablePosition(position);
+				return position > 0 && isRow && isColumn && tablePosition < DataHolder.getTables().size();
+			}
+
+			private Integer getTablePosition(Integer position) {
+				Integer row = position / 9;
+				Integer column = position % 9;
+
+				Integer rowCount = row / 3;
+				Integer columnCount = column / 3;
+
+				return 3 * rowCount + columnCount;
 			}
 
 			private void openDialog(final View view, final Table table) {
@@ -102,6 +141,19 @@ public class FloorActivity extends Activity {
 			private void notAvailableDialog(final View view, final Table table) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
 				alertDialogBuilder.setMessage("La mesa no está disponible");
+				alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+
+			private void closedDialog(final View view, final Table table) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FloorActivity.this);
+				alertDialogBuilder.setMessage("La mesa está deshabilitada hasta que se procese el pago.");
 				alertDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 
 					@Override

@@ -1,6 +1,7 @@
 package com.fiuba.diner.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Table implements Serializable {
 
@@ -11,6 +12,7 @@ public class Table implements Serializable {
 	private Waiter waiter;
 	private Boolean active;
 	private Boolean locked;
+	private List<Table> attachedTables;
 
 	public Integer getId() {
 		return this.id;
@@ -62,6 +64,14 @@ public class Table implements Serializable {
 
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
+	}
+
+	public List<Table> getAttachedTables() {
+		return this.attachedTables;
+	}
+
+	public void setAttachedTables(List<Table> attachedTables) {
+		this.attachedTables = attachedTables;
 	}
 
 }
