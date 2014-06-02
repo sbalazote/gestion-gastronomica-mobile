@@ -8,12 +8,18 @@ SaveUser = function() {
 			rules: {
 				name: {
 					required: true,
+					userOrPassInput: true
 				},
 				password: {
-					required: true, minlength: 5
+					required: true, 
+					minlength: 5,
+					userOrPassInput: true
 				},
 				passwordCheck: { 
-	                required: true, equalTo: "#passwordInput", minlength: 5
+	                required: true, 
+	                equalTo: "#passwordInput", 
+	                minlength: 5,
+	                userOrPassInput: true
 		        },
 				active: {
 					required: true
@@ -22,7 +28,17 @@ SaveUser = function() {
 			showErrors: myShowErrors,
 			onsubmit: false
 		});
-		return form.valid();
+		
+		if (form.valid()) {
+			if ($("#my-select").val()) {
+				return true;
+			} else {
+				$('#addRoleMessageModal').modal('show');
+				return false;
+			}
+		} else {
+			return false;
+		};
 	};
 	
 	var existsUser = function() {
