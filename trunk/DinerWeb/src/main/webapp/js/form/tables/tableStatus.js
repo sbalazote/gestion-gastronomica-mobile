@@ -56,6 +56,7 @@ function loadTables (){
 		error: function(response) {
 		}
 	});
+	
 }
 
 
@@ -67,6 +68,13 @@ TableStatus = function() {
 	var change = null;
 	var servicePrice = 0;
 	var servicePriceActive = false;
+	
+	var url = $.url(document.location);
+	var hasBeenChanged = url.param("change");
+	
+	if(hasBeenChanged == "true"){
+		$('#successMessageDiv').show();
+	}
 	
 	loadTables();
 	window.setInterval(loadTables, 5000);
@@ -250,7 +258,7 @@ TableStatus = function() {
 				change: change,
 			},
 			success: function(response) {
-				window.location = "entitySaved";
+				window.location = "tableStatus?change=true";
 			}
 		});
 	});
@@ -301,6 +309,7 @@ TableStatus = function() {
 			success: function(response) {
 			}
 		});
+		$('#successMessageDiv').show();
 	});
 	
 	$('#divTable').on("click", ".split-tables", function() {
@@ -323,6 +332,7 @@ TableStatus = function() {
 			error: function(response) {
 			}
 		});
+		$('#successMessageDiv').show();
 	});
 	
 }
