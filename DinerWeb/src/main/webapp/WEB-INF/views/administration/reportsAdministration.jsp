@@ -62,6 +62,7 @@
 							</div>
 						</div>
 					</form>
+					<br><br>
 					<div id="salesTableDiv">
 						<table class="table table-striped tableDatatable my-datatable" id="salesTable">
 							<thead>
@@ -74,6 +75,7 @@
 							</tbody>
 						</table>
 					</div>
+					<br><br>
 					<div id="salesHighchartDiv" style="width:100%; height:400px;"></div>
 				</div>
 					
@@ -132,6 +134,7 @@
 							</div>
 						</div>
 						</form>
+						<br><br>
 						<div id=productRankingTableDiv>
 							<table class="table table-striped reassignTablesdatatable my-datatable" id="productRankingTable">
 								<thead>
@@ -146,17 +149,20 @@
 								</tbody>
 							</table>
 						</div>
+						<br><br>
 						<div id="chartTabs" class="tabs">
 							<ul id="productRankingTab" class="nav nav-tabs">
-								<li class="active"><a href="#productRankingChart" data-toggle="tab"><spring:message code="administration.reports.productRankingChart"/></a></li>
-								<li><a href="#productRankingParetoChart" data-toggle="tab"><spring:message code="administration.reports.productRankingParetoChart"/></a></li>
+								<!-- <li ><a href="#productRankingChart" data-toggle="tab"><spring:message code="administration.reports.productRankingChart"/></a></li> -->
+								<li class="active"><a href="#productRankingParetoChart" data-toggle="tab"><spring:message code="administration.reports.productRankingParetoChart"/></a></li>
 							</ul>
 							<br>
 							<div id="myTabContent2" class="tab-content">
+							<!-- 
 								<div class="tab-pane fade in active" id="productRankingChart">
 									<div id="productRankingChartDiv" style="width:100%; height:400px;"></div>
 								</div>
-								<div class="tab-pane fade" id="productRankingParetoChart">
+							 -->
+								<div class="tab-pane fade in active" id="productRankingParetoChart">
 									<div id="productRankingParetoChartDiv" style="width:100%; height:400px;"></div>
 								</div>
 							</div>

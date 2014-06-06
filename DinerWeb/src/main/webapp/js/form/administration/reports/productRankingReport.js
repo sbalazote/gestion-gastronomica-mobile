@@ -110,7 +110,7 @@ ProductRankingReport = function() {
 					var paretoAcum = [];
 					var acumTotal = 0;
 					var total = 0;
-					for (var i = 0, l = response.length; i < l; ++i) {
+					for (var i = 0, l = response.length; i < l && i < 10; ++i) {
 						var productRankingResult = [];
 						productRankingResult.push(response[i].category);
 						productRankingResult.push(response[i].subcategory);
