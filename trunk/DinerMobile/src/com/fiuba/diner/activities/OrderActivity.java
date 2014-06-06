@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dm.zbar.android.scanner.ZBarScannerActivity;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
 import com.fiuba.diner.helper.Caller;
@@ -214,6 +215,11 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		 * Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
 		 * UpdateDeviceTask(null).execute(device);
 		 */
+	}
+
+	public void readQR(View view) throws Throwable {
+		Intent intent = new Intent(this, ZBarScannerActivity.class);
+		this.startActivityForResult(intent, com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST);
 	}
 
 	public void closeOrder(View view) throws Throwable {
