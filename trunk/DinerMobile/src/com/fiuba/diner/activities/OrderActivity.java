@@ -392,7 +392,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	@Override
 	public void afterCall(Integer result) {
-		if (result > 0) {
+		if (result != null && result > 0) {
 			this.finish();
 		} else {
 			this.openDialog("Acceso no autorizado");
