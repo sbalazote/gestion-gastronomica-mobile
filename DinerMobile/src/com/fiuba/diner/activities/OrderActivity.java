@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dm.zbar.android.scanner.ZBarConstants;
 import com.dm.zbar.android.scanner.ZBarScannerActivity;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
@@ -258,16 +261,32 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1 && resultCode == RESULT_OK) {
-			Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
-			OrderDetail orderDetail = new OrderDetail();
-			orderDetail.setProduct(selectedProduct);
-			orderDetail.setState(OrderDetailStateHelper.NEW.getState());
-			orderDetail.setAmount(1);
-			this.order.getDetails().add(orderDetail);
-			this.adapter.notifyDataSetChanged();
-			this.updateTotal();
-			this.hasChanged = true;
+		switch (requestCode) {
+		case com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST:
+		case com.fiuba.diner.constant.Constants.ZBAR_QR_SCANNER_REQUEST:
+			if (resultCode == RESULT_OK) {
+				Toast.makeText(this, "Scan Result = " + data.getStringExtra(ZBarConstants.SCAN_RESULT), Toast.LENGTH_SHORT).show();
+			} else if (resultCode == RESULT_CANCELED && data != null) {
+				String error = data.getStringExtra(ZBarConstants.ERROR_INFO);
+				if (!TextUtils.isEmpty(error)) {
+					Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+				}
+			}
+			break;
+
+		case 1:
+			if (resultCode == RESULT_OK) {
+				Product selectedProduct = (Product) data.getSerializableExtra(ProductListActivity.EXTRA_PRODUCT);
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setProduct(selectedProduct);
+				orderDetail.setState(OrderDetailStateHelper.NEW.getState());
+				orderDetail.setAmount(1);
+				this.order.getDetails().add(orderDetail);
+				this.adapter.notifyDataSetChanged();
+				this.updateTotal();
+				this.hasChanged = true;
+			}
+			break;
 		}
 	}
 
