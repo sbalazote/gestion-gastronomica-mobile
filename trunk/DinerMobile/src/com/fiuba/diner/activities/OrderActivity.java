@@ -398,11 +398,11 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	@Override
 	public void afterCall(Integer result) {
-		if (result != null && result > 0) {
-			this.finish();
-		} else {
+		if (result != null && result == 0) {
 			this.openDialog("Acceso no autorizado");
 			this.logout();
+		} else {
+			this.finish();
 		}
 	}
 
