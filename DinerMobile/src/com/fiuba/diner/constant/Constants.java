@@ -19,4 +19,6 @@ public class Constants {
 
 	public static final String MAC = "00B0D086BBF7";
 
+	public static final int ZBAR_SCANNER_REQUEST = 0;
+	public static final int ZBAR_QR_SCANNER_REQUEST = 1;
 }
