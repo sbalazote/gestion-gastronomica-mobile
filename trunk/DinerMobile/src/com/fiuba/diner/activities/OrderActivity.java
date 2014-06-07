@@ -22,6 +22,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,6 +65,9 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		this.setContentView(R.layout.activity_order);
 		// Register mMessageReceiver to receive messages.
 		LocalBroadcastManager.getInstance(this).registerReceiver(this.mMessageReceiver, new IntentFilter(this.LOG_OUT));
+
+		LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
+		couponLayout.setVisibility(LinearLayout.GONE);
 
 		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
 		tableTextView.setText("Mesa: " + DataHolder.getCurrentTable().getId());
@@ -266,6 +270,9 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		case com.fiuba.diner.constant.Constants.ZBAR_QR_SCANNER_REQUEST:
 			if (resultCode == RESULT_OK) {
 				Toast.makeText(this, "Scan Result = " + data.getStringExtra(ZBarConstants.SCAN_RESULT), Toast.LENGTH_SHORT).show();
+				LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
+				couponLayout.setVisibility(LinearLayout.VISIBLE);
+
 			} else if (resultCode == RESULT_CANCELED && data != null) {
 				String error = data.getStringExtra(ZBarConstants.ERROR_INFO);
 				if (!TextUtils.isEmpty(error)) {
