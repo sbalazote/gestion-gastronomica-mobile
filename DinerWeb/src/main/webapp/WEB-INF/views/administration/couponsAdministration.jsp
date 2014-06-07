@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript"
+	src="js/printThis.js"></script>
+<script type="text/javascript"
 	src="js/form/administration/couponsAdministration.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
