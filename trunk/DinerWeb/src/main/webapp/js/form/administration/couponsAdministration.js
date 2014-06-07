@@ -64,7 +64,9 @@ CouponsAdministration = function() {
 	
 	$("#printQRCodeImageButton").click(function() {
 		if (QRgenerated) {
-			//	TODO printear el <img> recien generado.
+			$("#QRCodeImage").printThis({
+				pageTitle : "QR Code Image",
+			});
 		}
 	});
 	
