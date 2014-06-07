@@ -1,5 +1,9 @@
 package com.fiuba.diner.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,14 +23,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.dto.CategorySubcategoryDTO;
+import com.fiuba.diner.dto.CouponDTO;
 import com.fiuba.diner.dto.ProductRankingReportDTO;
 import com.fiuba.diner.dto.ProductRankingReportFiltersDTO;
 import com.fiuba.diner.dto.SalesReportDTO;
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Coupon;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Subcategory;
+import com.fiuba.diner.qr.QRCodeGenerator;
 import com.fiuba.diner.service.CategoryService;
+import com.fiuba.diner.service.CouponService;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ProductService;
 import com.fiuba.diner.service.SubcategoryService;
@@ -44,6 +53,9 @@ public class AdministrationController {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private CouponService couponService;
 
 	@RequestMapping(value = "/categoryAdministration", method = RequestMethod.GET)
 	public String categoryAdministration(ModelMap modelMap) throws Exception {
@@ -98,6 +110,59 @@ public class AdministrationController {
 		}
 		modelMap.put("categoriesSubcategories", lista);
 		return "reportsAdministration";
+	}
+
+	@RequestMapping(value = "/couponsAdministration", method = RequestMethod.GET)
+	public String couponsAdministration(ModelMap modelMap) throws Exception {
+		return "couponsAdministration";
+	}
+
+	@RequestMapping(value = "/generateCoupon", method = RequestMethod.POST)
+	public @ResponseBody
+	void generateCoupon(@RequestBody CouponDTO couponDTO) throws Exception {
+		String qrCodeText = couponDTO.getDescription() + ";" + couponDTO.getPercentage() + ";" + couponDTO.getExpirationDate();
+		String filePath = "C:/coupons/" + couponDTO.getDescription() + ".png";
+		int size = 125;
+		String fileType = "png";
+		File qrFile = new File(filePath);
+		QRCodeGenerator.createQRImage(qrFile, qrCodeText, size, fileType);
+	}
+
+	@RequestMapping(value = "/saveCoupon", method = RequestMethod.POST)
+	public @ResponseBody
+	void saveCoupon(@RequestBody CouponDTO couponDTO) throws Exception {
+		Coupon coupon = this.buildCoupon(couponDTO);
+		this.couponService.save(coupon);
+	}
+
+	@RequestMapping(value = "/retrieveCouponImage", method = RequestMethod.POST)
+	public @ResponseBody
+	String retrieveCouponImage(@RequestParam String description) throws Exception {
+		File file = new File("C:/coupons/" + description + ".png");
+		FileInputStream imageInFile = new FileInputStream(file);
+		byte imageData[] = new byte[(int) file.length()];
+		imageInFile.read(imageData);
+
+		// Converting Image byte array into Base64 String
+		String imageDataString = Base64.encodeBase64String(imageData);
+
+		imageInFile.close();
+
+		return imageDataString;
+	}
+
+	private Coupon buildCoupon(CouponDTO couponDTO) {
+		Coupon coupon = new Coupon();
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		coupon.setDescription(couponDTO.getDescription());
+		coupon.setPercentage(couponDTO.getPercentage());
+		try {
+			coupon.setExpirationDate(dateFormatter.parse(couponDTO.getExpirationDate()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return coupon;
 	}
 
 	@RequestMapping(value = "/getBilledOrdersBetweenDates", method = RequestMethod.POST)
