@@ -75,8 +75,8 @@
 	        android:gravity="center_vertical"
 	        android:paddingLeft="4dp"
 	        android:text="@string/dinnerServiceTotal"
-	        android:background="#989898"
-	        android:textColor="#FFFFFF"
+	        android:background="#FA7896"
+	        android:textColor="#000000"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	    <TextView
@@ -86,8 +86,8 @@
 	        android:layout_weight="3"
 	        android:gravity="center_vertical|right"
 	        android:paddingRight="4dp"
-	        android:background="#989898"
-	        android:textColor="#FFFFFF"
+	        android:background="#FA7896"
+	        android:textColor="#000000"
 	        android:text="$0.00"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    
@@ -107,8 +107,8 @@
 	        android:gravity="center_vertical"
 	        android:paddingLeft="4dp"
 	        android:text="@string/subtotal"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
+	        android:background="#78ACFA"
+	        android:textColor="#000000"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	    <TextView
@@ -118,8 +118,8 @@
 	        android:layout_weight="3"
 	        android:gravity="center_vertical|right"
 	        android:paddingRight="4dp"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
+	        android:background="#78ACFA"
+	        android:textColor="#000000"
 	        android:text="$0.00"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    
@@ -139,8 +139,8 @@
 	        android:gravity="center_vertical"
 	        android:paddingLeft="4dp"
 	        android:text="@string/coupon"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
+	        android:background="#78FAA1"
+	        android:textColor="#000000"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	    <TextView
@@ -150,8 +150,8 @@
 	        android:layout_weight="3"
 	        android:gravity="center_vertical|right"
 	        android:paddingRight="4dp"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
+	        android:background="#78FAA1"
+	        android:textColor="#000000"
 	        android:text="$0.00"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    
@@ -171,8 +171,8 @@
 	        android:gravity="center_vertical"
 	        android:paddingLeft="4dp"
 	        android:text="@string/total"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
+	        android:background="#78ACFA"
+	        android:textColor="#000000"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	    <TextView
@@ -182,8 +182,8 @@
 	        android:layout_weight="3"
 	        android:gravity="center_vertical|right"
 	        android:paddingRight="4dp"
-	        android:background="#7F7F7F"
-	        android:textColor="#FFFFFF"
+	        android:background="#78ACFA"
+	        android:textColor="#000000"
 	        android:text="$0.00"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    
@@ -198,7 +198,7 @@
 
 		<Button
 		    android:id="@+id/qrCamera"
-	        android:layout_width="0dp"
+	        android:layout_width="wrap_content"
 	        android:layout_weight="1"
 	        android:layout_height="wrap_content"
 	      	android:onClick="readQR"
@@ -206,7 +206,7 @@
 	    
 	    <Button
 	        android:id="@+id/closeOrderButton"
-	        android:layout_width="0dp"
+	        android:layout_width="wrap_content"
 	        android:layout_weight="1"
 	        android:layout_height="wrap_content"
 	        android:onClick="closeOrder"
@@ -214,7 +214,7 @@
 	    
 	    <Button
 	        android:id="@+id/confirmOrderButton"
-	        android:layout_width="0dp"
+	        android:layout_width="wrap_content"
 	        android:layout_weight="1"
 	        android:layout_height="wrap_content"
 	        android:onClick="confirmOrder"
