@@ -66,15 +66,8 @@
 	    android:id="@+id/dinnerServiceLayout"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/couponLayout"
+	    android:layout_above="@+id/subtotalLayout"
 	    android:orientation="horizontal">
-
-         <LinearLayout
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:orientation="vertical" >
-         </LinearLayout>
-     	
      	<TextView
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
@@ -99,7 +92,39 @@
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    
     </LinearLayout>
-        
+    
+    <LinearLayout
+	    android:id="@+id/subtotalLayout"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/couponLayout"
+	    android:orientation="horizontal">
+	    
+	    <TextView
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="9"
+	        android:gravity="center_vertical"
+	        android:paddingLeft="4dp"
+	        android:text="@string/subtotal"
+	        android:background="#7F7F7F"
+	        android:textColor="#FFFFFF"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/subtotalTextView"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        android:gravity="center_vertical|right"
+	        android:paddingRight="4dp"
+	        android:background="#7F7F7F"
+	        android:textColor="#FFFFFF"
+	        android:text="$0.00"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	</LinearLayout>
+    
 	<LinearLayout
 	    android:id="@+id/couponLayout"
 	    android:layout_width="match_parent"
