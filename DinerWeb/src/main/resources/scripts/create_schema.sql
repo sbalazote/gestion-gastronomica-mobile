@@ -78,6 +78,14 @@ CREATE TABLE `diner`.`payment_media` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner`.`coupon` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(100) NOT NULL,
+  `percentage` DOUBLE NOT NULL,
+  `expiration_date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `diner`.`order_state` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(30) NOT NULL,
@@ -92,11 +100,14 @@ CREATE TABLE `diner`.`order` (
 	`total` decimal(6,2) DEFAULT NULL,
 	`change` decimal(6,2) DEFAULT NULL,
 	`billing_date` date DEFAULT NULL,
+	`coupon_id` int(8),
 	PRIMARY KEY (`id`),
 	KEY `fk_order_order_state_idx` (`state_id`),
 	CONSTRAINT `fk_order_order_state` FOREIGN KEY (`state_id`) REFERENCES `order_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	KEY `fk_order_payment_media_idx` (`payment_media_id`),
-	CONSTRAINT `fk_order_payment_media` FOREIGN KEY (`payment_media_id`) REFERENCES `payment_media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	CONSTRAINT `fk_order_payment_media` FOREIGN KEY (`payment_media_id`) REFERENCES `payment_media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	KEY `fk_order_coupon_idx` (`coupon_id`),
+	CONSTRAINT `fk_order_coupon` FOREIGN KEY (`coupon_id`) REFERENCES `coupon` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner`.`order_detail_state` (
@@ -180,14 +191,6 @@ CREATE TABLE `diner`.`user_role` (
   KEY `fk_user_role_role_idx` (`role_id`),
   CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_role_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `diner`.`coupon` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(100) NOT NULL,
-  `percentage` DOUBLE NOT NULL,
-  `expiration_date` date NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 COMMIT;

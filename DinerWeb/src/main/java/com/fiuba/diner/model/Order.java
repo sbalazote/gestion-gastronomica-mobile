@@ -51,6 +51,10 @@ public class Order {
 	@Column(name = "billing_date")
 	private Date billingDate;
 
+	@ManyToOne
+	@JoinColumn(name = "coupon_id")
+	private Coupon coupon;
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -117,6 +121,14 @@ public class Order {
 
 	public void setBillingDate(Date billingDate) {
 		this.billingDate = billingDate;
+	}
+
+	public Coupon getCoupon() {
+		return this.coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 }
