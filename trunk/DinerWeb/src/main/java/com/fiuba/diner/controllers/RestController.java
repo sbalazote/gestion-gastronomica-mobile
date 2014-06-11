@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.helper.EncryptionHelper;
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Coupon;
 import com.fiuba.diner.model.Device;
 import com.fiuba.diner.model.LoginRequest;
 import com.fiuba.diner.model.LoginResponse;
@@ -25,6 +26,7 @@ import com.fiuba.diner.model.Table;
 import com.fiuba.diner.model.User;
 import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.service.CategoryService;
+import com.fiuba.diner.service.CouponService;
 import com.fiuba.diner.service.DeviceService;
 import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
@@ -50,6 +52,8 @@ public class RestController {
 	private DeviceService deviceService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CouponService couponService;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	@ResponseBody
@@ -196,4 +200,11 @@ public class RestController {
 		this.tableService.save(table);
 	}
 
+	@RequestMapping(value = "/coupon/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Coupon getCoupon(@PathVariable Integer id) throws Exception {
+		Coupon coupon = this.couponService.get(id);
+		System.out.println("Salida:" + coupon.getDescription());
+		return coupon;
+	}
 }
