@@ -39,5 +39,6 @@
     <string name="action_logout">Logout</string>
     <string name="coupon">Descuento</string>
     <string name="readQR">Leer QR</string>
+    <string name="subtotal">Subtotal</string>
 
 </resources>

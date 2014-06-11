@@ -3,6 +3,7 @@ package com.fiuba.diner.helper;
 import java.util.List;
 
 import com.fiuba.diner.model.Category;
+import com.fiuba.diner.model.Coupon;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
@@ -16,6 +17,7 @@ public class DataHolder {
 	private static Table currentTable;
 	private static Waiter currentWaiter;
 	private static Parameter parameter;
+	private static Coupon coupon;
 
 	public static List<Category> getCategories() {
 		return categories;
@@ -63,6 +65,14 @@ public class DataHolder {
 
 	public static void setParameter(Parameter parameter) {
 		DataHolder.parameter = parameter;
+	}
+
+	public static Coupon getCoupon() {
+		return coupon;
+	}
+
+	public static void setCoupon(Coupon coupon) {
+		DataHolder.coupon = coupon;
 	}
 
 }

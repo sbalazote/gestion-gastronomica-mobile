@@ -20,6 +20,7 @@ public class Order implements Serializable {
 	private Float total;
 	private Float change;
 	private Date billingDate;
+	private Coupon coupon;
 
 	public Order() {
 		this.state = OrderStateHelper.OPEN.getState();
@@ -102,6 +103,14 @@ public class Order implements Serializable {
 
 	public void setBillingDate(Date billingDate) {
 		this.billingDate = billingDate;
+	}
+
+	public Coupon getCoupon() {
+		return this.coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 }

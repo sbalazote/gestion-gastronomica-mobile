@@ -22,6 +22,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dm.zbar.android.scanner.ZBarConstants;
-import com.dm.zbar.android.scanner.ZBarScannerActivity;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
 import com.fiuba.diner.helper.Caller;
@@ -44,6 +44,7 @@ import com.fiuba.diner.tasks.ChangeLockStateTableTask;
 import com.fiuba.diner.tasks.CloseOrderTask;
 import com.fiuba.diner.tasks.ConfirmOrderTask;
 import com.fiuba.diner.tasks.GetCategoriesTask;
+import com.fiuba.diner.tasks.GetCouponTask;
 import com.fiuba.diner.tasks.ObtainOrderTask;
 import com.fiuba.diner.util.Formatter;
 
@@ -225,8 +226,30 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 	}
 
 	public void readQR(View view) throws Throwable {
-		Intent intent = new Intent(this, ZBarScannerActivity.class);
-		this.startActivityForResult(intent, com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST);
+		// Intent intent = new Intent(this, ZBarScannerActivity.class);
+		// this.startActivityForResult(intent, com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST);
+
+		/* Esto de aca no va solo esta agregado para las pruebas con el cupon id 1 */
+		GetCouponTask getCouponTask = new GetCouponTask(null);
+		try {
+			getCouponTask.execute(1).get();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		if (DataHolder.getCoupon() == null) {
+			Toast.makeText(this, "El cupon no es valido", Toast.LENGTH_SHORT).show();
+		} else {
+			LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
+			couponLayout.setVisibility(LinearLayout.VISIBLE);
+			this.order.setCoupon(DataHolder.getCoupon());
+			this.updateTotal();
+			this.hasChanged = true;
+		}
 	}
 
 	public void closeOrder(View view) throws Throwable {
@@ -269,9 +292,27 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		case com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST:
 		case com.fiuba.diner.constant.Constants.ZBAR_QR_SCANNER_REQUEST:
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Scan Result = " + data.getStringExtra(ZBarConstants.SCAN_RESULT), Toast.LENGTH_SHORT).show();
-				LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
-				couponLayout.setVisibility(LinearLayout.VISIBLE);
+				// Aca se va a buscar por id de cupon el cupon, si no existe o no esta vigente se informa que no es valido.
+				GetCouponTask getCouponTask = new GetCouponTask(null);
+				try {
+					getCouponTask.execute(Integer.valueOf(data.getStringExtra(ZBarConstants.SCAN_RESULT))).get();
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+
+				if (DataHolder.getCoupon() == null) {
+					Toast.makeText(this, "El cupon no es valido", Toast.LENGTH_SHORT).show();
+				} else {
+					LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
+					couponLayout.setVisibility(LinearLayout.VISIBLE);
+					this.order.setCoupon(DataHolder.getCoupon());
+					this.updateTotal();
+					this.hasChanged = true;
+				}
 
 			} else if (resultCode == RESULT_CANCELED && data != null) {
 				String error = data.getStringExtra(ZBarConstants.ERROR_INFO);
@@ -299,7 +340,9 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	public void updateTotal() {
 		double total = 0;
+		double subtotal = 0;
 		double dinnerServiceTotal = 0;
+		double coupon = 0;
 
 		if (this.order.getDetails() != null) {
 			for (OrderDetail orderDetail : this.order.getDetails()) {
@@ -312,7 +355,21 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		TextView dinnerServiceTotalText = (TextView) this.findViewById(R.id.dinnerServiceTotalTextView);
 		dinnerServiceTotalText.setText(Formatter.getPriceFormat(dinnerServiceTotal));
 
-		total += dinnerServiceTotal;
+		subtotal = total + dinnerServiceTotal;
+		TextView subtotalTextVier = (TextView) this.findViewById(R.id.subtotalTextView);
+		subtotalTextVier.setText(Formatter.getPriceFormat(subtotal));
+
+		if (this.order.getCoupon() != null) {
+			TextView couponTextView = (TextView) this.findViewById(R.id.couponTextView);
+			LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
+			couponLayout.setVisibility(LinearLayout.VISIBLE);
+			coupon = (total + dinnerServiceTotal) * this.order.getCoupon().getPercentage();
+			couponTextView.setText(Formatter.getPriceFormat(coupon));
+			Button btn = (Button) this.findViewById(R.id.qrCamera);
+			btn.setVisibility(View.GONE);
+		}
+
+		total += dinnerServiceTotal - coupon;
 
 		TextView totalTextView = (TextView) this.findViewById(R.id.orderTotalTextView);
 		totalTextView.setText(Formatter.getPriceFormat(total));
