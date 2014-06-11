@@ -69,6 +69,8 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 		LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
 		couponLayout.setVisibility(LinearLayout.GONE);
+		LinearLayout subtotalLayout = (LinearLayout) this.findViewById(R.id.subtotalLayout);
+		subtotalLayout.setVisibility(LinearLayout.GONE);
 
 		TextView tableTextView = (TextView) this.findViewById(R.id.orderTableTextView);
 		tableTextView.setText("Mesa: " + DataHolder.getCurrentTable().getId());
@@ -309,6 +311,8 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 				} else {
 					LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
 					couponLayout.setVisibility(LinearLayout.VISIBLE);
+					LinearLayout subtotalLayout = (LinearLayout) this.findViewById(R.id.subtotalLayout);
+					subtotalLayout.setVisibility(LinearLayout.VISIBLE);
 					this.order.setCoupon(DataHolder.getCoupon());
 					this.updateTotal();
 					this.hasChanged = true;
@@ -356,6 +360,8 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		dinnerServiceTotalText.setText(Formatter.getPriceFormat(dinnerServiceTotal));
 
 		subtotal = total + dinnerServiceTotal;
+
+		LinearLayout subtotalLayout = (LinearLayout) this.findViewById(R.id.subtotalLayout);
 		TextView subtotalTextVier = (TextView) this.findViewById(R.id.subtotalTextView);
 		subtotalTextVier.setText(Formatter.getPriceFormat(subtotal));
 
@@ -367,6 +373,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 			couponTextView.setText(Formatter.getPriceFormat(coupon));
 			Button btn = (Button) this.findViewById(R.id.qrCamera);
 			btn.setVisibility(View.GONE);
+			subtotalLayout.setVisibility(LinearLayout.VISIBLE);
 		}
 
 		total += dinnerServiceTotal - coupon;
