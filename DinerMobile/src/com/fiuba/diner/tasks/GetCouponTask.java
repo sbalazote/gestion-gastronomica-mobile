@@ -10,7 +10,7 @@ import com.fiuba.diner.helper.ConnectionHelper;
 import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.model.Coupon;
 
-public class GetCouponTask extends AsyncTask<Integer, Void, Void> {
+public class GetCouponTask extends AsyncTask<String, Void, Void> {
 
 	private final ConnectionHelper connectionHelper = new ConnectionHelper();
 	private final ObjectMapper mapper = new ObjectMapper();
@@ -21,7 +21,7 @@ public class GetCouponTask extends AsyncTask<Integer, Void, Void> {
 	}
 
 	@Override
-	protected Void doInBackground(Integer... params) {
+	protected Void doInBackground(String... params) {
 		String response;
 		Coupon coupon = null;
 		try {
