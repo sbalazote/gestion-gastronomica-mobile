@@ -159,7 +159,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	private void openConfirmDialog(final View view, final OrderDetail orderDetail, final Adapter adapter) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("¿Está seguro que desea confirmar la entrega?");
+		alertDialogBuilder.setMessage("ï¿½Estï¿½ seguro que desea confirmar la entrega?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -231,7 +231,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		/* Esto de aca no va solo esta agregado para las pruebas con el cupon id 1 */
 		GetCouponTask getCouponTask = new GetCouponTask(null);
 		try {
-			getCouponTask.execute(1).get();
+			getCouponTask.execute("1").get();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -253,7 +253,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	public void closeOrder(View view) throws Throwable {
 		if (this.order.getDetails() == null || this.order.getDetails().isEmpty()) {
-			this.openDialog("La mesa no tiene ningún pedido ingresado.");
+			this.openDialog("La mesa no tiene ningï¿½n pedido ingresado.");
 			return;
 		}
 
@@ -266,7 +266,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		}
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("¿Confirma que desea cerrar la mesa?");
+		alertDialogBuilder.setMessage("ï¿½Confirma que desea cerrar la mesa?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -295,7 +295,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 				// Aca se va a buscar por id de cupon el cupon, si no existe o no esta vigente se informa que no es valido.
 				GetCouponTask getCouponTask = new GetCouponTask(null);
 				try {
-					getCouponTask.execute(Integer.valueOf(data.getStringExtra(ZBarConstants.SCAN_RESULT))).get();
+					getCouponTask.execute(data.getStringExtra(ZBarConstants.SCAN_RESULT)).get();
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 				} catch (InterruptedException e) {
@@ -440,7 +440,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	private void openConfirmExit() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderActivity.this);
-		alertDialogBuilder.setMessage("Existen cambios sin guardar, ¿desea continuar?");
+		alertDialogBuilder.setMessage("Existen cambios sin guardar, ï¿½desea continuar?");
 		alertDialogBuilder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 
 			@Override
