@@ -12,10 +12,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.dto.SalesReportDTO;
+import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.OrderDetailState;
@@ -69,7 +69,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 	public List<OrderDetailDTO> getRequestedOrders(boolean kitchen) {
 		try {
 			String sentence = "select d, t from Order as o inner join o.details as d inner join o.tables as t where d.product.kitchen = " + kitchen
-					+ " and d.state.id <> " + State.ENTREGADO.getId() + " order by d.id desc";
+					+ " and d.state.id <> " + OrderDetailStateHelper.DELIVERED.getState().getId() + " order by d.id desc";
 			Query query;
 			query = this.sessionFactory.getCurrentSession().createQuery(sentence);
 

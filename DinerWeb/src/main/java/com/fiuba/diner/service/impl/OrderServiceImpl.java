@@ -1,6 +1,7 @@
 package com.fiuba.diner.service.impl;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fiuba.diner.constant.State;
 import com.fiuba.diner.dao.OrderDAO;
 import com.fiuba.diner.dto.OrderDetailDTO;
 import com.fiuba.diner.dto.SalesReportDTO;
@@ -53,7 +53,16 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order getOrderByTable(Integer tableId) {
-		return this.orderDAO.getOrderByTable(tableId);
+		Order order = this.orderDAO.getOrderByTable(tableId);
+		if (order != null && order.getDetails() != null) {
+			for (Iterator<OrderDetail> iterator = order.getDetails().iterator(); iterator.hasNext();) {
+				OrderDetail orderDetail = iterator.next();
+				if (OrderDetailStateHelper.CANCELLED.getState().equals(orderDetail.getState())) {
+					iterator.remove();
+				}
+			}
+		}
+		return order;
 	}
 
 	@Override
@@ -72,10 +81,10 @@ public class OrderServiceImpl implements OrderService {
 
 		orderDetail.setState(orderDetailState);
 
-		if (orderDetailStateTo.equals(State.EN_PREPARACION.getId())) {
+		if (orderDetailState.equals(OrderDetailStateHelper.IN_PROCESS)) {
 			orderDetail.setPreparationStartDate(new Date());
 		}
-		if (orderDetailStateTo.equals(State.PREPARADO.getId())) {
+		if (orderDetailState.equals(OrderDetailStateHelper.PREPARED)) {
 			orderDetail.setPreparationEndDate(new Date());
 		}
 		this.orderDAO.saveOrderDetail(orderDetail);
@@ -88,7 +97,9 @@ public class OrderServiceImpl implements OrderService {
 		Order order = this.get(orderId);
 		order.setState(OrderStateHelper.CERRADA.getState());
 		for (OrderDetail detail : order.getDetails()) {
-			detail.setState(OrderDetailStateHelper.DELIVERED.getState());
+			if (!OrderDetailStateHelper.CANCELLED.getState().equals(detail.getState())) {
+				detail.setState(OrderDetailStateHelper.DELIVERED.getState());
+			}
 		}
 		for (Table table : order.getTables()) {
 			table.setLocked(false);

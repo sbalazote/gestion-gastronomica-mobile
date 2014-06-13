@@ -38,6 +38,7 @@ import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
+import com.fiuba.diner.model.OrderDetailState;
 import com.fiuba.diner.model.Product;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.tasks.ChangeLockStateTableTask;
@@ -140,17 +141,13 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 	public void deleteProduct(View view) {
 		int position = this.listView.getPositionForView(view);
 
-		if (this.order.getDetails().get(position).getState() != null) {
-			if (this.order.getDetails().get(position).getState().getId().equals(OrderDetailStateHelper.REQUESTED.getState().getId())
-					|| this.order.getDetails().get(position).getState().getId().equals(OrderDetailStateHelper.NEW.getState().getId())) {
-				this.delete(position, view);
-				this.hasChanged = true;
-			} else {
-				this.openDialog("No puede eliminarse el pedido, ya ha ingresado a la cocina.");
-			}
-		} else {
+		OrderDetailState state = this.order.getDetails().get(position).getState();
+		if (state == null || state.equals(OrderDetailStateHelper.NEW.getState()) || state.equals(OrderDetailStateHelper.REQUESTED.getState())
+				|| state.equals(OrderDetailStateHelper.CANCELLED.getState())) {
 			this.delete(position, view);
 			this.hasChanged = true;
+		} else {
+			this.openDialog("No puede eliminarse el pedido, ya ha ingresado a la cocina.");
 		}
 	}
 
@@ -261,7 +258,8 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		}
 
 		for (OrderDetail orderDetail : this.order.getDetails()) {
-			if (!orderDetail.getState().getId().equals(OrderDetailStateHelper.DELIVERED.getState().getId())) {
+			if (!orderDetail.getState().equals(OrderDetailStateHelper.DELIVERED.getState())
+					&& !orderDetail.getState().equals(OrderDetailStateHelper.CANCELLED.getState())) {
 				this.openDialog("Existen pedidos que no han sido entregados.");
 				return;
 			}
@@ -350,7 +348,9 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 		if (this.order.getDetails() != null) {
 			for (OrderDetail orderDetail : this.order.getDetails()) {
-				total += (orderDetail.getProduct().getPrice() * orderDetail.getAmount());
+				if (!OrderDetailStateHelper.CANCELLED.getState().equals(orderDetail.getState())) {
+					total += (orderDetail.getProduct().getPrice() * orderDetail.getAmount());
+				}
 			}
 		}
 
