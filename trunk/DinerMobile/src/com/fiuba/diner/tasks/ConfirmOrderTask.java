@@ -21,7 +21,10 @@ public class ConfirmOrderTask extends AsyncTask<Order, Void, Integer> {
 	@Override
 	protected Integer doInBackground(Order... params) {
 		try {
-			return Integer.valueOf(this.connectionHelper.post("orders", this.mapper.writeValueAsString(params[0])));
+			String response = this.connectionHelper.post("orders", this.mapper.writeValueAsString(params[0]));
+			if (response != null && !response.isEmpty()) {
+				return Integer.valueOf(response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

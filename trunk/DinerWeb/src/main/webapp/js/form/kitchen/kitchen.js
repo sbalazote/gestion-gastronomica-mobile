@@ -28,9 +28,12 @@ function refreshTable() {
 				} else if (response[i].detail.state.id == 3) {
 					orderDetail.push("<strong><span style='color:orange'>" + response[i].detail.state.description + "</span></strong>");
 					orderDetail.push("<a href='javascript:void(0);' class='a-end'>Finalizar</a>");
-				} else {
+				} else if (response[i].detail.state.id == 4) {
 					orderDetail.push("<strong><span style='color:green'>" + response[i].detail.state.description + "</span></strong>");
 					orderDetail.push("");
+				} else if (response[i].detail.state.id == 9) {
+					orderDetail.push("<strong><span style='color:grey'>" + response[i].detail.state.description + "</span></strong>");
+					orderDetail.push("");					
 				}
 				
 				if (response[i].detail.product.estimatedTime != null) {

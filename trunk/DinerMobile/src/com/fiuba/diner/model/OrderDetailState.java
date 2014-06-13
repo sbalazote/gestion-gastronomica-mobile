@@ -25,4 +25,16 @@ public class OrderDetailState implements Serializable {
 		this.description = description;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof OrderDetailState)) {
+			return false;
+		}
+		OrderDetailState state = (OrderDetailState) obj;
+		if (this.id != null && state.getId() != null && this.id.equals(state.getId())) {
+			return true;
+		}
+		return false;
+	}
+
 }

@@ -22,6 +22,7 @@ import com.fiuba.diner.R;
 import com.fiuba.diner.activities.OrderActivity;
 import com.fiuba.diner.helper.OrderDetailStateHelper;
 import com.fiuba.diner.model.OrderDetail;
+import com.fiuba.diner.model.OrderDetailState;
 import com.fiuba.diner.util.Formatter;
 
 public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
@@ -47,18 +48,21 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.order_product_detail_list_item, parent, false);
 
+		OrderDetail orderDetail = this.orderDetails.get(position);
+
 		TextView productTextView = (TextView) rowView.findViewById(R.id.productTextView);
-		productTextView.setText(this.orderDetails.get(position).getProduct().getDescription());
+		productTextView.setText(orderDetail.getProduct().getDescription());
 
 		TextView productPriceTextView = (TextView) rowView.findViewById(R.id.productPriceTextView);
-		productPriceTextView.setText(Formatter.getPriceFormat(this.orderDetails.get(position).getProduct().getPrice()
-				* this.orderDetails.get(position).getAmount()));
-
-		OrderDetail orderDetail = this.orderDetails.get(position);
+		if (OrderDetailStateHelper.CANCELLED.getState().equals(orderDetail.getState())) {
+			productPriceTextView.setText(String.valueOf(0));
+		} else {
+			productPriceTextView.setText(Formatter.getPriceFormat(orderDetail.getProduct().getPrice() * orderDetail.getAmount()));
+		}
 
 		Spinner productAmountSpinner = (Spinner) rowView.findViewById(R.id.productAmountSpinner);
 		ViewHolder viewHolder = new ViewHolder();
-		viewHolder.orderDetail = this.orderDetails.get(position);
+		viewHolder.orderDetail = orderDetail;
 		viewHolder.productPrice = productPriceTextView;
 		viewHolder.context = this.context;
 		productAmountSpinner.setTag(viewHolder);
@@ -69,7 +73,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 
 		EditText productCommentEditText = (EditText) rowView.findViewById(R.id.productCommentEditText);
 		productCommentEditText.setText(orderDetail.getComment());
-		productCommentEditText.setTag(this.orderDetails.get(position));
+		productCommentEditText.setTag(orderDetail);
 		productCommentEditText.setFocusable(true);
 		productCommentEditText.setOnKeyListener(new OnKeyListener() {
 
@@ -86,40 +90,50 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 		});
 
 		TextView productState = (TextView) rowView.findViewById(R.id.orderStateTextView);
-		if (this.orderDetails.get(position) != null) {
-			Integer stateId = this.orderDetails.get(position).getState().getId();
+		if (orderDetail != null) {
+			OrderDetailState state = orderDetail.getState();
 
-			if (!stateId.equals(OrderDetailStateHelper.NEW.getState().getId())) {
-				productState.setText(String.valueOf(this.orderDetails.get(position).getState().getDescription()));
-				if (stateId.equals(OrderDetailStateHelper.PREPARED.getState().getId())) {
-					deleteProductButton.setVisibility(ImageButton.GONE);
-					confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
-					productCommentEditText.setEnabled(false);
-					productAmountSpinner.setEnabled(false);
-					productState.setTextColor(Color.rgb(34, 139, 34));
-				} else {
-					if (stateId.equals(OrderDetailStateHelper.REQUESTED.getState().getId())) {
-						deleteProductButton.setVisibility(ImageButton.VISIBLE);
-						confirmDeliveryButton.setVisibility(ImageButton.GONE);
-						productState.setTextColor(Color.BLUE);
-					} else {
-						deleteProductButton.setVisibility(ImageButton.GONE);
-						confirmDeliveryButton.setVisibility(ImageButton.GONE);
-						productCommentEditText.setEnabled(false);
-						productAmountSpinner.setEnabled(false);
-						if (stateId.equals(OrderDetailStateHelper.DELIVERED.getState().getId())) {
-							productState.setTextColor(Color.RED);
-						} else {
-							productState.setTextColor(Color.rgb(255, 140, 0));
-						}
-					}
-				}
-			} else {
-				productState.setText(OrderDetailStateHelper.NEW.getState().getDescription());
+			productState.setText(state.getDescription());
+
+			if (state.equals(OrderDetailStateHelper.NEW.getState())) {
 				deleteProductButton.setVisibility(ImageButton.VISIBLE);
 				confirmDeliveryButton.setVisibility(ImageButton.GONE);
 				productState.setTextColor(Color.BLACK);
+
+			} else if (state.equals(OrderDetailStateHelper.REQUESTED.getState())) {
+				deleteProductButton.setVisibility(ImageButton.VISIBLE);
+				confirmDeliveryButton.setVisibility(ImageButton.GONE);
+				productState.setTextColor(Color.BLUE);
+
+			} else if (state.equals(OrderDetailStateHelper.IN_PROCESS.getState())) {
+				deleteProductButton.setVisibility(ImageButton.GONE);
+				confirmDeliveryButton.setVisibility(ImageButton.GONE);
+				productCommentEditText.setEnabled(false);
+				productAmountSpinner.setEnabled(false);
+				productState.setTextColor(Color.rgb(255, 140, 0));
+
+			} else if (state.equals(OrderDetailStateHelper.PREPARED.getState())) {
+				deleteProductButton.setVisibility(ImageButton.GONE);
+				confirmDeliveryButton.setVisibility(ImageButton.VISIBLE);
+				productCommentEditText.setEnabled(false);
+				productAmountSpinner.setEnabled(false);
+				productState.setTextColor(Color.rgb(34, 139, 34));
+
+			} else if (state.equals(OrderDetailStateHelper.DELIVERED.getState())) {
+				deleteProductButton.setVisibility(ImageButton.GONE);
+				confirmDeliveryButton.setVisibility(ImageButton.GONE);
+				productCommentEditText.setEnabled(false);
+				productAmountSpinner.setEnabled(false);
+				productState.setTextColor(Color.RED);
+
+			} else if (state.equals(OrderDetailStateHelper.CANCELLED.getState())) {
+				deleteProductButton.setVisibility(ImageButton.GONE);
+				confirmDeliveryButton.setVisibility(ImageButton.GONE);
+				productCommentEditText.setEnabled(false);
+				productAmountSpinner.setEnabled(false);
+				productState.setTextColor(Color.GRAY);
 			}
+
 		}
 
 		return rowView;
@@ -148,7 +162,12 @@ public class OrderListAdapter extends ArrayAdapter<OrderDetail> {
 				Spinner spinnerAmount = (Spinner) parentView;
 				ViewHolder viewHolder = (ViewHolder) spinnerAmount.getTag();
 				viewHolder.orderDetail.setAmount(Integer.parseInt(parentView.getItemAtPosition(position).toString()));
-				viewHolder.productPrice.setText(Formatter.getPriceFormat(viewHolder.orderDetail.getProduct().getPrice() * viewHolder.orderDetail.getAmount()));
+				if (OrderDetailStateHelper.CANCELLED.getState().equals(viewHolder.orderDetail.getState())) {
+					viewHolder.productPrice.setText(String.valueOf(0));
+				} else {
+					viewHolder.productPrice.setText(Formatter.getPriceFormat(viewHolder.orderDetail.getProduct().getPrice()
+							* viewHolder.orderDetail.getAmount()));
+				}
 				OrderActivity orderActivity = (OrderActivity) viewHolder.context;
 				orderActivity.updateTotal();
 			}

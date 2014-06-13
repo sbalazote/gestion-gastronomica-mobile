@@ -12,6 +12,7 @@ insert into `diner`.`order_detail_state` (id, description) values (2, 'Solicitad
 insert into `diner`.`order_detail_state` (id, description) values (3, 'Iniciado');
 insert into `diner`.`order_detail_state` (id, description) values (4, 'Finalizado');
 insert into `diner`.`order_detail_state` (id, description) values (5, 'Entregado');
+insert into `diner`.`order_detail_state` (id, description) values (9, 'Anulado');
 
 insert into `diner`.`order_state` (id, description) values (1, 'Abierta');
 insert into `diner`.`order_state` (id, description) values (2, 'Cerrada');

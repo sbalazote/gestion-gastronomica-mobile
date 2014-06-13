@@ -22,13 +22,14 @@ public class ObtainOrderTask extends AsyncTask<Integer, Void, Void> {
 
 	@Override
 	protected Void doInBackground(Integer... params) {
-		String response;
 		Order order = null;
 		try {
-			response = this.connectionHelper.get("orders/" + params[0]);
-			System.out.println(response);
-			order = this.mapper.readValue(response, new TypeReference<Order>() {
-			});
+			String response = this.connectionHelper.get("orders/" + params[0]);
+			if (response != null && !response.isEmpty()) {
+				System.out.println(response);
+				order = this.mapper.readValue(response, new TypeReference<Order>() {
+				});
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
