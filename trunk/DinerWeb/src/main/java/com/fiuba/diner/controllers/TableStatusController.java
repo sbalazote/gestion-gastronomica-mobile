@@ -122,6 +122,13 @@ public class TableStatusController {
 		this.tableService.save(table);
 	}
 
+	@RequestMapping(value = "/cancelOrderDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public void cancelOrderDetail(@RequestParam Map<String, String> parameters) throws Exception {
+		Integer detailId = Integer.valueOf(parameters.get("id"));
+		this.orderService.cancelOrderDetail(detailId);
+	}
+
 	private List<TableDTO> getSelectedTables(Table table) {
 		List<Table> attachedTables = table.getAttachedTables();
 		List<Table> availableTables = this.tableService.getAvailableTables();

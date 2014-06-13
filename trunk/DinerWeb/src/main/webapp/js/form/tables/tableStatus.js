@@ -42,7 +42,7 @@ function loadTables (){
 						table.push("<a href='javascript:void(0);' class='join-tables'>Adjuntar</a>");
 					}
 				} else {
-					table.push(" ");
+					table.push("<a href='javascript:void(0);' class='cancel-order-modal'>Anular pedido</a>");
 				}
 				aaData.push(table);
 				
@@ -273,6 +273,9 @@ TableStatus = function() {
 		});
 	});
 	
+	
+	// Unir/Separar Mesas
+	
 	$('#divTable').on("click", ".join-tables", function() {
 		var parent = $(this).parent().parent();
 		tableId = parent.find("td:first-child").html();
@@ -345,6 +348,98 @@ TableStatus = function() {
 			}
 		});
 		$('#successMessageDiv').show();
+	});
+	
+	
+	// Anular pedidos
+	
+	$('#divTable').on("click", ".cancel-order-modal", function() {
+		var parent = $(this).parent().parent();
+		tableId = parent.find("td:first-child").html();
+		
+		$.ajax({
+			url: "getOrderByTable",
+			data: {
+				id: tableId,
+			},
+			type: "GET",
+			async: false,
+			success: function(response) {
+				var aaData = [];
+				if (response.details) {
+					for (var i = 0, l = response.details.length; i < l; ++i) {
+						var orderDetail = [];
+						
+						orderDetail.push(response.details[i].id);
+						orderDetail.push(response.details[i].product.description);
+						orderDetail.push(response.details[i].amount);
+						orderDetail.push(response.details[i].comment);
+						if (response.details[i].waiter) {
+							orderDetail.push(response.details[i].waiter.surname);
+						} else {
+							orderDetail.push("");
+						}
+						
+						if (response.details[i].requestDate) {
+							var requestDate = new Date(response.details[i].requestDate);
+							orderDetail.push(requestDate.format("dd-mm-yyyy HH:MM:ss"));
+						} else {
+							orderDetail.push("");
+						}
+						
+						if (response.details[i].state.id == 2) {
+							orderDetail.push("<strong><span style='color:blue'>" + response.details[i].state.description + "</span></strong>");
+						} else if (response.details[i].state.id == 3) {
+							orderDetail.push("<strong><span style='color:orange'>" + response.details[i].state.description + "</span></strong>");
+						} else if (response.details[i].state.id == 4) {
+							orderDetail.push("<strong><span style='color:green'>" + response.details[i].state.description + "</span></strong>");
+						} else if (response.details[i].state.id == 5) {
+							orderDetail.push("<strong><span style='color:red'>" + response.details[i].state.description + "</span></strong>");
+						} else if (response.details[i].state.id == 9) {
+							orderDetail.push("<strong><span style='color:grey'>" + response.details[i].state.description + "</span></strong>");
+						}
+						
+						if (response.details[i].state.id != 9) {
+							orderDetail.push("<a href='javascript:void(0);' class='cancel-order'>Anular</a>");
+						} else {
+							orderDetail.push("");
+						}
+	
+						aaData.push(orderDetail);
+					}
+				}
+				$('.cancelOrderDatatable').dataTable({
+					"aaData": aaData,
+					"bDestroy": true,
+				    "iDisplayLength": -1,
+				    "aaSorting": [[ 0, "desc" ]] // Sort by first column descending
+				});
+			},
+			error: function(response) {
+			}
+		});
+		$('#cancelOrderModal').modal('show');
+	});
+	
+	$('#cancelOrderTable').on("click", ".cancel-order", function() {
+		var me = $(this);
+		var parent = $(this).parent().parent();
+		detailId = parent.find("td:first-child").html();
+		
+		$.ajax({
+			url: "cancelOrderDetail",
+			data: {
+				id: detailId,
+			},
+			type: "POST",
+			async: false,
+			success: function(response) {
+				parent.find("td:eq(6)").html("<strong><span style='color:grey'>Anulado</span></strong>");
+				parent.find("td:eq(7)").html("");
+			},
+			error: function(response) {
+			}
+		});
 	});
 	
 }

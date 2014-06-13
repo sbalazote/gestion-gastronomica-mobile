@@ -32,7 +32,7 @@
 	           	<th><spring:message code="common.action"/></th>
 	        </tr>
    	 	</thead>
-   	 	<tbody id="categoryTableBody">
+   	 	<tbody>
 		</tbody>
 	</table>
 </div>
