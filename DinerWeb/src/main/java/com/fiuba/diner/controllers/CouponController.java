@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.dto.CouponDTO;
-import com.fiuba.diner.helper.EncryptionHelper;
+import com.fiuba.diner.helper.CipherHelper;
 import com.fiuba.diner.model.Coupon;
 import com.fiuba.diner.qr.QRCodeGenerator;
 import com.fiuba.diner.service.CouponService;
@@ -60,12 +60,12 @@ public class CouponController {
 	}
 
 	private void generateCoupon(Coupon coupon) throws Exception {
-		String hashedQRCodeText = EncryptionHelper.generateHash(String.valueOf(coupon.getId()));
+		String encryptedQRCodeText = CipherHelper.encrypt(String.valueOf(coupon.getId()));
 		String filePath = "C:/coupons/coupon_" + coupon.getId() + ".png";
 		int size = 125;
 		String fileType = "png";
 		File qrFile = new File(filePath);
-		QRCodeGenerator.createQRImage(qrFile, hashedQRCodeText, size, fileType);
+		QRCodeGenerator.createQRImage(qrFile, encryptedQRCodeText, size, fileType);
 	}
 
 	@RequestMapping(value = "/retrieveCouponImage", method = RequestMethod.POST)

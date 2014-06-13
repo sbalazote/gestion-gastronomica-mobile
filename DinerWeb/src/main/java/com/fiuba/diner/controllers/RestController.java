@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fiuba.diner.helper.CipherHelper;
 import com.fiuba.diner.helper.EncryptionHelper;
 import com.fiuba.diner.model.Category;
 import com.fiuba.diner.model.Coupon;
@@ -178,11 +180,11 @@ public class RestController {
 					message = "Usuario inactivo.";
 				}
 			} else {
-				message = "Usuario / contraseña incorrecta.";
+				message = "Usuario / contraseï¿½a incorrecta.";
 			}
 
 		} else {
-			message = "Usuario / contraseña incorrecta.";
+			message = "Usuario / contraseï¿½a incorrecta.";
 		}
 
 		loginResponse = new LoginResponse();
@@ -202,8 +204,9 @@ public class RestController {
 
 	@RequestMapping(value = "/coupon/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Coupon getCoupon(@PathVariable Integer id) throws Exception {
-		Coupon coupon = this.couponService.get(id);
+	public Coupon getCoupon(@RequestParam String encryptedId) throws Exception {
+		String decryptedQRCodeText = CipherHelper.decrypt(encryptedId);
+		Coupon coupon = this.couponService.get(Integer.parseInt(decryptedQRCodeText));
 		System.out.println("Salida:" + coupon.getDescription());
 		return coupon;
 	}
