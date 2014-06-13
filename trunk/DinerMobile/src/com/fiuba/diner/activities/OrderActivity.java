@@ -369,6 +369,9 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 			TextView couponTextView = (TextView) this.findViewById(R.id.couponTextView);
 			LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
 			couponLayout.setVisibility(LinearLayout.VISIBLE);
+			TextView couponLabelTextView = (TextView) this.findViewById(R.id.couponLabelTextView);
+			couponLabelTextView.setText(this.order.getCoupon().getDescription());
+
 			coupon = (total + dinnerServiceTotal) * this.order.getCoupon().getPercentage();
 			couponTextView.setText(Formatter.getPriceFormat(coupon));
 			Button btn = (Button) this.findViewById(R.id.qrCamera);
