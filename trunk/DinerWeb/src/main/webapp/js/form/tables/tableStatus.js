@@ -167,6 +167,7 @@ TableStatus = function() {
 			async: false,
 			success: function(response) {
 				var subtotal = 0;
+				var couponDiscount = 0;
 				$('#modalTableDetail').html("Mozo: " + waiterName + " - Mesa Nro: " + tableId);
 				$('#modalDate').html("Fecha:" + new Date().format("dd-mm-yyyy HH:MM:ss"));
 				for (var i = 0, l = response.details.length; i < l; ++i) {
@@ -192,22 +193,31 @@ TableStatus = function() {
 				var totalServicePrice = 0;
 				if(servicePriceActive==true) {
 					totalServicePrice = servicePrice * response.customerAmount;
-				}
+				
 				$("#tableModal tbody").append("<tr>"
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "Servicio de Mesa" + "</td>"
 						+ "<td>" + response.customerAmount + "</td>"
 						+ "<td>" + totalServicePrice + "</td>"
 						+ "</tr>");
-
+				}
+				if(response.coupon != null){
+					couponDiscount += (totalServicePrice + subtotal)*(response.coupon.percentage);
+					$("#tableModal tbody").append("<tr>"
+							+ "<td>" + "-" + "</td>"
+							+ "<td>" + response.coupon.description + "</td>"
+							+ "<td>" + "-" + "</td>"
+							+ "<td>" + couponDiscount + "</td>"
+							+ "</tr>");
+				}
 				// inserto total
-				var totalAmount = subtotal + totalServicePrice;
+				var totalAmount = subtotal + totalServicePrice - couponDiscount ;
 				totalAmount.toFixed(2);
 				$("#tableModal tbody").append("<tr>"
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "TOTAL" + "</td>"
 						+ "<td>" + "-" + "</td>"
-						+ "<td>" + totalAmount + "</td>"
+						+ "<td>" + totalAmount  + "</td>"
 						+ "</tr>");
 			},
 			error: function(response) {
