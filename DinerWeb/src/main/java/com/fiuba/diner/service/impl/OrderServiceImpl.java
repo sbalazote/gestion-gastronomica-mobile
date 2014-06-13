@@ -54,14 +54,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order getOrderByTable(Integer tableId) {
 		Order order = this.orderDAO.getOrderByTable(tableId);
-		if (order != null && order.getDetails() != null) {
-			for (Iterator<OrderDetail> iterator = order.getDetails().iterator(); iterator.hasNext();) {
-				OrderDetail orderDetail = iterator.next();
-				if (OrderDetailStateHelper.CANCELLED.getState().equals(orderDetail.getState())) {
-					iterator.remove();
-				}
-			}
-		}
 		return order;
 	}
 
@@ -95,15 +87,29 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void closeOrder(Integer orderId) {
 		Order order = this.get(orderId);
-		order.setState(OrderStateHelper.CERRADA.getState());
-		for (OrderDetail detail : order.getDetails()) {
-			if (!OrderDetailStateHelper.CANCELLED.getState().equals(detail.getState())) {
-				detail.setState(OrderDetailStateHelper.DELIVERED.getState());
+		if (order.getDetails() != null) {
+			for (Iterator<OrderDetail> iterator = order.getDetails().iterator(); iterator.hasNext();) {
+				OrderDetail orderDetail = iterator.next();
+				if (OrderDetailStateHelper.CANCELLED.getState().equals(orderDetail.getState())) {
+					iterator.remove();
+				} else {
+					orderDetail.setState(OrderDetailStateHelper.DELIVERED.getState());
+				}
 			}
 		}
-		for (Table table : order.getTables()) {
-			table.setLocked(false);
-			table.setState(TableStateHelper.CLOSED.getState());
+		if (order.getDetails() != null && !order.getDetails().isEmpty()) {
+			order.setState(OrderStateHelper.CERRADA.getState());
+			for (Table table : order.getTables()) {
+				table.setLocked(false);
+				table.setState(TableStateHelper.CLOSED.getState());
+			}
+		} else {
+			order.setState(OrderStateHelper.FACTURADA.getState());
+			for (Table table : order.getTables()) {
+				table.setLocked(false);
+				table.setState(TableStateHelper.AVAILABLE.getState());
+				table.setWaiter(null);
+			}
 		}
 		this.save(order);
 	}
@@ -116,5 +122,12 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Order> getOrdersBetweenDates(String from, String to) {
 		return this.orderDAO.getOrdersBetweenDates(from, to);
+	}
+
+	@Override
+	public void cancelOrderDetail(Integer id) {
+		OrderDetail detail = this.orderDAO.getOrderDetail(id);
+		detail.setState(OrderDetailStateHelper.CANCELLED.getState());
+		this.orderDAO.saveOrderDetail(detail);
 	}
 }

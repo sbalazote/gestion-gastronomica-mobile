@@ -34,7 +34,7 @@
 	           	<th><spring:message code="common.time"/></th>
 	        </tr>
    	 	</thead>
-   	 	<tbody id="categoryTableBody">
+   	 	<tbody>
 		</tbody>
 	</table>
 </div>

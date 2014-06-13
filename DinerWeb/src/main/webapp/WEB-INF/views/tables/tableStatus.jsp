@@ -185,3 +185,33 @@
 		</div>
 	</div>
 </div>
+
+<%-- Modal Anulación de pedidos --%>
+<div class="modal fade" data-backdrop="static" id="cancelOrderModal">
+	<div class="modal-dialog" style="width:900px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><spring:message code="administration.cancelOrderModal.title" /></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped cancelOrderDatatable my-datatable" id="cancelOrderTable">
+					<thead>
+				        <tr>
+				            <th><spring:message code="common.id"/></th>
+				            <th><spring:message code="common.description"/></th>
+				           	<th><spring:message code="common.amount"/></th>
+				           	<th><spring:message code="common.comment"/></th>
+				           	<th><spring:message code="common.waiter"/></th>
+				           	<th><spring:message code="common.requestDate"/></th>
+				           	<th><spring:message code="common.state"/></th>
+				           	<th><spring:message code="common.action"/></th>
+				        </tr>
+			   	 	</thead>
+			   	 	<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
