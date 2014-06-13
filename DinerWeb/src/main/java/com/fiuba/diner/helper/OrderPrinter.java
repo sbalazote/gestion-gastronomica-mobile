@@ -181,6 +181,7 @@ public class OrderPrinter {
 		Double productPrice = 0.0;
 		Double subtotal = 0.0;
 		Double total = 0.0;
+		Double couponDiscount = 0.0;
 
 		Iterator<OrderDetail> it = order.getDetails().iterator();
 		while (it.hasNext()) {
@@ -199,9 +200,13 @@ public class OrderPrinter {
 		// imprimo servicio de mesa
 		Double dinerServicePriceTotal = this.dinerServicePrice * order.getCustomerAmount();
 		this.printDetail(document, header, cell, "-", "Servicio de Mesa", order.getCustomerAmount().toString(), dinerServicePriceTotal.toString());
+		if (order.getCoupon() != null) {
+			couponDiscount = (dinerServicePriceTotal + subtotal) * (order.getCoupon().getPercentage());
+			this.printDetail(document, header, cell, "-", order.getCoupon().getDescription(), " - ", dinerServicePriceTotal.toString());
+		}
 
 		// imprimo total
-		total = subtotal + dinerServicePriceTotal;
+		total = subtotal + dinerServicePriceTotal - couponDiscount;
 		this.printDetail(document, header, cell, "-", "TOTAL", "-", total.toString());
 	}
 
