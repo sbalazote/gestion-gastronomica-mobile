@@ -54,7 +54,7 @@
 							<a href="reportsAdministration"><spring:message code="common.reports" /></a>
 						</li>
 						<li>
-							<a href="couponsAdministration"><spring:message code="common.coupons" /></a>
+							<a href="couponAdministration"><spring:message code="common.coupons" /></a>
 						</li>
 					</ul>
 				</li>

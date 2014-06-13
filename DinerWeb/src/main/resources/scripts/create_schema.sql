@@ -82,6 +82,7 @@ CREATE TABLE `diner`.`coupon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL,
   `percentage` DOUBLE NOT NULL,
+  `starting_date` date NOT NULL,
   `expiration_date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

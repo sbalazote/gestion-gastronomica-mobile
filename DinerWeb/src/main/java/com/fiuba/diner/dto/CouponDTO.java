@@ -8,6 +8,7 @@ public class CouponDTO implements Serializable {
 	private Integer id;
 	private String description;
 	private Double percentage;
+	private String startingDate;
 	private String expirationDate;
 
 	public Integer getId() {
@@ -40,6 +41,14 @@ public class CouponDTO implements Serializable {
 
 	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	public String getStartingDate() {
+		return this.startingDate;
+	}
+
+	public void setStartingDate(String startingDate) {
+		this.startingDate = startingDate;
 	}
 
 }
