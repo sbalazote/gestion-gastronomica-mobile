@@ -1,20 +1,5 @@
 ProductRankingReport = function() {
 	
-//	function keysbyValue(O){
-//	    var A= [];
-//	    for(var p in O){
-//	        if(O.hasOwnProperty(p)) A.push([p, O[p]]);
-//	    }
-//	    A.sort(function(a, b){
-//	        var a1= a[1], b1= b[1];
-//	        return a1-b1;
-//	    });
-//	    for(var i= 0, L= A.length; i<L; i++){
-//	        A[i]= A[i][0];
-//	    }
-//	    return A;
-//	}
-	
 	$('#categoriesSubcategoriesSelect').multiSelect();
 	
 	var daysToAdd = 365;

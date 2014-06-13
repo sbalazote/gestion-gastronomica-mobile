@@ -23,6 +23,9 @@ public class Coupon {
 	@Column(name = "percentage", nullable = false)
 	private Double percentage;
 
+	@Column(name = "starting_date", nullable = false)
+	private Date startingDate;
+
 	@Column(name = "expiration_date", nullable = false)
 	private Date expirationDate;
 
@@ -48,6 +51,14 @@ public class Coupon {
 
 	public void setPercentage(Double percentage) {
 		this.percentage = percentage;
+	}
+
+	public Date getStartingDate() {
+		return this.startingDate;
+	}
+
+	public void setStartingDate(Date startingDate) {
+		this.startingDate = startingDate;
 	}
 
 	public Date getExpirationDate() {
