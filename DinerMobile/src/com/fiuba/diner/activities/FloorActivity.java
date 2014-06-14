@@ -80,12 +80,12 @@ public class FloorActivity extends Activity {
 					} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
 						this.closedDialog(view, table);
 
-					} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+					} else if (DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 						Intent intent = new Intent(FloorActivity.this, OrderActivity.class);
 						FloorActivity.this.startActivity(intent);
 
 					} else {
-						if (!DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+						if (!DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 							this.showOpenOthersTableConfirmationDialog(view, table);
 						} else {
 							this.notAvailableDialog(view, table);
@@ -123,7 +123,7 @@ public class FloorActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						table.setState(TableStateHelper.OPEN.getState());
-						table.setWaiter(DataHolder.getCurrentWaiter());
+						table.setUser(DataHolder.getCurrentUser());
 						FloorActivity.this.adapter.notifyDataSetChanged();
 					}
 				});

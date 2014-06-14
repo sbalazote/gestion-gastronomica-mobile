@@ -66,7 +66,7 @@ public class TableImageAdapter extends BaseAdapter {
 					imageView.setImageResource(R.drawable.available_table);
 				} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
 					imageView.setImageResource(R.drawable.closed_table);
-				} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+				} else if (table.getUser() == null || DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 					imageView.setImageResource(R.drawable.open_table);
 				} else {
 					imageView.setImageResource(R.drawable.not_available_table);
@@ -89,7 +89,7 @@ public class TableImageAdapter extends BaseAdapter {
 						imageView.setImageResource(R.drawable.available_table);
 					} else if (TableStateHelper.CLOSED.getState().getId().equals(table.getState().getId())) {
 						imageView.setImageResource(R.drawable.closed_table);
-					} else if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+					} else if (table.getUser() == null || DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 						imageView.setImageResource(R.drawable.open_table);
 					} else {
 						imageView.setImageResource(R.drawable.not_available_table);

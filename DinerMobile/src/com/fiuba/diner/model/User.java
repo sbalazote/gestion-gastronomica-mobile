@@ -1,6 +1,7 @@
 package com.fiuba.diner.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 
@@ -10,6 +11,7 @@ public class User implements Serializable {
 	private String name;
 	private String password;
 	private boolean active;
+	private List<Role> roles;
 
 	public Integer getId() {
 		return this.id;
@@ -41,6 +43,14 @@ public class User implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public List<Role> getRoles() {
+		return this.roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 }

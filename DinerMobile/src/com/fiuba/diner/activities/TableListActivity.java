@@ -92,7 +92,7 @@ public class TableListActivity extends Activity {
 					this.showDialog(view, table, "La mesa está deshabilitada hasta que se procese el pago.");
 
 					// Si ya esta abierta y es mia, sigo
-				} else if (DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+				} else if (DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 					if (table.getLocked() == false) {
 						Intent intent = new Intent(TableListActivity.this, OrderActivity.class);
 						TableListActivity.this.startActivity(intent);
@@ -102,7 +102,7 @@ public class TableListActivity extends Activity {
 
 					// Si ya esta abierta pero no es mia, muestro mensaje
 				} else {
-					if (!DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+					if (!DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 						if (table.getLocked() == false) {
 							this.showOpenOthersTableConfirmationDialog(view, table);
 						} else {
@@ -122,7 +122,7 @@ public class TableListActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						table.setState(TableStateHelper.OPEN.getState());
-						table.setWaiter(DataHolder.getCurrentWaiter());
+						table.setUser(DataHolder.getCurrentUser());
 						TextView stateTextView = (TextView) view.findViewById(R.id.stateTextView);
 						ImageView tableimageView = (ImageView) view.findViewById(R.id.imageView1);
 						stateTextView.setText(table.getState().getDescription());

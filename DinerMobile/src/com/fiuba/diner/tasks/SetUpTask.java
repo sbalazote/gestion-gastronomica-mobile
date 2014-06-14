@@ -27,13 +27,7 @@ public class SetUpTask extends AsyncTask<String, Void, Void> {
 			System.out.println(response);
 			Parameter parameter = this.mapper.readValue(response, Parameter.class);
 
-			// Me traigo un waiter
-			// response = this.connectionHelper.get("waiters/" + DataHolder.getCurrentWaiter().getId());
-			// System.out.println(response);
-			// Waiter waiter = this.mapper.readValue(response, Waiter.class);
-
 			DataHolder.setParameter(parameter);
-			// DataHolder.setCurrentWaiter(waiter);
 
 		} catch (Exception e) {
 			e.printStackTrace();

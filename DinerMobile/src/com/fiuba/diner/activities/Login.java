@@ -16,7 +16,6 @@ import com.fiuba.diner.helper.DataHolder;
 import com.fiuba.diner.helper.SessionManager;
 import com.fiuba.diner.model.LoginRequest;
 import com.fiuba.diner.model.LoginResponse;
-import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.tasks.LoginTask;
 import com.fiuba.diner.util.MacAddress;
 
@@ -58,8 +57,6 @@ public class Login extends Activity implements Caller<Boolean> {
 	public void afterCall(Boolean result) {
 		Boolean valid = false;
 
-		this.pdialog.dismiss();
-
 		if (this.loginResponse != null) {
 			valid = this.loginResponse.getValid();
 		}
@@ -68,22 +65,19 @@ public class Login extends Activity implements Caller<Boolean> {
 
 			Login.this.session.createLoginSession(Login.this.usernameEditText.getText().toString(), Login.this.passwordEditText.getText().toString());
 
-			// Se carga el waiter -----------------------------
-			Waiter waiter = new Waiter();
-			waiter.setId(this.loginResponse.getUserId());
-			waiter.setName(this.loginResponse.getUserName());
-			waiter.setActive(true);
-			DataHolder.setCurrentWaiter(waiter);
-			// -------------------------------------------------
+			// Se carga el usuario ----------------------------------
+			DataHolder.setCurrentUser(this.loginResponse.getUser());
+			// ------------------------------------------------------
 
 			Intent intent = new Intent(Login.this.getApplicationContext(), HomeActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			this.pdialog.dismiss();
 			Login.this.startActivity(intent);
 			Login.this.finish();
-			// this.setView();
 
 		} else {
-			// Toast.makeText(this.getApplicationContext(), "Ingreso incorrecto. Intente nuevamente.", Toast.LENGTH_LONG).show();
+			this.pdialog.dismiss();
+
 			Toast.makeText(this.getApplicationContext(), this.loginResponse.getMessage(), Toast.LENGTH_LONG).show();
 			Login.this.usernameEditText.setText("");
 			Login.this.passwordEditText.setText("");
@@ -128,12 +122,7 @@ public class Login extends Activity implements Caller<Boolean> {
 		}
 	}
 
-	// private void setView() {
-	// this.setContentView(R.layout.home);
-	// }
-
 	public void setLoginResponse(LoginResponse loginResponse) {
 		this.loginResponse = loginResponse;
 	}
-
 }
