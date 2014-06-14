@@ -73,10 +73,10 @@ public class OrderServiceImpl implements OrderService {
 
 		orderDetail.setState(orderDetailState);
 
-		if (orderDetailState.equals(OrderDetailStateHelper.IN_PROCESS)) {
+		if (orderDetailState.equals(OrderDetailStateHelper.IN_PROCESS.getState())) {
 			orderDetail.setPreparationStartDate(new Date());
 		}
-		if (orderDetailState.equals(OrderDetailStateHelper.PREPARED)) {
+		if (orderDetailState.equals(OrderDetailStateHelper.PREPARED.getState())) {
 			orderDetail.setPreparationEndDate(new Date());
 		}
 		this.orderDAO.saveOrderDetail(orderDetail);
