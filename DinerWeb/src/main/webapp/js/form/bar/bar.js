@@ -82,6 +82,7 @@ Bar = function() {
 
 		$.ajax({
 			url: "changeBarOrderDetailState",
+			async: false,
 			crossDomain: true,
 			type: "GET",
 			data: {

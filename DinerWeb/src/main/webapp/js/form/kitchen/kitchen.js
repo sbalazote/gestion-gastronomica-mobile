@@ -102,6 +102,7 @@ Kitchen = function() {
 
 		$.ajax({
 			url: "changeKitchenOrderDetailState",
+			async: false,
 			crossDomain: true,
 			type: "GET",
 			data: {
