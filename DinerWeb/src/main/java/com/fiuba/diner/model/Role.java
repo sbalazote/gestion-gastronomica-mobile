@@ -56,4 +56,7 @@ public class Role implements Serializable, GrantedAuthority {
 		return this.getCode();
 	}
 
+	public void setAuthority(String authority) {
+		this.code = authority;
+	}
 }

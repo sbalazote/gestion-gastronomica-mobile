@@ -9,7 +9,7 @@ import java.util.Iterator;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.OrderDetail;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.model.Waiter;
+import com.fiuba.diner.model.User;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -135,9 +135,9 @@ public class OrderPrinter {
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		header.addCell(cell);
 
-		Waiter waiter = order.getTables().get(0).getWaiter();
+		User user = order.getTables().get(0).getUser();
 		Table table = order.getTables().get(0);
-		cell = new PdfPCell(new Paragraph("Mozo: " + waiter.getSurname() + ", " + waiter.getName() + " - Mesa Nro: " + table.getId()));
+		cell = new PdfPCell(new Paragraph("Mozo: " + user.getName() + " - Mesa Nro: " + table.getId()));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		header.addCell(cell);
 

@@ -26,7 +26,6 @@ import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Role;
 import com.fiuba.diner.model.Table;
 import com.fiuba.diner.model.User;
-import com.fiuba.diner.model.Waiter;
 import com.fiuba.diner.service.CategoryService;
 import com.fiuba.diner.service.CouponService;
 import com.fiuba.diner.service.DeviceService;
@@ -34,7 +33,6 @@ import com.fiuba.diner.service.OrderService;
 import com.fiuba.diner.service.ParameterService;
 import com.fiuba.diner.service.TableService;
 import com.fiuba.diner.service.UserService;
-import com.fiuba.diner.service.WaiterService;
 
 @Controller
 @RequestMapping(value = "/rest")
@@ -44,8 +42,6 @@ public class RestController {
 	private CategoryService categoryService;
 	@Autowired
 	private TableService tableService;
-	@Autowired
-	private WaiterService waiterService;
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -61,18 +57,6 @@ public class RestController {
 	@ResponseBody
 	public List<Category> getCategories() throws IOException {
 		return this.categoryService.getAll();
-	}
-
-	@RequestMapping(value = "/waiters", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Waiter> getWaiters() throws IOException {
-		return this.waiterService.getAll();
-	}
-
-	@RequestMapping(value = "/waiters/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Waiter getWaiter(@PathVariable Integer id) throws IOException {
-		return this.waiterService.get(id);
 	}
 
 	@RequestMapping(value = "/tables", method = RequestMethod.GET)
@@ -91,8 +75,7 @@ public class RestController {
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer postOrder(@RequestBody Order order) throws IOException {
-		Waiter waiter = order.getTables().get(0).getWaiter();
-		User user = this.userService.get(waiter.getId());
+		User user = order.getTables().get(0).getUser();
 		if (user == null || !user.isActive() || !this.isWaiter(user)) {
 			return 0;
 		}
@@ -132,15 +115,14 @@ public class RestController {
 		return this.parameterService.get(id);
 	}
 
-	@RequestMapping(value = "/waiterLogin", method = RequestMethod.POST)
+	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public LoginResponse waiterLogin(@RequestBody LoginRequest loginRequest) throws Exception {
+	public LoginResponse userLogin(@RequestBody LoginRequest loginRequest) throws Exception {
 		LoginResponse loginResponse = null;
 		Boolean loginValid = false;
-		Integer userId = -1;
 		String message = "";
-		String userName = "";
 		String password = loginRequest.getUserPassword();
+		User userLogin = null;
 
 		User user = this.userService.getByName(loginRequest.getUserName());
 		if (user != null && password != null) {
@@ -157,21 +139,21 @@ public class RestController {
 							Device device = this.deviceService.get(loginRequest.getMobileId());
 							if (device != null) {
 								// El movil ya existe --> se actualiza el usuario
-								// Waiter waiter = this.waiterService.get(user.getId());
-								// device.setWaiter(waiter);
-								// this.deviceService.updateWaiterId(device);
+								device.setUser(user);
+								this.deviceService.updateUserId(device);
+
 							} else {
 								// El movil es nuevo --> se crea en la tabla device
 								device = new Device();
 								device.setId(loginRequest.getMobileId());
 								device.setRegistrationId("");
-								Waiter waiter = this.waiterService.get(user.getId());
-								device.setWaiter(waiter);
+								device.setUser(user);
 								this.deviceService.save(device);
 							}
+
 							loginValid = true;
-							userId = user.getId();
-							userName = user.getName();
+							userLogin = user;
+
 						} else {
 							message = "El usuario ingresado no es mozo.";
 						}
@@ -180,18 +162,17 @@ public class RestController {
 					message = "Usuario inactivo.";
 				}
 			} else {
-				message = "Usuario / contraseï¿½a incorrecta.";
+				message = "Usuario / contraseña incorrecta.";
 			}
 
 		} else {
-			message = "Usuario / contraseï¿½a incorrecta.";
+			message = "Usuario / contraseña incorrecta.";
 		}
 
 		loginResponse = new LoginResponse();
 		loginResponse.setValid(loginValid);
 		loginResponse.setMessage(message);
-		loginResponse.setUserId(userId);
-		loginResponse.setUserName(userName);
+		loginResponse.setUser(userLogin);
 
 		return loginResponse;
 	}
