@@ -7,7 +7,7 @@ public class Device implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String id;
-	private Waiter waiter;
+	private User user;
 	private String registrationId;
 
 	public String getId() {
@@ -18,12 +18,12 @@ public class Device implements Serializable {
 		this.id = id;
 	}
 
-	public Waiter getWaiter() {
-		return this.waiter;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setWaiter(Waiter waiter) {
-		this.waiter = waiter;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getRegistrationId() {
@@ -33,5 +33,4 @@ public class Device implements Serializable {
 	public void setRegistrationId(String registrationId) {
 		this.registrationId = registrationId;
 	}
-
 }

@@ -49,7 +49,7 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 		stateTextView.setText(table.getState().getDescription());
 
 		if (table.getState().getId().equals(TableStateHelper.OPEN.getState().getId())) {
-			if (table.getWaiter() == null || DataHolder.getCurrentWaiter().getId().equals(table.getWaiter().getId())) {
+			if (table.getUser() == null || DataHolder.getCurrentUser().getId().equals(table.getUser().getId())) {
 				stateTextView.setTextColor(Color.BLUE);
 				tableimageView.setImageResource(R.drawable.blue_table);
 			} else {

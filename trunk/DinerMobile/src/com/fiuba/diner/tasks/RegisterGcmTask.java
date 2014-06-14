@@ -1,7 +1,5 @@
 package com.fiuba.diner.tasks;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -25,21 +23,25 @@ public class RegisterGcmTask extends AsyncTask<String, Integer, String> {
 
 		try {
 
-			// Se hace el registro en los servidores de GCM
-			registrationId = gcm.register(com.fiuba.diner.constant.Constants.PROJECT_ID);
+			try {
+				// Se hace el registro en los servidores de GCM
+				registrationId = gcm.register(com.fiuba.diner.constant.Constants.PROJECT_ID);
 
-			// Updatear el Registration ID
+			} catch (Exception e) {
+				e.printStackTrace();
+				registrationId = com.fiuba.diner.constant.Constants.REGISTRATION_ID;
+			}
+
+			// Se actualiza el registration ID
 			Device device = new Device();
 			device.setId(com.fiuba.diner.constant.Constants.MAC);
 			device.setRegistrationId(registrationId);
-			device.setWaiter(null);
+			device.setUser(DataHolder.getCurrentUser());
 			new UpdateDeviceTask(null).execute(device);
 
 			// Guardamos los datos del registro
-			SharedPreferencesHelper.setRegistrationId(this.context, DataHolder.getCurrentWaiter().getId().toString(), registrationId);
+			SharedPreferencesHelper.setRegistrationId(this.context, DataHolder.getCurrentUser().getId().toString(), registrationId);
 
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

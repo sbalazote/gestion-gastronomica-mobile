@@ -83,7 +83,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 		try {
 			obtainOrderTask.execute(DataHolder.getCurrentTable().getId()).get();
 			DataHolder.getCurrentTable().setLocked(true);
-			DataHolder.getCurrentTable().setWaiter(DataHolder.getCurrentWaiter());
+			DataHolder.getCurrentTable().setUser(DataHolder.getCurrentUser());
 
 			changeLockStateTableTask.execute(DataHolder.getCurrentTable());
 
@@ -217,11 +217,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 		DataHolder.getCurrentTable().setLocked(false);
 		new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
-		// Updatear el Registration ID
-		/*
-		 * Device device = new Device(); device.setId("00B0D086BBF7"); device.setRegistrationId("pepe"); device.setWaiter(null); new
-		 * UpdateDeviceTask(null).execute(device);
-		 */
+
 	}
 
 	public void readQR(View view) throws Throwable {

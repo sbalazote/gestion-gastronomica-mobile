@@ -9,7 +9,7 @@ public class Table implements Serializable {
 
 	private Integer id;
 	private TableState state;
-	private Waiter waiter;
+	private User user;
 	private Boolean active;
 	private Boolean locked;
 	private List<Table> attachedTables;
@@ -30,12 +30,12 @@ public class Table implements Serializable {
 		this.state = state;
 	}
 
-	public Waiter getWaiter() {
-		return this.waiter;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setWaiter(Waiter waiter) {
-		this.waiter = waiter;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Boolean getActive() {
@@ -73,5 +73,4 @@ public class Table implements Serializable {
 	public void setAttachedTables(List<Table> attachedTables) {
 		this.attachedTables = attachedTables;
 	}
-
 }

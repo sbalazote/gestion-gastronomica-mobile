@@ -7,7 +7,7 @@ import com.fiuba.diner.model.Coupon;
 import com.fiuba.diner.model.Order;
 import com.fiuba.diner.model.Parameter;
 import com.fiuba.diner.model.Table;
-import com.fiuba.diner.model.Waiter;
+import com.fiuba.diner.model.User;
 
 public class DataHolder {
 
@@ -15,7 +15,7 @@ public class DataHolder {
 	private static List<Table> tables;
 	private static Order currentOrder;
 	private static Table currentTable;
-	private static Waiter currentWaiter;
+	private static User currentUser;
 	private static Parameter parameter;
 	private static Coupon coupon;
 
@@ -51,12 +51,12 @@ public class DataHolder {
 		DataHolder.currentTable = currentTable;
 	}
 
-	public static Waiter getCurrentWaiter() {
-		return currentWaiter;
+	public static User getCurrentUser() {
+		return currentUser;
 	}
 
-	public static void setCurrentWaiter(Waiter currentWaiter) {
-		DataHolder.currentWaiter = currentWaiter;
+	public static void setCurrentUser(User currentUser) {
+		DataHolder.currentUser = currentUser;
 	}
 
 	public static Parameter getParameter() {
@@ -74,5 +74,4 @@ public class DataHolder {
 	public static void setCoupon(Coupon coupon) {
 		DataHolder.coupon = coupon;
 	}
-
 }

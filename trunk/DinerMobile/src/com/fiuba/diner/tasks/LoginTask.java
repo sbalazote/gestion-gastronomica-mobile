@@ -27,7 +27,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, Boolean> {
 		LoginResponse loginResponse = null;
 
 		try {
-			result = this.connectionHelper.post("waiterLogin", this.mapper.writeValueAsString(params[0]));
+			result = this.connectionHelper.post("userLogin", this.mapper.writeValueAsString(params[0]));
 			loginResponse = this.mapper.readValue(result, new TypeReference<LoginResponse>() {
 			});
 		} catch (Exception e) {
