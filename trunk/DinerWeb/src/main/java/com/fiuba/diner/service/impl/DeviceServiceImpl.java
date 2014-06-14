@@ -26,6 +26,11 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Override
+	public Device getByUser(Integer userId) {
+		return this.deviceDAO.getByUser(userId);
+	}
+
+	@Override
 	public List<Device> getAll() {
 		return this.deviceDAO.getAll();
 	}
@@ -42,4 +47,9 @@ public class DeviceServiceImpl implements DeviceService {
 		return this.deviceDAO.updateRegistrationId(device);
 	}
 
+	@Override
+	public boolean updateUserId(Device device) {
+		logger.info("Se han actualizado el usuario exitosamente. Id de Device: " + device.getId());
+		return this.deviceDAO.updateUserId(device);
+	}
 }

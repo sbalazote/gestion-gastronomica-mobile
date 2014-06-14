@@ -21,6 +21,13 @@ public class DeviceDAOHibernateImpl implements DeviceDAO {
 		return (Device) this.sessionFactory.getCurrentSession().get(Device.class, id);
 	}
 
+	@Override
+	public Device getByUser(Integer userId) {
+		Query query = this.sessionFactory.getCurrentSession().createQuery("from Device where user_id = :user_id");
+		query.setParameter("user_id", userId);
+		return (Device) query.list().get(0);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Device> getAll() {
@@ -36,6 +43,19 @@ public class DeviceDAOHibernateImpl implements DeviceDAO {
 	public boolean updateRegistrationId(Device device) {
 		Query query = this.sessionFactory.getCurrentSession().createQuery("update Device set registration_id = :registrationId where id = :id");
 		query.setParameter("registrationId", device.getRegistrationId());
+		query.setParameter("id", device.getId());
+		int numRowsUpdated = query.executeUpdate();
+		if (numRowsUpdated == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateUserId(Device device) {
+		Query query = this.sessionFactory.getCurrentSession().createQuery("update Device set user_id = :userId where id = :id");
+		query.setParameter("userId", device.getUser().getId());
 		query.setParameter("id", device.getId());
 		int numRowsUpdated = query.executeUpdate();
 		if (numRowsUpdated == 1) {

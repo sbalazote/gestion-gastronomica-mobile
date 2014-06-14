@@ -16,8 +16,8 @@ public class Device {
 	private String id;
 
 	@ManyToOne
-	@JoinColumn(name = "waiter_id")
-	private Waiter waiter;
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column(name = "registration_id", nullable = false)
 	private String registrationId;
@@ -30,12 +30,12 @@ public class Device {
 		this.id = id;
 	}
 
-	public Waiter getWaiter() {
-		return this.waiter;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setWaiter(Waiter waiter) {
-		this.waiter = waiter;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getRegistrationId() {
@@ -45,5 +45,4 @@ public class Device {
 	public void setRegistrationId(String registrationId) {
 		this.registrationId = registrationId;
 	}
-
 }

@@ -2,10 +2,15 @@ START TRANSACTION;
 
 insert into `diner`.`parameter` (id, restaurant_name, dinner_service_price, dinner_service_active, address) values (1, 'La Bisteca', 12.00, true, 'Rivadavia 5684');
 
-insert into `diner`.`waiter` (id, name, surname, active) values (1, 'Carlos', 'Rodriguez', true);
-insert into `diner`.`waiter` (id, name, surname, active) values (2, 'Roberto', 'Fernandez', true);
+insert into `diner`.`user` values (1, "crodriguez", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (2, "rfernandez", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (3, "sbalazote", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (4, "mlongo", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (5, "lpalmieri", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (6, "frago", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
+insert into `diner`.`user` values (7, "admin", "bba48f6c994c885417a26397ac34aeb59981d0b6", 1);
 
-insert into `diner`.`device` (id, waiter_id, registration_id) values ('00B0D086BBF7', 1,'66666666666');
+insert into `diner`.`device` (id, user_id, registration_id) values ('00B0D086BBF7', 1,'66666666666');
 
 insert into `diner`.`order_detail_state` (id, description) values (1, 'Nuevo');
 insert into `diner`.`order_detail_state` (id, description) values (2, 'Solicitado');
@@ -26,20 +31,20 @@ insert into `diner`.`payment_media` (id, description) values (1, 'Tarjeta de Deb
 insert into `diner`.`payment_media` (id, description) values (2, 'Tarjeta de Credito');
 insert into `diner`.`payment_media` (id, description) values (3, 'Efectivo');
 
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (1, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (2, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (3, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (4, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (5, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (6, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (7, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (8, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (9, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (10, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (11, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (12, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (13, 1, null, true, false);
-insert into `diner`.`table` (id, state_id, waiter_id, active, locked) values (14, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (1, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (2, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (3, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (4, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (5, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (6, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (7, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (8, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (9, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (10, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (11, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (12, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (13, 1, null, true, false);
+insert into `diner`.`table` (id, state_id, user_id, active, locked) values (14, 1, null, true, false);
 
 insert into `diner`.`category` (id, description, active) values (1, 'Entradas', true);
 insert into `diner`.`category` (id, description, active) values (2, 'Carnes', true);
@@ -276,14 +281,6 @@ insert into `diner`.`role` values (3, 'WAITER', 'Mozo');
 insert into `diner`.`role` values (4, 'CASHIER', 'Cajero o Cobrador');
 insert into `diner`.`role` values (5, 'ENTITY_ADMINISTRATION', 'Administración de Entidades');
 insert into `diner`.`role` values (6, 'USER_ADMINISTRATION', 'Administración de Usuarios');
-
-insert into `diner`.`user` values (1, "crodriguez", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (2, "rfernandez", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (3, "sbalazote", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (4, "mlongo", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (5, "lpalmieri", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (6, "frago", "3b7f6458be826d8cac7e7510bfae50d0ebf283ef", 1);
-insert into `diner`.`user` values (7, "admin", "bba48f6c994c885417a26397ac34aeb59981d0b6", 1);
 
 insert into `diner`.`user_role` values (1, 1, 3);
 insert into `diner`.`user_role` values (2, 2, 3);

@@ -26,8 +26,8 @@ function loadTables (){
 					table.push("<strong><span style='color:orange'>" + response[i].state.description + "</span></strong>");
 				}
 				
-				if(response[i].waiter != null){
-					table.push(response[i].waiter.surname + ", " + response[i].waiter.name);
+				if(response[i].user != null){
+					table.push(response[i].user.name);
 				}else{
 					table.push("");
 				}
@@ -63,8 +63,8 @@ function loadTables (){
 TableStatus = function() {
 	var orderId = null;
 	var tableId = null;
-	var waiterName;
-	var waiterId;
+	var userName;
+	var userId;
 	var change = null;
 	var servicePrice = 0;
 	var servicePriceActive = false;
@@ -95,7 +95,7 @@ TableStatus = function() {
 	$('#divTable').on("click", ".print-row", function() {
 		var parent = $(this).parent().parent();
 		tableId = parent.find("td:first-child").html();
-		waiterName = parent.find("td:eq(1)").html();
+		userName = parent.find("td:eq(1)").html();
 		printOrder();
 	});
 	
@@ -103,7 +103,7 @@ TableStatus = function() {
 		var total = 0;
 		var parent = $(this).parent().parent();
 		tableId = parent.find("td:first-child").html();
-		waiterName = parent.find("td:eq(1)").html();
+		userName = parent.find("td:eq(1)").html();
 		
 		$.ajax({
 			url: "getOrderByTable",
@@ -121,7 +121,7 @@ TableStatus = function() {
 			}
 		});
 		$('#totalInput').val(total.toFixed(2));
-		$('#modalPaymentTitle').html("Mozo: " + waiterName + " - Mesa Nro: " + tableId);
+		$('#modalPaymentTitle').html("Mozo: " + userName + " - Mesa Nro: " + tableId);
 		$('#paymentMediaModal').modal('show');
 	});
 	
@@ -168,7 +168,7 @@ TableStatus = function() {
 			success: function(response) {
 				var subtotal = 0;
 				var couponDiscount = 0;
-				$('#modalTableDetail').html("Mozo: " + waiterName + " - Mesa Nro: " + tableId);
+				$('#modalTableDetail').html("Mozo: " + userName + " - Mesa Nro: " + tableId);
 				$('#modalDate').html("Fecha:" + new Date().format("dd-mm-yyyy HH:MM:ss"));
 				for (var i = 0, l = response.details.length; i < l; ++i) {
 					subtotal += response.details[i].amount * response.details[i].product.price;
@@ -374,8 +374,8 @@ TableStatus = function() {
 						orderDetail.push(response.details[i].product.description);
 						orderDetail.push(response.details[i].amount);
 						orderDetail.push(response.details[i].comment);
-						if (response.details[i].waiter) {
-							orderDetail.push(response.details[i].waiter.surname);
+						if (response.details[i].user) {
+							orderDetail.push(response.details[i].user.name);
 						} else {
 							orderDetail.push("");
 						}

@@ -24,8 +24,8 @@ public class Table {
 	private TableState state;
 
 	@ManyToOne
-	@JoinColumn(name = "waiter_id")
-	private Waiter waiter;
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column(name = "active", nullable = false)
 	private Boolean active;
@@ -53,12 +53,12 @@ public class Table {
 		this.state = state;
 	}
 
-	public Waiter getWaiter() {
-		return this.waiter;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setWaiter(Waiter waiter) {
-		this.waiter = waiter;
+	public void setWaiter(User user) {
+		this.user = user;
 	}
 
 	public Boolean getActive() {
