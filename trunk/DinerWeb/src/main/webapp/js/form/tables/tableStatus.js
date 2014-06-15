@@ -95,7 +95,7 @@ TableStatus = function() {
 	$('#divTable').on("click", ".print-row", function() {
 		var parent = $(this).parent().parent();
 		tableId = parent.find("td:first-child").html();
-		userName = parent.find("td:eq(1)").html();
+		userName = parent.find("td:eq(3)").html();
 		printOrder();
 	});
 	
@@ -103,7 +103,7 @@ TableStatus = function() {
 		var total = 0;
 		var parent = $(this).parent().parent();
 		tableId = parent.find("td:first-child").html();
-		userName = parent.find("td:eq(1)").html();
+		userName = parent.find("td:eq(3)").html();
 		
 		$.ajax({
 			url: "getOrderByTable",
@@ -177,7 +177,7 @@ TableStatus = function() {
 							+ "<td>" + response.details[i].product.id + "</td>"
 							+ "<td>" + response.details[i].product.description + "</td>"
 							+ "<td>" + response.details[i].amount + "</td>"
-							+ "<td>" + response.details[i].product.price.toFixed(2) + "</td>"
+							+ "<td>" + "$" + response.details[i].product.price.toFixed(2) + "</td>"
 							+ "</tr>");
 				}
 				subtotal.toFixed(2);
@@ -186,7 +186,7 @@ TableStatus = function() {
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "SUBTOTAL" + "</td>"
 						+ "<td>" + "-" + "</td>"
-						+ "<td>" + subtotal + "</td>"
+						+ "<td>" + "$" + Math.floor(subtotal).toFixed(2) + "</td>"
 						+ "</tr>");
 
 				// inserto servicio de mesa
@@ -198,7 +198,7 @@ TableStatus = function() {
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "Servicio de Mesa" + "</td>"
 						+ "<td>" + response.customerAmount + "</td>"
-						+ "<td>" + totalServicePrice + "</td>"
+						+ "<td>" + "$" + Math.floor(totalServicePrice).toFixed(2) + "</td>"
 						+ "</tr>");
 				}
 				if(response.coupon != null){
@@ -207,17 +207,16 @@ TableStatus = function() {
 							+ "<td>" + "-" + "</td>"
 							+ "<td>" + response.coupon.description + "</td>"
 							+ "<td>" + "-" + "</td>"
-							+ "<td>" + couponDiscount + "</td>"
+							+ "<td>" + "$" + Math.floor(couponDiscount).toFixed(2) + "</td>"
 							+ "</tr>");
 				}
 				// inserto total
 				var totalAmount = subtotal + totalServicePrice - couponDiscount ;
-				totalAmount.toFixed(2);
 				$("#tableModal tbody").append("<tr>"
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "TOTAL" + "</td>"
 						+ "<td>" + "-" + "</td>"
-						+ "<td>" + totalAmount  + "</td>"
+						+ "<td>" + "$" + Math.floor(totalAmount).toFixed(2)  + "</td>"
 						+ "</tr>");
 			},
 			error: function(response) {
