@@ -69,6 +69,9 @@ public class OrderServiceImpl implements OrderService {
 					}
 				}
 			}
+			savedOrder.setCoupon(order.getCoupon());
+			savedOrder.setCustomerAmount(order.getCustomerAmount());
+			savedOrder.setState(order.getState());
 			this.orderDAO.save(savedOrder);
 		}
 		logger.info("Se han guardado los cambios exitosamente. Id de Pedido: " + order.getId());
