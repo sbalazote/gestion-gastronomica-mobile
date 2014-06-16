@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dm.zbar.android.scanner.ZBarConstants;
+import com.dm.zbar.android.scanner.ZBarScannerActivity;
 import com.fiuba.diner.R;
 import com.fiuba.diner.adapters.OrderListAdapter;
 import com.fiuba.diner.helper.Caller;
@@ -221,30 +222,8 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 	}
 
 	public void readQR(View view) throws Throwable {
-		// Intent intent = new Intent(this, ZBarScannerActivity.class);
-		// this.startActivityForResult(intent, com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST);
-
-		/* Esto de aca no va solo esta agregado para las pruebas con el cupon id 1 */
-		GetCouponTask getCouponTask = new GetCouponTask(null);
-		try {
-			getCouponTask.execute("1").get();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-
-		if (DataHolder.getCoupon() == null) {
-			Toast.makeText(this, "El cupón no es válido", Toast.LENGTH_SHORT).show();
-		} else {
-			LinearLayout couponLayout = (LinearLayout) this.findViewById(R.id.couponLayout);
-			couponLayout.setVisibility(LinearLayout.VISIBLE);
-			this.order.setCoupon(DataHolder.getCoupon());
-			this.updateTotal();
-			this.hasChanged = true;
-		}
+		Intent intent = new Intent(this, ZBarScannerActivity.class);
+		this.startActivityForResult(intent, com.fiuba.diner.constant.Constants.ZBAR_SCANNER_REQUEST);
 	}
 
 	public void closeOrder(View view) throws Throwable {
@@ -480,6 +459,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	private void logout() {
 		this.session.logoutUser();
+		new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
 		Intent intent = new Intent(this.LOG_OUT);
 		// send the broadcast to all activities who are listening
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
