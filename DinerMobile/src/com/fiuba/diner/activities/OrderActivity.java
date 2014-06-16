@@ -277,6 +277,8 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 					e.printStackTrace();
 				} catch (ExecutionException e) {
 					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 				if (DataHolder.getCoupon() == null) {

@@ -25,17 +25,13 @@ public class GetCouponTask extends AsyncTask<String, Void, Void> {
 		String response;
 		Coupon coupon = null;
 		try {
-			System.out.println(params[0]);
 			response = this.connectionHelper.get("coupon/" + params[0]);
-			System.out.println(response);
 			coupon = this.mapper.readValue(response, new TypeReference<Coupon>() {
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		DataHolder.setCoupon(coupon);
-		System.out.println("Cupon: " + coupon.getDescription());
-
 		return null;
 	}
 
