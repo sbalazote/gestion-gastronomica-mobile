@@ -52,6 +52,10 @@ public class ProductServiceTest {
 		product.setActive(true);
 		product.setDescription("Test Product description");
 		product.setPrice(Double.valueOf("4.0"));
+		product.setCeliacAllowed(false);
+		product.setKitchen(false);
+		product.setPrice(Double.valueOf(200));
+		product.setStock(true);
 
 		List<Product> products = new ArrayList<Product>();
 
@@ -66,5 +70,4 @@ public class ProductServiceTest {
 
 		this.categoryService.delete(category.getId());
 	}
-
 }

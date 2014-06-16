@@ -48,9 +48,9 @@ public class CategoryServiceTest {
 
 		Assert.isTrue(categories.size() == (sizeBefore + 2));
 
-		for (Category agent : categories) {
-			this.categoryService.delete(agent.getId());
-		}
+		// for (Category agent : categories) {
+		// this.categoryService.delete(agent.getId());
+		// }
 	}
 
 }
