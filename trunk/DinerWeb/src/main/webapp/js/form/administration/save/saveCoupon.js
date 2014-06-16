@@ -10,9 +10,12 @@ SaveCoupon = function() {
 	});
 	
 	$("#expirationDateInput").datepicker({
-	      onClose: function( selectedDate ) {
-	        $( "#startingDateInput" ).datepicker( "option", "maxDate", selectedDate );
-	      }
+		beforeShow: function() {
+			$( "#expirationDateInput" ).datepicker( "option", "minDate", new Date() );
+		},
+		onClose: function( selectedDate ) {
+			$( "#startingDateInput" ).datepicker( "option", "maxDate", selectedDate );
+		}
 	});
 	
 	$("#startingDateButton").click(function() {
