@@ -187,10 +187,14 @@ public class RestController {
 	@RequestMapping(value = "/coupon/{encryptedId}", method = RequestMethod.GET)
 	@ResponseBody
 	public Coupon getCoupon(@PathVariable String encryptedId) throws Exception {
-		String decryptedQRCodeText = CipherHelper.decrypt(encryptedId);
-		Integer decryptedId = Integer.parseInt(decryptedQRCodeText);
-		String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-		Coupon coupon = this.couponService.validate(decryptedId, currentDate);
-		return coupon;
+		try {
+			String decryptedQRCodeText = CipherHelper.decrypt(encryptedId);
+			Integer decryptedId = Integer.parseInt(decryptedQRCodeText);
+			String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+			Coupon coupon = this.couponService.validate(decryptedId, currentDate);
+			return coupon;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
