@@ -2,12 +2,13 @@ START TRANSACTION;
 
 CREATE SCHEMA `diner_test`;
 
-CREATE TABLE `diner_test`.`waiter` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `diner_test`.`user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `surname` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `active` bit(1) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner_test`.`table_state` (
@@ -19,14 +20,14 @@ CREATE TABLE `diner_test`.`table_state` (
 CREATE TABLE `diner_test`.`table` (
   `id` int(8) NOT NULL,
   `state_id` int(8) NOT NULL,
-  `waiter_id` int(8) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `active` bit(1) NOT NULL,
   `locked` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_table_table_state_idx` (`state_id`),
-  KEY `fk_table_waiter_idx` (`waiter_id`),
+  KEY `fk_table_user_idx` (`user_id`),
   CONSTRAINT `fk_table_table_state` FOREIGN KEY (`state_id`) REFERENCES `table_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_table_waiter` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_table_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner_test`.`table_union` (
@@ -78,6 +79,15 @@ CREATE TABLE `diner_test`.`payment_media` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `diner_test`.`coupon` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(100) NOT NULL,
+  `percentage` DOUBLE NOT NULL,
+  `starting_date` date NOT NULL,
+  `expiration_date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `diner_test`.`order_state` (
 	`id` int(8) NOT NULL AUTO_INCREMENT,
 	`description` varchar(30) NOT NULL,
@@ -92,11 +102,14 @@ CREATE TABLE `diner_test`.`order` (
 	`total` decimal(6,2) DEFAULT NULL,
 	`change` decimal(6,2) DEFAULT NULL,
 	`billing_date` date DEFAULT NULL,
+	`coupon_id` int(8),
 	PRIMARY KEY (`id`),
 	KEY `fk_order_order_state_idx` (`state_id`),
 	CONSTRAINT `fk_order_order_state` FOREIGN KEY (`state_id`) REFERENCES `order_state` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	KEY `fk_order_payment_media_idx` (`payment_media_id`),
-	CONSTRAINT `fk_order_payment_media` FOREIGN KEY (`payment_media_id`) REFERENCES `payment_media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	CONSTRAINT `fk_order_payment_media` FOREIGN KEY (`payment_media_id`) REFERENCES `payment_media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	KEY `fk_order_coupon_idx` (`coupon_id`),
+	CONSTRAINT `fk_order_coupon` FOREIGN KEY (`coupon_id`) REFERENCES `coupon` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner_test`.`order_detail_state` (
@@ -147,20 +160,11 @@ CREATE TABLE `diner_test`.`parameter` (
 
 CREATE TABLE `diner_test`.`device` (
   `id` VARCHAR(20) NOT NULL,
-  `waiter_id` INT NULL,
+  `user_id` INT NULL,
   `registration_id` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_mobile_waiter_idx` (`waiter_id`),
-  CONSTRAINT `fk_mobile_waiter_id` FOREIGN KEY (`waiter_id`) REFERENCES `waiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `diner_test`.`user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `active` bit(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+  KEY `fk_mobile_user_idx` (`user_id`),
+  CONSTRAINT `fk_mobile_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diner_test`.`role` (
