@@ -459,6 +459,7 @@ public class OrderActivity extends Activity implements Caller<Integer> {
 
 	private void logout() {
 		this.session.logoutUser();
+		DataHolder.getCurrentTable().setLocked(false);
 		new ChangeLockStateTableTask(null).execute(DataHolder.getCurrentTable());
 		Intent intent = new Intent(this.LOG_OUT);
 		// send the broadcast to all activities who are listening
