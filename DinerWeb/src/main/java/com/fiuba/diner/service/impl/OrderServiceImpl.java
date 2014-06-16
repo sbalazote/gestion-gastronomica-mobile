@@ -47,6 +47,34 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public void update(Order order) {
+		if (order.getId() == null || order.getDetails() == null || order.getDetails().isEmpty()) {
+			this.orderDAO.save(order);
+
+		} else {
+			Order savedOrder = this.get(order.getId());
+			if (savedOrder.getDetails() == null || savedOrder.getDetails().isEmpty()) {
+				savedOrder.setDetails(order.getDetails());
+
+			} else {
+				for (Iterator<OrderDetail> iterator = savedOrder.getDetails().iterator(); iterator.hasNext();) {
+					OrderDetail savedDetail = iterator.next();
+					if (savedDetail.getState().getId() <= OrderDetailStateHelper.REQUESTED.getState().getId()) {
+						iterator.remove();
+					}
+				}
+				for (OrderDetail detail : order.getDetails()) {
+					if (!savedOrder.getDetails().contains(detail)) {
+						savedOrder.getDetails().add(detail);
+					}
+				}
+			}
+			this.orderDAO.save(savedOrder);
+		}
+		logger.info("Se han guardado los cambios exitosamente. Id de Pedido: " + order.getId());
+	}
+
+	@Override
 	public void delete(Integer orderId) {
 		this.orderDAO.delete(orderId);
 	}

@@ -80,7 +80,7 @@ public class RestController {
 		if (user == null || !user.isActive() || !this.isWaiter(user)) {
 			return 0;
 		}
-		this.orderService.save(order);
+		this.orderService.update(order);
 		return order.getId();
 	}
 
