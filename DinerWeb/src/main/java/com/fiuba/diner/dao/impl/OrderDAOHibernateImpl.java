@@ -124,7 +124,7 @@ public class OrderDAOHibernateImpl implements OrderDAO {
 		Query query = this.sessionFactory
 				.getCurrentSession()
 				.createQuery(
-						"select billingDate as billingDate, sum(total) as dayTotal from Order where billingDate >= :from and billingDate <= :to and state.id = 3 group by billingDate order by billingDate asc");
+						"select billingDate as billingDate, sum(total) as dayTotal from Order where billingDate >= :from and billingDate <= :to and state.id = 3 group by YEAR(billingDate), MONTH(billingDate) order by billingDate asc");
 		query.setParameter("from", this.formatDateFrom(dateFromFormated));
 		query.setParameter("to", this.formatDateTo(dateToFormated));
 
