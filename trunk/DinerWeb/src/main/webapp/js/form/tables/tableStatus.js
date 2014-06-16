@@ -116,6 +116,13 @@ TableStatus = function() {
 				for (var i = 0, l = response.details.length; i < l; ++i) {
 					total += response.details[i].product.price*response.details[i].amount;
 				}
+				if(servicePriceActive==true) {
+					total += servicePrice * response.customerAmount;
+				}
+				if(response.coupon != null){
+					total = total * (1 - response.coupon.percentage);
+				}
+				
 			},
 			error: function(response) {
 			}

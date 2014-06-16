@@ -28,9 +28,8 @@ public class TableServiceTest {
 		table.setState(TableStateHelper.AVAILABLE.getState());
 
 		this.tableService.save(table);
-		System.out.println(sizeBefore);
-
-		Assert.isTrue(this.tableService.getAll().size() == (sizeBefore + 1));
-		System.out.println(this.tableService.getAll().size());
+		System.out.println("Tamaño antes " + sizeBefore);
+		Assert.isTrue(this.tableService.getAllTables().size() == (sizeBefore + 1));
+		System.out.println("Tamaño despues " + this.tableService.getAll().size());
 	}
 }
