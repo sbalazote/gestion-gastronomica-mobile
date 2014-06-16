@@ -1,6 +1,8 @@
 package com.fiuba.diner.controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -161,11 +163,11 @@ public class RestController {
 					message = "Usuario inactivo.";
 				}
 			} else {
-				message = "Usuario / contraseña incorrecta.";
+				message = "Usuario / contraseï¿½a incorrecta.";
 			}
 
 		} else {
-			message = "Usuario / contraseña incorrecta.";
+			message = "Usuario / contraseï¿½a incorrecta.";
 		}
 
 		loginResponse = new LoginResponse();
@@ -186,10 +188,9 @@ public class RestController {
 	@ResponseBody
 	public Coupon getCoupon(@PathVariable String encryptedId) throws Exception {
 		String decryptedQRCodeText = CipherHelper.decrypt(encryptedId);
-		System.out.println("Codigo encriptado: " + encryptedId);
-		System.out.println("Codigo desencriptado: " + decryptedQRCodeText);
-		Coupon coupon = this.couponService.get(Integer.parseInt(decryptedQRCodeText));
-		System.out.println("Salida:" + coupon.getDescription());
+		Integer decryptedId = Integer.parseInt(decryptedQRCodeText);
+		String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+		Coupon coupon = this.couponService.validate(decryptedId, currentDate);
 		return coupon;
 	}
 }

@@ -12,4 +12,6 @@ public interface CouponService {
 	void save(Coupon coupon);
 
 	void delete(Integer couponId);
+
+	Coupon validate(Integer id, String currentDate);
 }

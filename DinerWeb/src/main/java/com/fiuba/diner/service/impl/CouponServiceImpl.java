@@ -40,4 +40,9 @@ public class CouponServiceImpl implements CouponService {
 	public void delete(Integer couponId) {
 		this.couponDAO.delete(couponId);
 	}
+
+	@Override
+	public Coupon validate(Integer id, String currentDate) {
+		return this.couponDAO.validate(id, currentDate);
+	}
 }

@@ -14,4 +14,6 @@ public interface CouponDAO {
 
 	void delete(Integer couponId);
 
+	Coupon validate(Integer id, String currentDate);
+
 }
