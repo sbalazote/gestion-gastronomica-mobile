@@ -186,7 +186,7 @@ TableStatus = function() {
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "SUBTOTAL" + "</td>"
 						+ "<td>" + "-" + "</td>"
-						+ "<td>" + "$" + Math.floor(subtotal).toFixed(2) + "</td>"
+						+ "<td>" + "$" + (subtotal).toFixed(2) + "</td>"
 						+ "</tr>");
 
 				// inserto servicio de mesa
@@ -198,7 +198,7 @@ TableStatus = function() {
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "Servicio de Mesa" + "</td>"
 						+ "<td>" + response.customerAmount + "</td>"
-						+ "<td>" + "$" + Math.floor(totalServicePrice).toFixed(2) + "</td>"
+						+ "<td>" + "$" + (totalServicePrice).toFixed(2) + "</td>"
 						+ "</tr>");
 				}
 				if(response.coupon != null){
@@ -207,7 +207,7 @@ TableStatus = function() {
 							+ "<td>" + "-" + "</td>"
 							+ "<td>" + response.coupon.description + "</td>"
 							+ "<td>" + "-" + "</td>"
-							+ "<td>" + "$" + Math.floor(couponDiscount).toFixed(2) + "</td>"
+							+ "<td>" + "$" + (couponDiscount).toFixed(2) + "</td>"
 							+ "</tr>");
 				}
 				// inserto total
@@ -216,7 +216,7 @@ TableStatus = function() {
 						+ "<td>" + "-" + "</td>"
 						+ "<td>" + "TOTAL" + "</td>"
 						+ "<td>" + "-" + "</td>"
-						+ "<td>" + "$" + Math.floor(totalAmount).toFixed(2)  + "</td>"
+						+ "<td>" + "$" + (totalAmount).toFixed(2)  + "</td>"
 						+ "</tr>");
 			},
 			error: function(response) {

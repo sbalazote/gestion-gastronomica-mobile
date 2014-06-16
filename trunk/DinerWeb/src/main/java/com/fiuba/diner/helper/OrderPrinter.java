@@ -191,23 +191,23 @@ public class OrderPrinter {
 			productAmount = od.getAmount();
 			productPrice = od.getProduct().getPrice();
 			subtotal += productAmount * productPrice;
-			this.printDetail(document, header, cell, productId.toString(), productDescription, productAmount.toString(), productPrice.toString());
+			this.printDetail(document, header, cell, productId.toString(), productDescription, productAmount.toString(), String.format("%.2f", productPrice));
 		}
 
 		// imprimo subtotal
-		this.printDetail(document, header, cell, "-", "SUBTOTAL", "-", subtotal.toString());
+		this.printDetail(document, header, cell, "-", "SUBTOTAL", "-", String.format("%.2f", subtotal));
 
 		// imprimo servicio de mesa
 		Double dinerServicePriceTotal = this.dinerServicePrice * order.getCustomerAmount();
-		this.printDetail(document, header, cell, "-", "Servicio de Mesa", order.getCustomerAmount().toString(), dinerServicePriceTotal.toString());
+		this.printDetail(document, header, cell, "-", "Servicio de Mesa", order.getCustomerAmount().toString(), String.format("%.2f", dinerServicePriceTotal));
 		if (order.getCoupon() != null) {
 			couponDiscount = (dinerServicePriceTotal + subtotal) * (order.getCoupon().getPercentage());
-			this.printDetail(document, header, cell, "-", order.getCoupon().getDescription(), " - ", dinerServicePriceTotal.toString());
+			this.printDetail(document, header, cell, "-", order.getCoupon().getDescription(), " - ", String.format("%.2f", couponDiscount));
 		}
 
 		// imprimo total
 		total = subtotal + dinerServicePriceTotal - couponDiscount;
-		this.printDetail(document, header, cell, "-", "TOTAL", "-", total.toString());
+		this.printDetail(document, header, cell, "-", "TOTAL", "-", String.format("%.2f", total));
 	}
 
 	private void printDetail(Document document, PdfPTable header, PdfPCell cell, String id, String description, String amount, String price)

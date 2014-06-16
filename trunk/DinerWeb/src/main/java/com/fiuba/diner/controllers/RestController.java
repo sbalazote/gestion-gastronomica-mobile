@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fiuba.diner.helper.CipherHelper;
@@ -183,10 +182,12 @@ public class RestController {
 		this.tableService.save(table);
 	}
 
-	@RequestMapping(value = "/coupon/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/coupon/{encryptedId}", method = RequestMethod.GET)
 	@ResponseBody
-	public Coupon getCoupon(@RequestParam String encryptedId) throws Exception {
+	public Coupon getCoupon(@PathVariable String encryptedId) throws Exception {
 		String decryptedQRCodeText = CipherHelper.decrypt(encryptedId);
+		System.out.println("Codigo encriptado: " + encryptedId);
+		System.out.println("Codigo desencriptado: " + decryptedQRCodeText);
 		Coupon coupon = this.couponService.get(Integer.parseInt(decryptedQRCodeText));
 		System.out.println("Salida:" + coupon.getDescription());
 		return coupon;
