@@ -17,7 +17,7 @@ CouponAdministration = function() {
 				var coupon = [];
 				coupon.push(response[i].id);
 				coupon.push(response[i].description);
-				coupon.push(response[i].percentage);
+				coupon.push(response[i].percentage * 100);
 				
 				var startingDate = new Date(response[i].startingDate);
 				coupon.push(startingDate.format("dd-mm-yyyy"));

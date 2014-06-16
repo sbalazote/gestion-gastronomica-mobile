@@ -116,4 +116,16 @@ public class OrderDetail {
 		this.deliveryDate = deliveryDate;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof OrderDetail)) {
+			return false;
+		}
+		OrderDetail detail = (OrderDetail) obj;
+		if (detail.getId() != null && this.id != null && detail.getId().equals(this.getId())) {
+			return true;
+		}
+		return false;
+	}
+
 }
