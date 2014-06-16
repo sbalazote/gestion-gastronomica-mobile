@@ -10,6 +10,7 @@ public class Coupon implements Serializable {
 	private Integer id;
 	private String description;
 	private Double percentage;
+	private Date startingDate;
 	private Date expirationDate;
 
 	public Integer getId() {
@@ -42,6 +43,14 @@ public class Coupon implements Serializable {
 
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	public Date getStartingDate() {
+		return this.startingDate;
+	}
+
+	public void setStartingDate(Date startingDate) {
+		this.startingDate = startingDate;
 	}
 
 }
