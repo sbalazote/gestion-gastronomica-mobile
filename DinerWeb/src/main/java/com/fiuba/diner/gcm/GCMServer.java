@@ -5,9 +5,8 @@ package com.fiuba.diner.gcm;
 import java.io.IOException;
 
 import com.google.android.gcm.server.Message;
-//import com.google.android.gcm.server.MulticastResult;
-import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
+//import com.google.android.gcm.server.MulticastResult;
 
 public class GCMServer {
 
@@ -23,9 +22,9 @@ public class GCMServer {
 				.addData("message_id", "1").build();
 
 		// Use this code to send notification message to a single device
-		Result result = sender.send(message, REGISTRATION_ID, 1);
+		// Result result = sender.send(message, REGISTRATION_ID, 1);
 
-		System.out.println("Message Result: " + result.toString()); // Print message result on console
+		// System.out.println("Message Result: " + result.toString()); // Print message result on console
 
 		// Use this code to send notification message to multiple devices
 		// ArrayList<String> devicesList = new ArrayList<String>();
@@ -49,9 +48,9 @@ public class GCMServer {
 				.addData("message_id", "1").build();
 
 		// Use this code to send notification message to a single device
-		Result result = sender.send(message, registratioId, 1);
+		// Result result = sender.send(message, registratioId, 1);
 
-		System.out.println("Message Result: " + result.toString()); // Print message result on console
+		// System.out.println("Message Result: " + result.toString()); // Print message result on console
 
 		// Use this code to send notification message to multiple devices
 		// ArrayList<String> devicesList = new ArrayList<String>();
