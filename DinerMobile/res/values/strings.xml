@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Diner</string>
+    <string name="action_settings">Ajustes</string>
+    
+    <string name="add_product">Agregar Producto</string>
+    
+    <string name="table">Mesa </string>
+    <string name="state">Estado</string>
+    <string name="title_activity_order">Carga de Pedidos</string>
+    
+    <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="closeTable">Cerrar Mesa</string>
+
+    <string name="new_order">Nuevo Pedido</string>
+    <string name="categories">Rubros</string>
+    <string name="subcategories">Subrubros</string>
+    <string name="products">Productos</string>
+    
+    <string name="total">Total:</string>
+    <string name="diners">Comensales: </string>
+    <string name="waiterField">Mozo: </string>
+    
+    <string name="hardcodedWaiter">Mozo: Rodriguez, Carlos</string>
+    
+    <string name="dinnerServiceTotal">Servicio de Mesa:</string>
+    
+    <string name="showTables">Distribución Mesas</string>
+    <string name="listTables">Lista Mesas</string>
+    
+    <string name="floor">Piso</string>
+    
+    <string name="username">Nombre de Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Ingresar</string>
+    
+    <string name="action_logout">Logout</string>
+    <string name="coupon">Descuento</string>
+    <string name="readQR">Leer QR</string>
+    <string name="subtotal">Subtotal</string>
+
+</resources>

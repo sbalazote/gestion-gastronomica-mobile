@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+	
+<tiles-definitions>  
+
+    <definition name="base.definition" template="/WEB-INF/views/main.jsp">
+        <put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+    </definition>
+    
+    <definition name="error" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/error.jsp" />
+    </definition>
+    
+    <definition name="login" extends="base.definition">
+        <put-attribute name="header" value="" />
+        <put-attribute name="menu" value="" />
+        <put-attribute name="body" value="/WEB-INF/views/login/login.jsp" />
+    </definition>
+
+    <definition name="home" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+    </definition>
+    
+    <definition name="categoryAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/categoryAdministration.jsp" />
+    </definition>
+    
+    <definition name="addCategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addCategory.jsp" />
+    </definition>
+    
+    <definition name="addTable" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addTable.jsp" />
+    </definition>
+    
+    <definition name="entitySaved" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/entitySaved.jsp" />
+    </definition>
+     
+    <definition name="deleteConfirmation" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/deleteConfirmation.jsp" />
+    </definition>
+    
+    <definition name="updateCategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateCategory.jsp" />
+    </definition>
+
+    <definition name="updateTable" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateTable.jsp" />
+    </definition>
+    
+    <definition name="subcategoryAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/subcategoryAdministration.jsp" />
+    </definition>
+        
+    <definition name="addSubcategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addSubcategory.jsp" />
+    </definition>
+        
+    <definition name="updateSubcategory" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateSubcategory.jsp" />
+    </definition>
+    
+    <definition name="productAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/productAdministration.jsp" />
+    </definition>
+    
+    <definition name="addProduct" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addProduct.jsp" />
+    </definition>
+    
+    <definition name="updateProduct" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateProduct.jsp" />
+    </definition>
+    
+    <definition name="updateParameter" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/configuration/updateParameter.jsp" />
+    </definition>
+    
+    <definition name="kitchen" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/kitchen/kitchen.jsp" />
+    </definition>
+    
+    <definition name="bar" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/bar/bar.jsp" />
+    </definition>
+    
+   	<definition name="kitchenProductAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/kitchen/kitchenProductAdministration.jsp" />
+    </definition>
+    
+    <definition name="tableStatus" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/tables/tableStatus.jsp" />
+    </definition>
+    
+    <definition name="barProductAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/bar/barProductAdministration.jsp" />
+    </definition>
+    
+    <definition name="tableAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/tableAdministration.jsp" />
+    </definition>
+    
+    <definition name="userAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/userAdministration.jsp" />
+    </definition>
+    
+     <definition name="reportsAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/reportsAdministration.jsp" />
+    </definition>
+    
+     <definition name="couponAdministration" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/couponAdministration.jsp" />
+    </definition>
+    
+     <definition name="addCoupon" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addCoupon.jsp" />
+    </definition>
+    
+    <definition name="addUser" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/addUser.jsp" />
+    </definition>
+    
+    <definition name="updateUser" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/administration/updateUser.jsp" />
+    </definition>
+        
+</tiles-definitions>
